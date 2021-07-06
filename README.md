@@ -1,6 +1,7 @@
 # XPL_Replication_Project
 
 This repository containts a replication of Pryor, Perfors, Howe (2019) for the course 'Experimental Psychology Lab' in the summer term 2021.
+
 The original paper can be accessed at https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0219464.
 
 ## The Experiment
