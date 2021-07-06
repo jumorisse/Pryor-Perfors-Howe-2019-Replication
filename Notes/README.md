@@ -5,4 +5,4 @@ This folder contains any ideas, remarks or general notes about the project as we
 ## Files
 01_General_Notes          Contains a time plan, open questions, ideas... 
 
-                          The current version can be accessed at https://docs.google.com/document/d/16jwuf6hCWMsxysZmMmcEPu5R1d4dIE9wz5huqVeDtaY/edit
+                          https://docs.google.com/document/d/16jwuf6hCWMsxysZmMmcEPu5R1d4dIE9wz5huqVeDtaY/edit
