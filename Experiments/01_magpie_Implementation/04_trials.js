@@ -17,5 +17,13 @@ const trial_info = {
             option2: "rainbow",
             correct: "shiny"
         }
+    ],
+    dropdown_choice_trials: [
+        {
+            question_left_part: "Welches der folgenden Themen interessiert dich am meisten?",
+            option1: 'jam',
+            option2: 'ham',
+            option3: 'butter'
+        }
     ]
 };

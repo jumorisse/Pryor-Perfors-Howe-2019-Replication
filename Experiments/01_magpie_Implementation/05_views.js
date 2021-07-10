@@ -22,28 +22,35 @@
 const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
+  title: 'Wilkommen!',
   // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-  text: `This is a sample introduction view.
+  text: `Willkommen zu unserem Experiment!
             <br />
             <br />
-            The introduction view welcomes the participant and gives general information
-            about the experiment. You are in the <strong>${coin}</strong> group.
+            Vielen Dank, dass du an unserer Studie teilnimmst.
             <br />
             <br />
-            This is a minimal experiment with one forced choice view. It can serve as a starting point for programming your own experiment.`,
-  buttonText: 'begin the experiment'
+            `,
+  buttonText: 'Weiter zu der Anleitung'
 });
 
 // For most tasks, you need instructions views
 const instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions',
-  title: 'General Instructions',
-  text: `This is a sample instructions view.
-            <br />
-            <br />
-            Tell your participants what they are to do here.`,
-  buttonText: 'go to trials'
+  title: 'Anleitung',
+  text: `In dieser Befragung knüpfen wir an eine zuvor veröffentlichte Studie an, in der untersucht wurde, wie Menschen sich in moralischen Dilemmata fühlen.
+        <br/>
+        <br/>
+        In der vorherigen Studie wurde ein moralisches Dilemma beschrieben, dass zwei mögliche Handlungsoptionen beinhaltete.
+        <br/>
+        Die Teilnehmer wählten aus, welche Handlung sie bevorzugten und mussten bewerten, wie sie sich bei der Ausführung dieser Handlung fühlen würden.
+        <br/>
+        <br/>
+        In dieser Studie wird Ihnen ein Szenario präsentiert, dass ein moralisches Dilemma beschreibt.
+        <br/>
+        Sie werden wählen, welche Handlung Sie durchführen würden und dann eine Bewertung abgeben, wie gut oder schlecht Sie sich nach der Durchführung dieser Handlung fühlen würden.`,
+  buttonText: 'Beginne mit dem Experiment'
 });
 
 
@@ -51,23 +58,28 @@ const instructions = magpieViews.view_generator("instructions", {
 const post_test = magpieViews.view_generator("post_test", {
   trials: 1,
   name: 'post_test',
-  title: 'Additional information',
-  text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
-
-  // You can change much of what appears here, e.g., to present it in a different language, as follows:
-  // buttonText: 'Weiter',
-  // age_question: 'Alter',
-  // gender_question: 'Geschlecht',
-  // gender_male: 'männlich',
-  // gender_female: 'weiblich',
-  // gender_other: 'divers',
-  // edu_question: 'Höchster Bildungsabschluss',
-  // edu_graduated_high_school: 'Abitur',
-  // edu_graduated_college: 'Hochschulabschluss',
-  // edu_higher_degree: 'Universitärer Abschluss',
-  // languages_question: 'Muttersprache',
-  // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
+  title: 'Persönliche Informationen',
+  text: 'Bitte trage die folgenden Informationen ein. Alle Eingaben sind anonymisiert und helfen uns lediglich die Ergebnisse zu analysieren.',
+  buttonText: 'Weiter',
+  age_question: 'Alter',
+  gender_question: 'Geschlecht',
+  gender_male: 'männlich',
+  gender_female: 'weiblich',
+  gender_other: 'divers',
+  edu_question: 'Höchster Bildungsabschluss',
+  edu_graduated_lower_degree: 'Real- oder Hauptschulabschluss',
+  edu_graduated_high_school: 'Abitur',
+  edu_graduated_college: 'Hochschulabschluss',
+  edu_higher_degree: 'Universitärer Abschluss',
+  languages_question: 'Muttersprache',
   // comments_question: 'Weitere Kommentare'
+});
+
+const subject_decision = magpieViews.view_generator("dropdown_choice", {
+  trials: trial_info.dropdown_choice_trials.length,
+  // name should be identical to the variable name
+  name: 'subject_decision',
+  data: trial_info.dropdown_choice_trials
 });
 
 // The 'thanks' view is crucial; never delete it; it submits the results!

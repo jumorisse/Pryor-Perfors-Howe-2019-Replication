@@ -17,8 +17,9 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions,
-            forced_choice_2A,
             post_test,
+            subject_decision,
+            forced_choice_2A,
             thanks,
         ],
         // Here, you can specify all information for the deployment
