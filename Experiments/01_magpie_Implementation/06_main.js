@@ -18,8 +18,8 @@ $("document").ready(function() {
             intro,
             instructions,
             post_test,
-            subject_decision,
-            forced_choice_2A,
+            topic_choice,
+            statement_rating,
             thanks,
         ],
         // Here, you can specify all information for the deployment

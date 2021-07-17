@@ -75,13 +75,81 @@ const post_test = magpieViews.view_generator("post_test", {
   // comments_question: 'Weitere Kommentare'
 });
 
-const subject_decision = magpieViews.view_generator("dropdown_choice", {
-  trials: trial_info.dropdown_choice_trials.length,
-  // name should be identical to the variable name
-  name: 'subject_decision',
-  data: trial_info.dropdown_choice_trials
-});
+const topic_choice = custom_press_a_button(
+    // config information
+    {
+        trials: trial_info.topic_choice.length,
+        name: 'topic_choice',
+        data: trial_info.topic_choice
+    }
+);
+/*const topic_decision = magpieViews.view_generator(
+    "forced_choice",
+    // config information
+    {
+        trials: trial_info.topic_choice.length,
+        name: 'topic_decision',
+        data: trial_info.topic_choice
+    },
+    // custom generator functions
+    {
+      answer_container_generator: function (config, CT) {
+       return `<div class='magpie-view-answer-container'>
+               <p class='magpie-view-question'>${config.data[CT].question}</p>
+               <label for='o1' class='magpie-response-buttons'>${config.data[CT].option1}</label>
+               <input type='radio' name='answer' id='o1' value=${config.data[CT].option1} />
+               <label for='o2' class='magpie-response-buttons'>${config.data[CT].option2}</label>
+               <input type='radio' name='answer' id='o2' value=${config.data[CT].option2} />
+               <label for='o3' class='magpie-response-buttons'>${config.data[CT].option3}</label>
+               <input type='radio' name='answer' id='o3' value=${config.data[CT].option3} />
+               <label for='o4' class='magpie-response-buttons'>${config.data[CT].option4}</label>
+               <input type='radio' name='answer' id='o4' value=${config.data[CT].option4} />
+               <label for='o5' class='magpie-response-buttons'>${config.data[CT].option5}</label>
+               <input type='radio' name='answer' id='o5' value=${config.data[CT].option5} />
+               <label for='o6' class='magpie-response-buttons'>${config.data[CT].option6}</label>
+               <input type='radio' name='answer' id='o6' value=${config.data[CT].option6} />
+               <label for='o7' class='magpie-response-buttons'>${config.data[CT].option7}</label>
+               <input type='radio' name='answer' id='o7' value=${config.data[CT].option7} />
+               <label for='o8' class='magpie-response-buttons'>${config.data[CT].option8}</label>
+               <input type='radio' name='answer' id='o8' value=${config.data[CT].option8} />
+               <label for='o9' class='magpie-response-buttons'>${config.data[CT].option9}</label>
+               <input type='radio' name='answer' id='o9' value=${config.data[CT].option9} />
+               </div>`;
+  }
+    }
+);
+*/
+const statement_rating = custom_statement_rating(
+    // config information
+    {
+        trials: trial_info.statement_rating.length,
+        name: 'statement_rating',
+        data: trial_info.statement_rating
+    }
+);
 
+/*const statement_rating = magpieViews.view_generator(
+  'rating_scale',
+  // config Informationen
+  {
+    trials: trial_info.statement_rating.length,
+    name: 'statement_rating',
+    data: trial_info.statement_rating
+  },
+  // custom generator functions
+  {
+    stimulus_container_generator: function (config, CT, magpie) {
+        return `<div class='magpie-view'>
+                    <h1 class='magpie-view-title'>${config.title}</h1>
+                    <p class='magpie-view-question magpie-view-qud'>${magpie.trial_data}</p>
+                    <div class='magpie-view-stimulus-container'>
+                        <div class='magpie-view-stimulus magpie-nodisplay'></div>
+                    </div>
+                </div>`;
+    },
+   }
+ )
+*/
 // The 'thanks' view is crucial; never delete it; it submits the results!
 const thanks = magpieViews.view_generator("thanks", {
   trials: 1,
