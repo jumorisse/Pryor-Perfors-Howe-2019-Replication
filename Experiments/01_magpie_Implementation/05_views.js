@@ -83,73 +83,43 @@ const topic_choice = custom_press_a_button(
         data: trial_info.topic_choice
     }
 );
-/*const topic_decision = magpieViews.view_generator(
-    "forced_choice",
-    // config information
-    {
-        trials: trial_info.topic_choice.length,
-        name: 'topic_decision',
-        data: trial_info.topic_choice
-    },
-    // custom generator functions
-    {
-      answer_container_generator: function (config, CT) {
-       return `<div class='magpie-view-answer-container'>
-               <p class='magpie-view-question'>${config.data[CT].question}</p>
-               <label for='o1' class='magpie-response-buttons'>${config.data[CT].option1}</label>
-               <input type='radio' name='answer' id='o1' value=${config.data[CT].option1} />
-               <label for='o2' class='magpie-response-buttons'>${config.data[CT].option2}</label>
-               <input type='radio' name='answer' id='o2' value=${config.data[CT].option2} />
-               <label for='o3' class='magpie-response-buttons'>${config.data[CT].option3}</label>
-               <input type='radio' name='answer' id='o3' value=${config.data[CT].option3} />
-               <label for='o4' class='magpie-response-buttons'>${config.data[CT].option4}</label>
-               <input type='radio' name='answer' id='o4' value=${config.data[CT].option4} />
-               <label for='o5' class='magpie-response-buttons'>${config.data[CT].option5}</label>
-               <input type='radio' name='answer' id='o5' value=${config.data[CT].option5} />
-               <label for='o6' class='magpie-response-buttons'>${config.data[CT].option6}</label>
-               <input type='radio' name='answer' id='o6' value=${config.data[CT].option6} />
-               <label for='o7' class='magpie-response-buttons'>${config.data[CT].option7}</label>
-               <input type='radio' name='answer' id='o7' value=${config.data[CT].option7} />
-               <label for='o8' class='magpie-response-buttons'>${config.data[CT].option8}</label>
-               <input type='radio' name='answer' id='o8' value=${config.data[CT].option8} />
-               <label for='o9' class='magpie-response-buttons'>${config.data[CT].option9}</label>
-               <input type='radio' name='answer' id='o9' value=${config.data[CT].option9} />
-               </div>`;
-  }
-    }
-);
-*/
+
 const statement_rating = custom_statement_rating(
     // config information
     {
-        trials: trial_info.statement_rating.length,
+        trials: 1,
         name: 'statement_rating',
         data: trial_info.statement_rating
     }
 );
 
-/*const statement_rating = magpieViews.view_generator(
-  'rating_scale',
-  // config Informationen
+const dilemma_instructions = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'dilemma_instructions',
+  title: 'Anleitung für den nächsten Schritt',
+  text: `Als nächstes wirst du mit einer Entscheidungssituation konfrontiert und erhälst Informationen darüber, wie sich andere Teilnehmer entschieden haben.
+        <br/>
+        <br/>
+        Lese dir das Dilemma genau durch und nehme dir Zeit dich für eine der beiden Möglichkeiten zu entscheiden.`,
+  buttonText: 'Weiter zum Dilemma'
+});
+
+const dilemma_decision = custom_dilemma(
   {
-    trials: trial_info.statement_rating.length,
-    name: 'statement_rating',
-    data: trial_info.statement_rating
-  },
-  // custom generator functions
+    trials: 1,
+    name: 'dilemma_decision',
+    data: trial_info.dilemma_decision_1,
+  }
+);
+
+const rate_feeling = magpieViews.view_generator('slider_rating',
   {
-    stimulus_container_generator: function (config, CT, magpie) {
-        return `<div class='magpie-view'>
-                    <h1 class='magpie-view-title'>${config.title}</h1>
-                    <p class='magpie-view-question magpie-view-qud'>${magpie.trial_data}</p>
-                    <div class='magpie-view-stimulus-container'>
-                        <div class='magpie-view-stimulus magpie-nodisplay'></div>
-                    </div>
-                </div>`;
-    },
-   }
- )
-*/
+    trials: trial_info.feeling_options.length,
+    name: 'rate_feeling',
+    data: trial_info.feeling_options
+  }
+)
+
 // The 'thanks' view is crucial; never delete it; it submits the results!
 const thanks = magpieViews.view_generator("thanks", {
   trials: 1,

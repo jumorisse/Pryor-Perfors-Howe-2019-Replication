@@ -33,45 +33,86 @@ const trial_info = {
         }
     ],
     statement_rating: [
-        {
-          first: 'Auf deutschen Autobahnen sollte eine Geschwindigkeitsbegrenzung eingeführt werden.',
-          second: 'In Deutschland sollte ein bedingungsloses Grundeinkommen eingeführt werden.',
-          03: 'In geschriebener und gesprochener Sprache sollte stets die männliche und weibliche Form genutzt werden (gegendert werden).',
-          04: 'Die Einführung einer CO2-Steuer in Deutschland war richtig.',
-          05: 'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht in Deutschland durchgesetzt werden.',
-          06: 'Migration nach Deutschland sollte begrenzt werden.',
-          07: 'Der Konsum von Cannabis sollte in Deutschland legalisiert werden.',
-          08: 'Das Patentrecht für Covid-Impfstoffe sollte (zumindest vorrübergehend) ausgesetzt werden.',
-          09: 'In Deutschland sollte eine Vermögenssteuer eingeführt werden.',
+        'Auf deutschen Autobahnen sollte eine Geschwindigkeitsbegrenzung eingeführt werden.',
+        'In Deutschland sollte ein bedingungsloses Grundeinkommen eingeführt werden.',
+        'In geschriebener und gesprochener Sprache sollte stets die männliche und weibliche Form genutzt werden (gegendert werden).',
+        'Die Einführung einer CO2-Steuer in Deutschland war richtig.',
+        'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht in Deutschland durchgesetzt werden.',
+        'Migration nach Deutschland sollte begrenzt werden.',
+        'Der Konsum von Cannabis sollte in Deutschland legalisiert werden.',
+        'Das Patentrecht für Covid-Impfstoffe sollte (zumindest vorrübergehend) ausgesetzt werden.',
+        'In Deutschland sollte eine Vermögenssteuer eingeführt werden.'
+      ],
+    dilemma_decision_1:[
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für ein bedingungsloses Grundeinkommen sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen ein bedingungsloses Grundeinkommen sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für das Gendern der Sprache sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen das Gendern der Sprache sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine höher CO2-Steuer sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine höhere CO2-Steuer sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Impfpflicht in Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Impfpflicht in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Begrenzung der Migration nach Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Begrenzung der Migration nach Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Freigabe von Impfstoffpatenten sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Freigabe von Impfstoffpatenten sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für die Einführung einer Vermögenssteuer sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen die Einführung einer Vermögenssteuer sind, haben sich zu 65% für Option B entschieden.',
       }
     ],
-    topic_statements: [
+    feeling_options: [
       {
-        statement1: 'Auf deutschen Autobahnen sollte eine Geschwindigkeitsbegrenzung eingeführt werden.'
-      },
-      {
-        statement2: 'In Deutschland sollte ein bedingungsloses Grundeinkommen eingeführt werden.'
-      },
-      {
-        statement3: 'In geschriebener und gesprochener Sprache sollte stets die männliche und weibliche Form genutzt werden (gegendert werden).'
-      },
-      {
-        statement4: 'Die Einführung einer CO2-Steuer in Deutschland war richtig.'
-      },
-      {
-        statement5: 'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht in Deutschland durchgesetzt werden.'
-      },
-      {
-        statement6: 'Migration nach Deutschland sollte begrenzt werden.'
-      },
-      {
-        statement7: 'Der Konsum von Cannabis sollte in Deutschland legalisiert werden.'
-      },
-      {
-        statement8: 'Das Patentrecht für Covid-Impfstoffe sollte (zumindest vorrübergehend) ausgesetzt werden.'
-      },
-      {
-        statement9: 'In Deutschland sollte eine Vermögenssteuer eingeführt werden.'
-      },
+        question: 'Wie fühlst du dich nach dieser Entscheidung?',
+        optionRight: 'Sehr gut',
+        optionLeft: 'Sehr schlecht'
+      }
     ]
-};
+}

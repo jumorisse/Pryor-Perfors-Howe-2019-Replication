@@ -20,6 +20,9 @@ $("document").ready(function() {
             post_test,
             topic_choice,
             statement_rating,
+            dilemma_instructions,
+            dilemma_decision,
+            rate_feeling,
             thanks,
         ],
         // Here, you can specify all information for the deployment
