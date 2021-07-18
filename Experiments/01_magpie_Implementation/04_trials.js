@@ -114,5 +114,115 @@ const trial_info = {
         optionRight: 'Sehr gut',
         optionLeft: 'Sehr schlecht'
       }
+    ],
+    group_identifiers: [
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern eines Tempolimits.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern eines Tempolimits.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern eines bedingungslosen Grundeinkommens.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern eines bedingungslosen Grundeinkommens.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern des Genderns.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern des Genderns.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern einer höheren CO2-Steuer.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern einer höheren CO2-Steuer.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern einer Impfpflicht.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern einer Impfpflicht.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern einer Migrationsregulierung.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern einer Migrationsregulierung.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern einer Cannabis Legalisierung.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern einer Cannabis Legalisierung.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern der Freigabe von Impfstoffpatenten.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern der Freigabe von Impfstoffpatenten.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ],
+      [
+        {
+          question: 'Ich identifiziere mich mit Befürwortern einer Vermögenssteuer.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        },
+        {
+          question: 'Ich identifiziere mich mit Gegnern einer Vermögenssteuer.',
+          option1: 'Korrekt',
+          option2: 'Inkorrekt'
+        }
+      ]
     ]
 }

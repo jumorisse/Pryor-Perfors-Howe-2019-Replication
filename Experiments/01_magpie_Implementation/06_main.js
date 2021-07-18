@@ -23,6 +23,7 @@ $("document").ready(function() {
             dilemma_instructions,
             dilemma_decision,
             rate_feeling,
+            group_ident,
             thanks,
         ],
         // Here, you can specify all information for the deployment

@@ -118,6 +118,14 @@ const rate_feeling = magpieViews.view_generator('slider_rating',
     name: 'rate_feeling',
     data: trial_info.feeling_options
   }
+);
+
+const group_ident = group_identification(
+  {
+    trials: 2,
+    name: 'group_ident',
+    data: trial_info.group_identifiers
+  }
 )
 
 // The 'thanks' view is crucial; never delete it; it submits the results!

@@ -305,6 +305,61 @@ const custom_dilemma = function(config) {
     return view;
 };
 
+
+const group_identification = function(config) {
+    const view = {
+        name: config.name,
+        CT: 0,
+        trials: config.trials,
+        data: config.data,
+        // The render functions gets the magpie object as well as the current trial in view counter as input
+        render: function (CT, magpie) {
+          var response = magpie.trial_data[0].response;
+          var rating = magpie.trial_data[1].response;
+            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
+            // to proceed to the next view and if it is an trial type view,
+            // you should save the trial information with magpie.trial_data.push(trial_data)
+
+            // Normally, you want to display some kind of html, to do this you append your html to the main element
+            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT)
+            $("main").html(`<div class='magpie-view'>
+                <h1 class='magpie-view-title'>TITLE</h1>
+                <p class='magpie-view-question magpie-view-qud'>HIER KANN TEXT HIN</p>
+                <p class='magpie-view-question'>${config.data[response][CT].question}</p>
+                <label for='o1' class='magpie-response-buttons'>${config.data[response][CT].option1}</label>
+                <input type='radio' name='answer' id='o1' value=${config.data[response][CT].option1} />
+                <input type='radio' name='answer' id='o2' value=${config.data[response][CT].option2} />
+                <label for='o2' class='magpie-response-buttons'>${config.data[response][CT].option2}</label>
+                </div>`);
+            // This function will handle  the response
+            const handle_click = function(e) {
+                // We will just save the response and continue to the next view
+                let trial_data = {
+                    trial_name: config.name,
+                    trial_number: CT + 1,
+                    response: e.target.id
+                };
+                // Often it makes sense to also save the config information
+                // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
+
+                // Here, we save the trial_data
+                magpie.trial_data.push(trial_data);
+
+                // Now, we will continue with the next view
+                magpie.findNextView();
+                console.log(magpie);
+            };
+
+            // We will add the handle_click functions to both buttons
+            $('#o1').on("click", handle_click);
+            $('#o2').on("click", handle_click);
+
+            // That's everything for this view
+        }
+    };
+    // We have to return the view, so that it can be used in 05_views.js
+    return view;
+};
 /*
 <div class='magpie-view-stimulus-container'>
 <div class='magpie-view-stimulus magpie-nodisplay'></div>
