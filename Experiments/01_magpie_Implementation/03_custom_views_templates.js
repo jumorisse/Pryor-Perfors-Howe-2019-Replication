@@ -23,17 +23,22 @@ const custom_press_a_button = function(config) {
 
             // Normally, you want to display some kind of html, to do this you append your html to the main element
             // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT)
-            $("main").html(`<div class='magpie-view'>
-                <h1 class='magpie-view-title'>Bitte wähle das Thema aus, für das du dich am meisten interessierst!</h1>
-                <button id="0" class='magpie-view-button'>Tempolimit auf deutschen Autobahnen</button>
-                <button id="1" class='magpie-view-button'>Bedingungsloses Grundeinkommen</button>
-                <button id="2" class='magpie-view-button'>Gendern der Sprache</button>
-                <button id="3" class='magpie-view-button'>${magpie.deploy.deployMethod}</button>
-                <button id="4" class='magpie-view-button'>Impfpflicht in Deutschland</button>
-                <button id="5" class='magpie-view-button'>Migration nach Deutschland</button>
-                <button id="6" class='magpie-view-button'>Cannabis Legalisierung</button>
-                <button id="7" class='magpie-view-button'>Freigabe von Impfstoffpatenten</button>
-                <button id="8" class='magpie-view-button'>Vermögenssteuer</button>
+            $("main").html(`
+                <div class='magpie-view'>
+                <h1 style="margin-top: 10%" class='magpie-view-title'>Welches Thema interessiert dich am meisten?</h1>
+                </div>
+                <div style="width: 350px; float:left; height:1000px; background:white; margin:10px; margin-left: 600px; margin-top: -4%" class='magpie-view'>
+                <button style="width: 350px;  height:40px;  margin:10px" id="0" class='magpie-view-button'>Tempolimit auf deutschen Autobahnen</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="1" class='magpie-view-button'>Bedingungsloses Grundeinkommen</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="2" class='magpie-view-button'>Gendern der Sprache</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="3" class='magpie-view-button'>CO2 Steuer</button>
+                </div>
+                <div style="width: 350px; float:left; height:1000px; background:white; margin:10px; margin-top: -4%" class='magpie-view'>
+                <button style="width: 350px;  height:40px;  margin:10px" id="4" class='magpie-view-button'>Impfpflicht in Deutschland</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="5" class='magpie-view-button'>Migration nach Deutschland</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="6" class='magpie-view-button'>Cannabis Legalisierung</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="7" class='magpie-view-button'>Freigabe von Impfstoffpatenten</button>
+                <button style="width: 350px;  height:40px;  margin:10px" id="8" class='magpie-view-button'>Vermögenssteuer</button>
                 </div>`);
             // This function will handle  the response
             const handle_click = function(e) {
@@ -89,11 +94,14 @@ const custom_statement_rating = function(config) {
             // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${magpie.trial_data[0].response} or ${config.data[response]}
 
             // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
-            $("main").html(`<div class='magpie-view'>
-                    <h1 class='magpie-view-title'>TEST</h1>
-                    <p class='magpie-view-question magpie-view-qud'>TEST</p>
-                    <p class='magpie-view-question'>${config.data[response]}</p>
-                    <strong class='magpie-response-rating-option magpie-view-text'>Strongly Disagree</strong>
+            // <p class='magpie-view-question magpie-view-qud'>TEST</p>
+            $("main").html(`
+                    <div class='magpie-view'>
+                    <h1 class='magpie-view-title'>Bewerte die folgende Aussage:</h1>
+                    <p style="font-weight: bold" class='magpie-view-question'>${config.data[response]}</p>
+                    </div>
+                    <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                    <strong class='magpie-response-rating-option magpie-view-text'>Ich stimme gar nicht zu</strong>
                     <label for="-5" class='magpie-response-rating'>-5</label>
                     <input type="radio" name="answer" id="-5" value="-5" />
                     <label for="-4" class='magpie-response-rating'>-4</label>
@@ -116,7 +124,7 @@ const custom_statement_rating = function(config) {
                     <input type="radio" name="answer" id="4" value="4" />
                     <label for="5" class='magpie-response-rating'>5</label>
                     <input type="radio" name="answer" id="5" value="5" />
-                    <strong class='magpie-response-rating-option magpie-view-text'>Strongly Agree</strong>
+                    <strong class='magpie-response-rating-option magpie-view-text'>Ich stimme voll zu</strong>
                     </div>`);
 
             // This function will handle  the response
@@ -178,10 +186,10 @@ const custom_dilemma = function(config) {
             // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
             if (rating >= 0) {
               if (both_infos == true) {
-                $("main").html(`<div class='magpie-view'>
-                        <h1 class='magpie-view-title'>TITLE</h1>
+                $("main").html(`<div style="text-align: center" class='magpie-view'>
+                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ingroup statement: ${config.data[response].pos_info} <br> outgroup statement: ${config.data[response].neg_info} </p>
+                        <br> <br>  ${config.data[response].pos_info} <br> ${config.data[response].neg_info} </p>
                         <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
                         <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
                         <label for="1" class='magpie-response-rating'>1</label>
@@ -200,10 +208,10 @@ const custom_dilemma = function(config) {
                         </div>`);
               };
               if (both_infos == false) {
-                $("main").html(`<div class='magpie-view'>
-                        <h1 class='magpie-view-title'>TITLE</h1>
+                $("main").html(`<div style="text-align: center" class='magpie-view'>
+                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ingroup statement: ${config.data[response].pos_info} </p>
+                        <br> <br> ${config.data[response].pos_info} </p>
                         <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
                         <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
                         <label for="1" class='magpie-response-rating'>1</label>
@@ -225,10 +233,10 @@ const custom_dilemma = function(config) {
 
             if (rating <= 0) {
               if (both_infos == true) {
-                $("main").html(`<div class='magpie-view'>
-                        <h1 class='magpie-view-title'>${random_boolean}</h1>
+                $("main").html(`<div style="text-align: center" class='magpie-view'>
+                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ingroup statement: ${config.data[response].neg_info} <br> outgroup statement: ${config.data[response].pos_info} </p>
+                        <br> <br> ${config.data[response].neg_info} <br> ${config.data[response].pos_info} </p>
                         <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
                         <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
                         <label for="1" class='magpie-response-rating'>1</label>
@@ -247,10 +255,10 @@ const custom_dilemma = function(config) {
                         </div>`);
               };
               if (both_infos == false) {
-                $("main").html(`<div class='magpie-view'>
-                        <h1 class='magpie-view-title'>${random_boolean}</h1>
+                $("main").html(`<div style="text-align: center" class='magpie-view'>
+                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ingroup statement: ${config.data[response].neg_info} </p>
+                        <br> <br> ${config.data[response].neg_info} </p>
                         <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
                         <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
                         <label for="1" class='magpie-response-rating'>1</label>

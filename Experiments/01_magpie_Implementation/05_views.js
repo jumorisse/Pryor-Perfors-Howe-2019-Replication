@@ -22,14 +22,10 @@
 const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
-  title: 'Wilkommen!',
-  // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-  text: `Willkommen zu unserem Experiment!
-            <br />
-            <br />
-            Vielen Dank, dass du an unserer Studie teilnimmst.
-            <br />
-            <br />
+  title: '',
+  // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside margin-top: 10%; font-size: 30px; margin-left: 30%;
+  text: `<h1 style="margin-top: 10%; text-align: center" class='magpie-view-title'>Willkommen zu unserem Experiment!</h1>
+         <p style="margin-top: 5%; font-size: 25px; text-align: center">Vielen Dank, dass du an unserer Studie teilnimmst.</p>
             `,
   buttonText: 'Weiter zu der Anleitung'
 });
@@ -59,7 +55,7 @@ const post_test = magpieViews.view_generator("post_test", {
   trials: 1,
   name: 'post_test',
   title: 'Persönliche Informationen',
-  text: 'Bitte trage die folgenden Informationen ein. Alle Eingaben sind anonymisiert und helfen uns lediglich die Ergebnisse zu analysieren.',
+  text: `Bitte trage die folgenden Informationen ein. <br/> Alle Eingaben sind anonymisiert!`,
   buttonText: 'Weiter',
   age_question: 'Alter',
   gender_question: 'Geschlecht',
@@ -100,7 +96,7 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
   text: `Als nächstes wirst du mit einer Entscheidungssituation konfrontiert und erhälst Informationen darüber, wie sich andere Teilnehmer entschieden haben.
         <br/>
         <br/>
-        Lese dir das Dilemma genau durch und nehme dir Zeit dich für eine der beiden Möglichkeiten zu entscheiden.`,
+        Lese dir das Dilemma genau durch und nimm dir Zeit dich für eine der beiden Möglichkeiten zu entscheiden.`,
   buttonText: 'Weiter zum Dilemma'
 });
 
