@@ -91,7 +91,7 @@ const statement_rating = custom_statement_rating(
 
 const dilemma_instructions = magpieViews.view_generator("instructions", {
   trials: 1,
-  name: 'dilemma_instructions',
+  name: 'dilemma_instructions1',
   title: 'Anleitung für den nächsten Schritt',
   text: `Als nächstes wirst du mit einer Entscheidungssituation konfrontiert und erhälst Informationen darüber, wie sich andere Teilnehmer entschieden haben.
         <br/>
@@ -100,22 +100,37 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
   buttonText: 'Weiter zum Dilemma'
 });
 
-const dilemma_decision = custom_dilemma(
+const dilemma_decision1 = custom_dilemma_decision(
   {
-    trials: 1,
-    name: 'dilemma_decision',
+    trials: 3,
+    name: 'dilemma_decision1',
     data: trial_info.dilemma_decision_1,
   }
 );
 
-const rate_feeling = magpieViews.view_generator('slider_rating',
+const rate_feeling1 = magpieViews.view_generator('slider_rating',
   {
     trials: trial_info.feeling_options.length,
-    name: 'rate_feeling',
+    name: 'rate_feeling1',
     data: trial_info.feeling_options
   }
 );
 
+const dilemma_decision2 = custom_dilemma_decision(
+  {
+    trials: 3,
+    name: 'dilemma_decision2',
+    data: trial_info.dilemma_decision_2,
+  }
+);
+
+const rate_feeling2 = magpieViews.view_generator('slider_rating',
+  {
+    trials: trial_info.feeling_options.length,
+    name: 'rate_feeling2',
+    data: trial_info.feeling_options
+  }
+);
 const group_ident = group_identification(
   {
     trials: 2,

@@ -108,6 +108,71 @@ const trial_info = {
         neg_info: 'Leute, die gegen die Einführung einer Vermögenssteuer sind, haben sich zu 65% für Option B entschieden.',
       }
     ],
+    dilemma_decision_2:[
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für ein bedingungsloses Grundeinkommen sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen ein bedingungsloses Grundeinkommen sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für das Gendern der Sprache sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen das Gendern der Sprache sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine höher CO2-Steuer sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine höhere CO2-Steuer sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Impfpflicht in Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Impfpflicht in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Begrenzung der Migration nach Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Begrenzung der Migration nach Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für eine Freigabe von Impfstoffpatenten sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen eine Freigabe von Impfstoffpatenten sind, haben sich zu 65% für Option B entschieden.',
+      },
+      {
+        dilemma: 'Was ein Dilemma..',
+        optionA: 'Option A',
+        optionB: 'Option B',
+        pos_info: 'Leute, die für die Einführung einer Vermögenssteuer sind, haben sich zu 80% für Option A entschieden.',
+        neg_info: 'Leute, die gegen die Einführung einer Vermögenssteuer sind, haben sich zu 65% für Option B entschieden.',
+      }
+    ],
     feeling_options: [
       {
         question: 'Wie fühlst du dich nach dieser Entscheidung?',

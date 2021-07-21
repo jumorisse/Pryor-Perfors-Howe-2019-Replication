@@ -165,7 +165,7 @@ const custom_statement_rating = function(config) {
     return view;
 };
 
-const custom_dilemma = function(config) {
+const custom_dilemma_decision = function(config) {
     const view = {
         name: config.name,
         CT: 0,
@@ -175,7 +175,18 @@ const custom_dilemma = function(config) {
         render: function (CT, magpie) {
             var response = magpie.trial_data[0].response;
             var rating = magpie.trial_data[1].response;
-            var both_infos = Math.random() < 0.5;
+            if (CT == 0) {
+              var both_infos = Math.random() < 0.5;
+            }
+            if (CT == 1) {
+              var both_infos = magpie.trial_data[2].both_infos;
+            };
+            if (CT == 2) {
+              var both_infos = magpie.trial_data[2].both_infos;
+            };
+            if (CT == 3) {
+              var both_infos = magpie.trial_data[2].both_infos;
+            };
             // Here, you can do whatever you want, eventually you should call magpie.findNextView()
             // to proceed to the next view and if it is an trial type view,
             // you should save the trial information with magpie.trial_data.push(trial_data)
@@ -184,97 +195,153 @@ const custom_dilemma = function(config) {
             // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${magpie.trial_data[0].response} or ${config.data[response]}
 
             // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
-            if (rating >= 0) {
-              if (both_infos == true) {
-                $("main").html(`<div style="text-align: center" class='magpie-view'>
-                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                        <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br>  ${config.data[response].pos_info} <br> ${config.data[response].neg_info} </p>
-                        <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
-                        <label for="1" class='magpie-response-rating'>1</label>
-                        <input type="radio" name="answer" id="1" value="1" />
-                        <label for="2" class='magpie-response-rating'>2</label>
-                        <input type="radio" name="answer" id="2" value="2" />
-                        <label for="3" class='magpie-response-rating'>3</label>
-                        <input type="radio" name="answer" id="3" value="3" />
-                        <label for="4" class='magpie-response-rating'>4</label>
-                        <input type="radio" name="answer" id="4" value="4" />
-                        <label for="5" class='magpie-response-rating'>5</label>
-                        <input type="radio" name="answer" id="5" value="5" />
-                        <label for="6" class='magpie-response-rating'>6</label>
-                        <input type="radio" name="answer" id="6" value="6" />
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
-                        </div>`);
+            if (CT == 0) {
+              $("main").html(`<div style="text-align: center" class='magpie-view'>
+                      <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                      <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                      <br>
+                      <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                      </div>`);
+            };
+
+            if (CT == 1) {
+              if (rating >= 0) {
+                if (both_infos == true) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br>  ${config.data[response].pos_info} <br> ${config.data[response].neg_info} </p>
+                          <br>
+                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                          </div>`);
+                };
+                if (both_infos == false) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].pos_info} </p>
+                          <br>
+                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                          </div>`);
+                };
               };
-              if (both_infos == false) {
-                $("main").html(`<div style="text-align: center" class='magpie-view'>
-                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                        <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ${config.data[response].pos_info} </p>
-                        <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
-                        <label for="1" class='magpie-response-rating'>1</label>
-                        <input type="radio" name="answer" id="1" value="1" />
-                        <label for="2" class='magpie-response-rating'>2</label>
-                        <input type="radio" name="answer" id="2" value="2" />
-                        <label for="3" class='magpie-response-rating'>3</label>
-                        <input type="radio" name="answer" id="3" value="3" />
-                        <label for="4" class='magpie-response-rating'>4</label>
-                        <input type="radio" name="answer" id="4" value="4" />
-                        <label for="5" class='magpie-response-rating'>5</label>
-                        <input type="radio" name="answer" id="5" value="5" />
-                        <label for="6" class='magpie-response-rating'>6</label>
-                        <input type="radio" name="answer" id="6" value="6" />
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
-                        </div>`);
+
+              if (rating <= 0) {
+                if (both_infos == true) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].neg_info} <br> ${config.data[response].pos_info} </p>
+                          <br>
+                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                          </div>`);
+                };
+                if (both_infos == false) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].neg_info} </p>
+                          <br>
+                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                          </div>`);
+                };
               };
             };
 
-            if (rating <= 0) {
-              if (both_infos == true) {
-                $("main").html(`<div style="text-align: center" class='magpie-view'>
-                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                        <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ${config.data[response].neg_info} <br> ${config.data[response].pos_info} </p>
-                        <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
-                        <label for="1" class='magpie-response-rating'>1</label>
-                        <input type="radio" name="answer" id="1" value="1" />
-                        <label for="2" class='magpie-response-rating'>2</label>
-                        <input type="radio" name="answer" id="2" value="2" />
-                        <label for="3" class='magpie-response-rating'>3</label>
-                        <input type="radio" name="answer" id="3" value="3" />
-                        <label for="4" class='magpie-response-rating'>4</label>
-                        <input type="radio" name="answer" id="4" value="4" />
-                        <label for="5" class='magpie-response-rating'>5</label>
-                        <input type="radio" name="answer" id="5" value="5" />
-                        <label for="6" class='magpie-response-rating'>6</label>
-                        <input type="radio" name="answer" id="6" value="6" />
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
-                        </div>`);
+
+            if (CT == 2) {
+              if (rating >= 0) {
+                if (both_infos == true) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br>  ${config.data[response].pos_info} <br> ${config.data[response].neg_info} </p>
+                          <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
+                          <label for="1" class='magpie-response-rating'>1</label>
+                          <input type="radio" name="answer" id="1" value="1" />
+                          <label for="2" class='magpie-response-rating'>2</label>
+                          <input type="radio" name="answer" id="2" value="2" />
+                          <label for="3" class='magpie-response-rating'>3</label>
+                          <input type="radio" name="answer" id="3" value="3" />
+                          <label for="4" class='magpie-response-rating'>4</label>
+                          <input type="radio" name="answer" id="4" value="4" />
+                          <label for="5" class='magpie-response-rating'>5</label>
+                          <input type="radio" name="answer" id="5" value="5" />
+                          <label for="6" class='magpie-response-rating'>6</label>
+                          <input type="radio" name="answer" id="6" value="6" />
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
+                          </div>`);
+                };
+                if (both_infos == false) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].pos_info} </p>
+                          <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
+                          <label for="1" class='magpie-response-rating'>1</label>
+                          <input type="radio" name="answer" id="1" value="1" />
+                          <label for="2" class='magpie-response-rating'>2</label>
+                          <input type="radio" name="answer" id="2" value="2" />
+                          <label for="3" class='magpie-response-rating'>3</label>
+                          <input type="radio" name="answer" id="3" value="3" />
+                          <label for="4" class='magpie-response-rating'>4</label>
+                          <input type="radio" name="answer" id="4" value="4" />
+                          <label for="5" class='magpie-response-rating'>5</label>
+                          <input type="radio" name="answer" id="5" value="5" />
+                          <label for="6" class='magpie-response-rating'>6</label>
+                          <input type="radio" name="answer" id="6" value="6" />
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
+                          </div>`);
+                };
               };
-              if (both_infos == false) {
-                $("main").html(`<div style="text-align: center" class='magpie-view'>
-                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                        <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
-                        <br> <br> ${config.data[response].neg_info} </p>
-                        <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
-                        <label for="1" class='magpie-response-rating'>1</label>
-                        <input type="radio" name="answer" id="1" value="1" />
-                        <label for="2" class='magpie-response-rating'>2</label>
-                        <input type="radio" name="answer" id="2" value="2" />
-                        <label for="3" class='magpie-response-rating'>3</label>
-                        <input type="radio" name="answer" id="3" value="3" />
-                        <label for="4" class='magpie-response-rating'>4</label>
-                        <input type="radio" name="answer" id="4" value="4" />
-                        <label for="5" class='magpie-response-rating'>5</label>
-                        <input type="radio" name="answer" id="5" value="5" />
-                        <label for="6" class='magpie-response-rating'>6</label>
-                        <input type="radio" name="answer" id="6" value="6" />
-                        <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
-                        </div>`);
+
+              if (rating <= 0) {
+                if (both_infos == true) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].neg_info} <br> ${config.data[response].pos_info} </p>
+                          <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
+                          <label for="1" class='magpie-response-rating'>1</label>
+                          <input type="radio" name="answer" id="1" value="1" />
+                          <label for="2" class='magpie-response-rating'>2</label>
+                          <input type="radio" name="answer" id="2" value="2" />
+                          <label for="3" class='magpie-response-rating'>3</label>
+                          <input type="radio" name="answer" id="3" value="3" />
+                          <label for="4" class='magpie-response-rating'>4</label>
+                          <input type="radio" name="answer" id="4" value="4" />
+                          <label for="5" class='magpie-response-rating'>5</label>
+                          <input type="radio" name="answer" id="5" value="5" />
+                          <label for="6" class='magpie-response-rating'>6</label>
+                          <input type="radio" name="answer" id="6" value="6" />
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
+                          </div>`);
+                };
+                if (both_infos == false) {
+                  $("main").html(`<div style="text-align: center" class='magpie-view'>
+                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma} Antwormöglichkeiten: ${config.data[response].optionA} oder ${config.data[response].optionB}
+                          <br> <br> ${config.data[response].neg_info} </p>
+                          <p class='magpie-view-question'>Wie würdest du dich entscheiden?</p>
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionA}</strong>
+                          <label for="1" class='magpie-response-rating'>1</label>
+                          <input type="radio" name="answer" id="1" value="1" />
+                          <label for="2" class='magpie-response-rating'>2</label>
+                          <input type="radio" name="answer" id="2" value="2" />
+                          <label for="3" class='magpie-response-rating'>3</label>
+                          <input type="radio" name="answer" id="3" value="3" />
+                          <label for="4" class='magpie-response-rating'>4</label>
+                          <input type="radio" name="answer" id="4" value="4" />
+                          <label for="5" class='magpie-response-rating'>5</label>
+                          <input type="radio" name="answer" id="5" value="5" />
+                          <label for="6" class='magpie-response-rating'>6</label>
+                          <input type="radio" name="answer" id="6" value="6" />
+                          <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response].optionB}</strong>
+                          </div>`);
+                };
               };
             };
 
@@ -299,12 +366,22 @@ const custom_dilemma = function(config) {
             };
 
             // We will add the handle_click functions to both buttons
-            $('#1').on("click", handle_click);
-            $('#2').on("click", handle_click);
-            $('#3').on("click", handle_click);
-            $('#4').on("click", handle_click);
-            $('#5').on("click", handle_click);
-            $('#6').on("click", handle_click);
+            if (CT == 0) {
+              $('#next').on("click", handle_click);
+            };
+
+            if (CT == 1) {
+              $('#next').on("click", handle_click);
+            };
+
+            if (CT == 2) {
+              $('#1').on("click", handle_click);
+              $('#2').on("click", handle_click);
+              $('#3').on("click", handle_click);
+              $('#4').on("click", handle_click);
+              $('#5').on("click", handle_click);
+              $('#6').on("click", handle_click);
+            };
 
             // That's everything for this view
         }
@@ -329,15 +406,27 @@ const group_identification = function(config) {
             // you should save the trial information with magpie.trial_data.push(trial_data)
 
             // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT)
+            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${config.data[response][CT].option1}
             $("main").html(`<div class='magpie-view'>
                 <h1 class='magpie-view-title'>TITLE</h1>
                 <p class='magpie-view-question magpie-view-qud'>HIER KANN TEXT HIN</p>
                 <p class='magpie-view-question'>${config.data[response][CT].question}</p>
-                <label for='o1' class='magpie-response-buttons'>${config.data[response][CT].option1}</label>
-                <input type='radio' name='answer' id='o1' value=${config.data[response][CT].option1} />
-                <input type='radio' name='answer' id='o2' value=${config.data[response][CT].option2} />
-                <label for='o2' class='magpie-response-buttons'>${config.data[response][CT].option2}</label>
+                <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response][CT].option2}</strong>
+                <label for="-3" class='magpie-response-rating'>-3</label>
+                <input type="radio" name="answer" id="-3" value="-3" />
+                <label for="-2" class='magpie-response-rating'>-2</label>
+                <input type="radio" name="answer" id="-2" value="-2" />
+                <label for="-1" class='magpie-response-rating'>-1</label>
+                <input type="radio" name="answer" id="-1" value="-1" />
+                <label for="0" class='magpie-response-rating'>0</label>
+                <input type="radio" name="answer" id="0" value="0" />
+                <label for="1" class='magpie-response-rating'>1</label>
+                <input type="radio" name="answer" id="1" value="1" />
+                <label for="2" class='magpie-response-rating'>2</label>
+                <input type="radio" name="answer" id="2" value="2" />
+                <label for="3" class='magpie-response-rating'>3</label>
+                <input type="radio" name="answer" id="3" value="3" />
+                <strong class='magpie-response-rating-option magpie-view-text'>${config.data[response][CT].option1}</strong>
                 </div>`);
             // This function will handle  the response
             const handle_click = function(e) {
@@ -359,8 +448,13 @@ const group_identification = function(config) {
             };
 
             // We will add the handle_click functions to both buttons
-            $('#o1').on("click", handle_click);
-            $('#o2').on("click", handle_click);
+            $('#-3').on("click", handle_click);
+            $('#-2').on("click", handle_click);
+            $('#-1').on("click", handle_click);
+            $('#0').on("click", handle_click);
+            $('#1').on("click", handle_click);
+            $('#2').on("click", handle_click);
+            $('#3').on("click", handle_click);
 
             // That's everything for this view
         }
@@ -368,10 +462,3 @@ const group_identification = function(config) {
     // We have to return the view, so that it can be used in 05_views.js
     return view;
 };
-/*
-<div class='magpie-view-stimulus-container'>
-<div class='magpie-view-stimulus magpie-nodisplay'></div>
-</div>
-<div class='magpie-view-answer-container'>
-</div>
-*/
