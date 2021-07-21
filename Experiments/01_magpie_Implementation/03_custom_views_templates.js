@@ -184,9 +184,6 @@ const custom_dilemma_decision = function(config) {
             if (CT == 2) {
               var both_infos = magpie.trial_data[2].both_infos;
             };
-            if (CT == 3) {
-              var both_infos = magpie.trial_data[2].both_infos;
-            };
             // Here, you can do whatever you want, eventually you should call magpie.findNextView()
             // to proceed to the next view and if it is an trial type view,
             // you should save the trial information with magpie.trial_data.push(trial_data)
