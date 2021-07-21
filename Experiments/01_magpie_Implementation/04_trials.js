@@ -21,157 +21,141 @@ const trial_info = {
     topic_choice: [
         {
             question: 'Bitte wähle das Thema aus, für das du dich am meisten interessierst.',
-            option1: 'Tempolimit auf deutschen Autobahnen',
-            option2: 'Bedingungsloses Grundeinkommen',
-            option3: 'Gendern der Sprache',
-            option4: 'CO2 Steuer',
-            option5: 'Impfpflicht in Deutschland',
-            option6: 'Migration nach Deutschland',
+            option1: 'Tempolimit',
+            option2: 'Digitalisierung und Datenschutz',
+            option3: 'Gender-Debatte',
+            option4: 'Vermögenssteuer',
+            option5: 'Impfpflicht',
+            option6: 'Migration',
             option7: 'Cannabis Legalisierung',
-            option8: 'Freigabe von Impfstoffpatenten',
-            option9: 'Vermögenssteuer',
+            option8: 'Fleischkonsum',
         }
     ],
     statement_rating: [
-        'Auf deutschen Autobahnen sollte eine Geschwindigkeitsbegrenzung eingeführt werden.',
-        'In Deutschland sollte ein bedingungsloses Grundeinkommen eingeführt werden.',
-        'In geschriebener und gesprochener Sprache sollte stets die männliche und weibliche Form genutzt werden (gegendert werden).',
-        'Die Einführung einer CO2-Steuer in Deutschland war richtig.',
-        'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht in Deutschland durchgesetzt werden.',
-        'Migration nach Deutschland sollte begrenzt werden.',
-        'Der Konsum von Cannabis sollte in Deutschland legalisiert werden.',
-        'Das Patentrecht für Covid-Impfstoffe sollte (zumindest vorrübergehend) ausgesetzt werden.',
-        'In Deutschland sollte eine Vermögenssteuer eingeführt werden.'
+        'Es sollte eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen eingeführt werden.',
+        'Persönliche Daten des Verbrauchers sollten in Deutschland bessermehr geschützt werden. ',
+        'In der Öffentlichkeit sollte Sprache gegendert sein.',
+        'Die Vermögenssteuer sollte in Deutschland wieder eingeführt werden.',
+        'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht eingeführt werden.',
+        'Migration nach Deutschland sollte strenger kontrolliert werden.',
+        'Das Konsumieren von Cannabis sollte in Deutschland legal sein.',
+        'Fleisch sollte in Deutschland einen Mindestpreis erhalten.',
       ],
     dilemma_decision_1:[
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Tempolimit zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Tempolimit nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für ein bedingungsloses Grundeinkommen sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen ein bedingungsloses Grundeinkommen sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug Datenschutz zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug Datenschutz nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für das Gendern der Sprache sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen das Gendern der Sprache sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Gendern zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Gendern nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine höher CO2-Steuer sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine höhere CO2-Steuer sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Impfpflicht in Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Impfpflicht in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Impfpflicht zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Impfpflicht nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Begrenzung der Migration nach Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Begrenzung der Migration nach Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf Migration zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf Migration nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Freigabe von Impfstoffpatenten sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Freigabe von Impfstoffpatenten sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Ein guter Freund erzählt dir, dass er ein Verbrechen begangen und deshalb Nachts Probleme mit dem Schlafen hat. Er hat das Gefühl, dass du der einzige bist, dem er sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines Freundes für ein paar Wochen ins Gefängnis muss. Was tust du?',
+        optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
+        optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf den Fleischkonsum zustimmen, entschieden sich, zur Polizei gehen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf den Fleischkonsum nicht zustimmen, entschieden sich, nichts zu sagen',
       },
-      {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für die Einführung einer Vermögenssteuer sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen die Einführung einer Vermögenssteuer sind, haben sich zu 65% für Option B entschieden.',
-      }
     ],
     dilemma_decision_2:[
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Tempolimit zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Tempolimit nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für ein bedingungsloses Grundeinkommen sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen ein bedingungsloses Grundeinkommen sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug Datenschutz zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug Datenschutz nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für das Gendern der Sprache sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen das Gendern der Sprache sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Gendern zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Gendern nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine höher CO2-Steuer sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine höhere CO2-Steuer sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Impfpflicht in Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Impfpflicht in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Impfpflicht zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Impfpflicht nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Begrenzung der Migration nach Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Begrenzung der Migration nach Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf Migration zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf Migration nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Legalisierung von Cannabis in Deutschland sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis nicht zustimmen, entschieden sich, nichts zu machen',
       },
       {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für eine Freigabe von Impfstoffpatenten sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen eine Freigabe von Impfstoffpatenten sind, haben sich zu 65% für Option B entschieden.',
+        dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person. Was tust du?',
+        optionA: 'Die Weiche umstellen, sodass der Zug auf das andere Gleis geleitet wird und eine Person überfahren wird?',
+        optionB: 'Nichts machen, sodass der Zug gerade weiter fährt und fünf Personen überfahren werden?',
+        pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf den Fleischkonsum zustimmen, entschieden sich, die Weiche umzustellen.',
+        neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf den Fleischkonsum nicht zustimmen, entschieden sich, nichts zu machen',
       },
-      {
-        dilemma: 'Was ein Dilemma..',
-        optionA: 'Option A',
-        optionB: 'Option B',
-        pos_info: 'Leute, die für die Einführung einer Vermögenssteuer sind, haben sich zu 80% für Option A entschieden.',
-        neg_info: 'Leute, die gegen die Einführung einer Vermögenssteuer sind, haben sich zu 65% für Option B entschieden.',
-      }
     ],
     feeling_options: [
       {
@@ -183,96 +167,96 @@ const trial_info = {
     group_identifiers: [
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern eines Tempolimits.',
+          question: 'Ich identifiziere mich als Tempolimit-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern eines Tempolimits.',
+          question: 'Ich identifiziere mich als Tempolimit-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern eines bedingungslosen Grundeinkommens.',
+          question: 'Ich identifiziere mich als Digitalisierungs-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern eines bedingungslosen Grundeinkommens.',
+          question: 'Ich identifiziere mich als Digitalisierungs-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern des Genderns.',
+          question: 'Ich identifiziere mich als Befürworter der Gender-Debatte',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern des Genderns.',
+          question: 'Ich identifiziere mich als Gegnern der Gender-Debatte',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern einer höheren CO2-Steuer.',
+          question: 'Ich identifiziere mich als Vermögenssteuer-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern einer höheren CO2-Steuer.',
+          question: 'Ich identifiziere mich als Vermögenssteuer-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern einer Impfpflicht.',
+          question: 'Ich identifiziere mich als Impfpflicht-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern einer Impfpflicht.',
+          question: 'Ich identifiziere mich als Impflicht-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern einer Migrationsregulierung.',
+          question: 'Ich identifiziere mich als Migrations-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern einer Migrationsregulierung.',
+          question: 'Ich identifiziere mich als Migrations-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern einer Cannabis Legalisierung.',
+          question: 'Ich identifiziere mich als Cannabis-Legalisierung-Befürworter',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern einer Cannabis Legalisierung.',
+          question: 'Ich identifiziere mich als Cannabis-Legalisierung-Gegner',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich mit Befürwortern der Freigabe von Impfstoffpatenten.',
+          question: 'Ich identifiziere mich als Befürworter des Mindestpreises von Fleisch',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich mit Gegnern der Freigabe von Impfstoffpatenten.',
+          question: 'Ich identifiziere mich als Gegner des Mindestpreises von Fleisch',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
