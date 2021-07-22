@@ -48,9 +48,29 @@ const instructions = magpieViews.view_generator("instructions", {
   buttonText: 'Beginne mit dem Experiment'
 });
 
+const post_test = custom_post(
+  {
+    trials: 1,
+    name: 'post_test',
+    title: 'Persönliche Informationen',
+    text: `Bitte trage die folgenden Informationen ein. <br/> Alle Eingaben sind anonymisiert!`,
+    age_question: 'Alter',
+    gender_question: 'Geschlecht',
+    gender_male: 'männlich',
+    gender_female: 'weiblich',
+    gender_other: 'divers',
+    edu_question: 'Höchster Bildungsabschluss',
+    edu_graduated_lower_degree: 'Real- oder Hauptschulabschluss',
+    edu_graduated_high_school: 'Abitur',
+    edu_graduated_college: 'Hochschulabschluss',
+    edu_higher_degree: 'Universitärer Abschluss',
+    languages_question: 'Muttersprache',
+    button_text: 'Weiter',
+  }
+);
 
 // In the post test questionnaire you can ask your participants addtional questions
-const post_test = magpieViews.view_generator("post_test", {
+/*const post_test = magpieViews.view_generator("post_test", {
   trials: 1,
   name: 'post_test',
   title: 'Persönliche Informationen',
@@ -69,6 +89,7 @@ const post_test = magpieViews.view_generator("post_test", {
   buttonText: 'Weiter',
   // comments_question: 'Weitere Kommentare'
 });
+*/
 
 const topic_choice = custom_press_a_button(
     // config information
@@ -101,7 +122,7 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
 
 const dilemma_decision1 = custom_dilemma_decision(
   {
-    trials: 3,
+    trials: 4,
     name: 'dilemma_decision1',
     data: trial_info.dilemma_decision_1,
   }
@@ -117,7 +138,7 @@ const rate_feeling1 = magpieViews.view_generator('slider_rating',
 
 const dilemma_decision2 = custom_dilemma_decision(
   {
-    trials: 3,
+    trials: 4,
     name: 'dilemma_decision2',
     data: trial_info.dilemma_decision_2,
   }
@@ -130,6 +151,14 @@ const rate_feeling2 = magpieViews.view_generator('slider_rating',
     data: trial_info.feeling_options
   }
 );
+
+const understanding_check = magpieViews.view_generator('sentence_choice',
+  {
+    trials: trial_info.understanding_checks.length,
+    name: 'understanding_check',
+    data: trial_info.understanding_checks
+  }
+)
 const group_ident = group_identification(
   {
     trials: 2,

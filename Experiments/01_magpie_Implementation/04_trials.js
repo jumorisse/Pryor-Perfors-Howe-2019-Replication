@@ -180,6 +180,23 @@ const trial_info = {
         optionLeft: 'Sehr schlecht'
       }
     ],
+    understanding_checks: [
+      {
+        question: 'Welche dieser Behauptungen über dieses Experiment ist wahr?',
+        option1: 'Du musstest immer so schnell wie möglich antworten.',
+        option2: 'Es ist irrelevant, wie lange du für deine Antworten benötigt hast.'
+      },
+      {
+        question: 'Welche dieser Behauptungen über dieses Experiment ist wahr?',
+        option1: 'Anfangs wurden dir mehrere Themen zur Auswahl gestellt.',
+        option2: 'Du konntest dir ein Dilemma aussuchen.'
+      },
+      {
+        question: 'Welche dieser Behauptungen über dieses Experiment ist wahr?',
+        option1: 'Für die Durchführung dieses Experiments erhälst du eine Aufwandsentschädigung oder VP Stunden.',
+        option2: 'Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar.'
+      }
+    ],
     group_identifiers: [
       [
         {

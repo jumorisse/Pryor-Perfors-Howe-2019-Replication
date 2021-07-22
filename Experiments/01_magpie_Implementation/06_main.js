@@ -22,6 +22,7 @@ $("document").ready(function() {
             statement_rating,
             dilemma_instructions,
             _.shuffle([dilemma_decision1, dilemma_decision2]),
+            understanding_check,
             group_ident,
             thanks,
         ],
