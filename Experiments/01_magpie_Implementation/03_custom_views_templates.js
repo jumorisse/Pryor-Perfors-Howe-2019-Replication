@@ -354,12 +354,12 @@ const custom_dilemma_decision = function(config) {
                           </br> </br>  ${config.data[response].pos_info} </br> </br> ${config.data[response].neg_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
-                          <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
                           </div>
-                          <div style="width: 49%; float:left; margin-left: -23%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
@@ -374,12 +374,12 @@ const custom_dilemma_decision = function(config) {
                           </br> </br> ${config.data[response].pos_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
-                          <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
                           </div>
-                          <div style="width: 49%; float:left; margin-left: -23%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
@@ -397,12 +397,12 @@ const custom_dilemma_decision = function(config) {
                           </br> </br> ${config.data[response].neg_info} </br> </br> ${config.data[response].pos_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
-                          <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
                           </div>
-                          <div style="width: 49%; float:left; margin-left: -23%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
@@ -417,12 +417,12 @@ const custom_dilemma_decision = function(config) {
                           </br> </br> ${config.data[response].neg_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
-                          <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
                           <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
                           </div>
-                          <div style="width: 49%; float:left; margin-left: -23%" class='magpie-view'>
+                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
                           <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
                           <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
