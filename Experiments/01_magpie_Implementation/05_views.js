@@ -42,8 +42,8 @@ const instructions = magpieViews.view_generator("instructions", {
          Die Teilnehmer wählten aus, welche Handlung sie bevorzugten und mussten bewerten, wie sie sich bei der Ausführung dieser Handlung fühlen würden.
          </br>
          </br>
-         In dieser Studie wird Ihnen ein Szenario präsentiert, dass ein moralisches Dilemma beschreibt.
-         Sie werden wählen, welche Handlung Sie durchführen würden und dann eine Bewertung abgeben, wie gut oder schlecht Sie sich nach der Durchführung dieser Handlung fühlen würden.
+         In dieser Studie wird dir ein Szenario präsentiert, dass ein moralisches Dilemma beschreibt.
+         Du entscheidest, welche Handlung du durchführen würdest und gibst dann eine Bewertung ab, wie gut oder schlecht du dich nach der Durchführung dieser Handlung fühlen würdest.
          </div>`,
   buttonText: 'Beginne mit dem Experiment'
 });
@@ -55,7 +55,6 @@ const post_test = magpieViews.view_generator("post_test", {
   name: 'post_test',
   title: 'Persönliche Informationen',
   text: `Bitte trage die folgenden Informationen ein. <br/> Alle Eingaben sind anonymisiert!`,
-  buttonText: 'Weiter',
   age_question: 'Alter',
   gender_question: 'Geschlecht',
   gender_male: 'männlich',
@@ -67,6 +66,7 @@ const post_test = magpieViews.view_generator("post_test", {
   edu_graduated_college: 'Hochschulabschluss',
   edu_higher_degree: 'Universitärer Abschluss',
   languages_question: 'Muttersprache',
+  buttonText: 'Weiter',
   // comments_question: 'Weitere Kommentare'
 });
 
@@ -95,7 +95,7 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
   text: `Als nächstes wirst du mit einer Entscheidungssituation konfrontiert und erhälst Informationen darüber, wie sich andere Teilnehmer entschieden haben.
         <br/>
         <br/>
-        Lese dir das Dilemma genau durch und nimm dir Zeit dich für eine der beiden Möglichkeiten zu entscheiden.`,
+        Lies dir das Dilemma genau durch und nimm dir Zeit dich für eine der beiden Möglichkeiten zu entscheiden.`,
   buttonText: 'Weiter zum Dilemma'
 });
 
