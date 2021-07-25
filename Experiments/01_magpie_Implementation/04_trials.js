@@ -47,6 +47,7 @@ const trial_info = {
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt? ',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst?',
         pos_info: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Tempolimit zustimmen, entschieden sich, zur Polizei gehen.',
+        pos_info_b: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Tempolimit zustimmen, entschieden sich, zur Polizei gehen.',
         neg_info: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Tempolimit nicht zustimmen, entschieden sich, nichts zu sagen',
       },
       {

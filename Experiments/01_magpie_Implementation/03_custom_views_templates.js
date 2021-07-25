@@ -283,8 +283,8 @@ const custom_dilemma_decision = function(config) {
                 $("main").html(`<div style="text-align: center" class='magpie-view'>
                         <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                        </br> </br>A: ${config.data[response].optionA}
-                        </br> B: ${config.data[response].optionB}
+                        </br> </br>${config.data[response].optionA}
+                        </br>${config.data[response].optionB}
                         </br>
                         <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
                         </div>`);
@@ -296,8 +296,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br> ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].pos_info}
                           </br> </br> ${config.data[response].neg_info} </p>
                           </br>
@@ -308,8 +308,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br> A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br>${config.data[response].optionB}
                           </br> </br> ${config.data[response].pos_info} </p>
                           </br>
                           <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -322,8 +322,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br>${config.data[response].optionB}
                           </br> </br> ${config.data[response].neg_info} </br> </br> ${config.data[response].pos_info} </p>
                           </br>
                           <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -333,8 +333,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br>${config.data[response].optionB}
                           </br> </br> ${config.data[response].neg_info} </p>
                           </br>
                           <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -349,8 +349,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br> ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].pos_info} </br> </br> ${config.data[response].neg_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -369,8 +369,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br> ${config.data[response].optionB}
                           </br> </br> ${config.data[response].pos_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -392,8 +392,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br> ${config.data[response].optionB}
                           </br> </br> ${config.data[response].neg_info} </br> </br> ${config.data[response].pos_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -412,8 +412,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>A: ${config.data[response].optionA}
-                          </br> B: ${config.data[response].optionB}
+                          </br> </br>${config.data[response].optionA}
+                          </br> ${config.data[response].optionB}
                           </br> </br> ${config.data[response].neg_info} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
