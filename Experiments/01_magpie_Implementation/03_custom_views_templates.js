@@ -252,15 +252,23 @@ const custom_dilemma_decision = function(config) {
             var rating = magpie.trial_data[1].response;
             if (CT == 0) {
               var both_infos = Math.random() < 0.5;
+              var ingroup_info_a = Math.random() < 0.5;
             }
             if (CT == 1) {
               var both_infos = magpie.trial_data[2].both_infos;
+              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
             };
             if (CT == 2) {
               var both_infos = magpie.trial_data[2].both_infos;
+              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
             };
             if (CT == 3) {
               var both_infos = magpie.trial_data[2].both_infos;
+              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+            };
+            if (CT == 4) {
+              var both_infos = magpie.trial_data[2].both_infos;
+              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
             };
             // Here, you can do whatever you want, eventually you should call magpie.findNextView()
             // to proceed to the next view and if it is an trial type view,
@@ -293,52 +301,106 @@ const custom_dilemma_decision = function(config) {
             if (CT == 2) {
               if (rating >= 0) {
                 if (both_infos == true) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
-                          </br> </br>  ${config.data[response].pos_info}
-                          </br> </br> ${config.data[response].neg_info} </p>
-                          </br>
-                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br>  ${config.data[response].pos_info_a}
+                            </br> </br> ${config.data[response].neg_info_b} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br>  ${config.data[response].pos_info_b}
+                            </br> </br> ${config.data[response].neg_info_a} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
                 };
                 if (both_infos == false) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br>${config.data[response].optionB}
-                          </br> </br> ${config.data[response].pos_info} </p>
-                          </br>
-                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].pos_info_a} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].pos_info_b} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
+
                 };
               };
 
               if (rating <= 0) {
                 if (both_infos == true) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br>${config.data[response].optionB}
-                          </br> </br> ${config.data[response].neg_info} </br> </br> ${config.data[response].pos_info} </p>
-                          </br>
-                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_a} </br> </br> ${config.data[response].pos_info_b} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_b} </br> </br> ${config.data[response].pos_info_a} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
                 };
                 if (both_infos == false) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br>${config.data[response].optionB}
-                          </br> </br> ${config.data[response].neg_info} </p>
-                          </br>
-                          <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_a} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br>${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_b} </p>
+                            </br>
+                            <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
+                            </div>`);
+                  };
                 };
               };
             };
@@ -346,89 +408,203 @@ const custom_dilemma_decision = function(config) {
             if (CT == 3) {
               if (rating >= 0) {
                 if (both_infos == true) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
-                          </br> </br>  ${config.data[response].pos_info} </br> </br> ${config.data[response].neg_info} </p>
-                          <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br>  ${config.data[response].pos_info_a} </br> </br> ${config.data[response].neg_info_b} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br>  ${config.data[response].pos_info_b} </br> </br> ${config.data[response].neg_info_a} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
                 };
                 if (both_infos == false) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
-                          </br> </br> ${config.data[response].pos_info} </p>
-                          <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].pos_info_a} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].pos_info_b} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
                 };
               };
 
               if (rating <= 0) {
                 if (both_infos == true) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
-                          </br> </br> ${config.data[response].neg_info} </br> </br> ${config.data[response].pos_info} </p>
-                          <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_a} </br> </br> ${config.data[response].pos_info_b} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_b} </br> </br> ${config.data[response].pos_info_a} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
                 };
                 if (both_infos == false) {
-                  $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
-                          <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
-                          </br> </br> ${config.data[response].neg_info} </p>
-                          <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
-                          <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
-                          </div>
-                          <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
-                          <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
-                          <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
-                          </div>`);
+                  if (ingroup_info_a == true) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_a} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
+                  if (ingroup_info_a == false) {
+                    $("main").html(`<div style="text-align: center" class='magpie-view'>
+                            <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                            <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
+                            </br> </br>${config.data[response].optionA}
+                            </br> ${config.data[response].optionB}
+                            </br> </br> ${config.data[response].neg_info_b} </p>
+                            <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: 23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="1" class='magpie-view-button'>Definitiv: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="2" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionA}</button>
+                            <button style="width: 50%; margin:1%" id="3" class='magpie-view-button'>Vermutlich: ${config.data[response].optionA}</button>
+                            </div>
+                            <div style="width: 49%; float:left; margin-left: -23%; margin-top:-5%" class='magpie-view'>
+                            <button style="width: 50%; margin:1%" id="4" class='magpie-view-button'>Vermutlich: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="5" class='magpie-view-button'>Ziemlich sicher: ${config.data[response].optionB}</button>
+                            <button style="width: 50%; margin:1%" id="6" class='magpie-view-button'>Definitiv: ${config.data[response].optionB}</button>
+                            </div>`);
+                  };
                 };
               };
+            };
+
+            if (CT == 4) {
+              $("main").html(`
+                      <div class='magpie-view'>
+                      <h1 class='magpie-view-title'>HIER KANN EIN TITEL HIN:</h1>
+                      <p style="font-weight: bold" class='magpie-view-question'>Wie fühlst du dich nach dieser Entscheidung?</p>
+                      </div>
+                      <div style="text-align: center; margin-top: -5%" class='magpie-view'>
+                      <strong class='magpie-response-rating-option magpie-view-text'>Garnicht gut</strong>
+                      <label for="-3" class='magpie-response-rating'>-3</label>
+                      <input type="radio" name="answer" id="-3" value="-3" />
+                      <label for="-2" class='magpie-response-rating'>-2</label>
+                      <input type="radio" name="answer" id="-2" value="-2" />
+                      <label for="-1" class='magpie-response-rating'>-1</label>
+                      <input type="radio" name="answer" id="-1" value="-1" />
+                      <label for="0" class='magpie-response-rating'>0</label>
+                      <input type="radio" name="answer" id="0" value="0" />
+                      <label for="1" class='magpie-response-rating'>1</label>
+                      <input type="radio" name="answer" id="1" value="1" />
+                      <label for="2" class='magpie-response-rating'>2</label>
+                      <input type="radio" name="answer" id="2" value="2" />
+                      <label for="3" class='magpie-response-rating'>3</label>
+                      <input type="radio" name="answer" id="3" value="3" />
+                      <strong class='magpie-response-rating-option magpie-view-text'>Sehr gut</strong>
+                      </div>`);
             };
 
 
@@ -439,7 +615,8 @@ const custom_dilemma_decision = function(config) {
                     trial_name: config.name,
                     trial_number: CT + 1,
                     response: e.target.id,
-                    both_infos: both_infos
+                    both_infos: both_infos,
+                    ingroup_info_a: ingroup_info_a
                 };
                 // Often it makes sense to also save the config information
                 // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
@@ -471,6 +648,16 @@ const custom_dilemma_decision = function(config) {
               $('#4').on("click", handle_click);
               $('#5').on("click", handle_click);
               $('#6').on("click", handle_click);
+            };
+
+            if (CT == 4) {
+              $('#-3').on("click", handle_click);
+              $('#-2').on("click", handle_click);
+              $('#-1').on("click", handle_click);
+              $('#0').on("click", handle_click);
+              $('#1').on("click", handle_click);
+              $('#2').on("click", handle_click);
+              $('#3').on("click", handle_click);
             };
 
             // That's everything for this view

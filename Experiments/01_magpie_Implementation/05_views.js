@@ -122,7 +122,7 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
 
 const dilemma_decision1 = custom_dilemma_decision(
   {
-    trials: 4,
+    trials: 5,
     name: 'dilemma_decision1',
     data: trial_info.dilemma_decision_1,
   }
@@ -138,7 +138,7 @@ const rate_feeling1 = magpieViews.view_generator('slider_rating',
 
 const dilemma_decision2 = custom_dilemma_decision(
   {
-    trials: 4,
+    trials: 5,
     name: 'dilemma_decision2',
     data: trial_info.dilemma_decision_2,
   }
