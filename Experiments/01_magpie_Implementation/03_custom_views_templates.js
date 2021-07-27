@@ -251,46 +251,47 @@ const custom_dilemma_decision = function(config) {
             var response = magpie.trial_data[0].response;
             var rating = magpie.trial_data[1].response;
             if (CT == 0) {
-              var both_infos = Math.random() < 0.5;
+              if (magpie.currentTrialCounter < 10) {
+                var both_infos = Math.random() < 0.5;
+              }
+              if (magpie.currentTrialCounter > 10){
+                var both_infos = magpie.trial_data[2].both_infos;
+              }
               var ingroup_info_a = Math.random() < 0.5;
             }
             if (CT == 1) {
+              var both_infos = magpie.trial_data[2].both_infos;
               if (magpie.currentTrialCounter < 12) {
-                var both_infos = magpie.trial_data[2].both_infos;
                 var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
               }
               if (magpie.currentTrialCounter >= 12) {
-                var both_infos = magpie.trial_data[7].both_infos;
                 var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
               }
             };
             if (CT == 2) {
+              var both_infos = magpie.trial_data[2].both_infos;
               if (magpie.currentTrialCounter < 12) {
-                var both_infos = magpie.trial_data[2].both_infos;
                 var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
               }
               if (magpie.currentTrialCounter >= 12) {
-                var both_infos = magpie.trial_data[7].both_infos;
                 var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
               }
             };
             if (CT == 3) {
+              var both_infos = magpie.trial_data[2].both_infos;
               if (magpie.currentTrialCounter < 12) {
-                var both_infos = magpie.trial_data[2].both_infos;
                 var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
               }
               if (magpie.currentTrialCounter >= 12) {
-                var both_infos = magpie.trial_data[7].both_infos;
                 var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
               }
             };
             if (CT == 4) {
+              var both_infos = magpie.trial_data[2].both_infos;
               if (magpie.currentTrialCounter < 12) {
-                var both_infos = magpie.trial_data[2].both_infos;
                 var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
               }
               if (magpie.currentTrialCounter >= 12) {
-                var both_infos = magpie.trial_data[7].both_infos;
                 var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
               }
             };
@@ -304,7 +305,7 @@ const custom_dilemma_decision = function(config) {
             // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
             if (CT == 0) {
               $("main").html(`<div style="text-align: center" class='magpie-view'>
-                      <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                      <h1 class='magpie-view-title'>Was ein Dilemma!</h1>
                       <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
                       </br>
                       <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -313,10 +314,10 @@ const custom_dilemma_decision = function(config) {
 
             if (CT == 1) {
                 $("main").html(`<div style="text-align: center" class='magpie-view'>
-                        <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                        <h1 class='magpie-view-title'>Die Antwortmöglichkeiten</h1>
                         <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                        </br> </br>${config.data[response].optionA}
-                        </br>${config.data[response].optionB}
+                        </br> </br>Entweder: ${config.data[response].optionA}
+                        </br>Oder: ${config.data[response].optionB}
                         </br>
                         <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
                         </div>`);
@@ -326,10 +327,10 @@ const custom_dilemma_decision = function(config) {
               if (both_infos == true) {
                 if (ingroup_info_a == true) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <h1 class='magpie-view-title'>Wie haben die Anderen entschieden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].ingroup_a}
                           </br> </br> ${config.data[response].outgroup_b} </p>
                           </br>
@@ -338,10 +339,10 @@ const custom_dilemma_decision = function(config) {
                 };
                 if (ingroup_info_a == false) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <h1 class='magpie-view-title'>Wie haben die Anderen entschieden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].ingroup_b}
                           </br> </br> ${config.data[response].outgroup_a} </p>
                           </br>
@@ -352,10 +353,10 @@ const custom_dilemma_decision = function(config) {
               if (both_infos == false) {
                 if (ingroup_info_a == true) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <h1 class='magpie-view-title'>Wie haben die Anderen entschieden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br>${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br> ${config.data[response].ingroup_a} </p>
                           </br>
                           <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -363,10 +364,10 @@ const custom_dilemma_decision = function(config) {
                 };
                 if (ingroup_info_a == false) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
-                          <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
+                          <h1 class='magpie-view-title'>Wie haben die Anderen entschieden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br>${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br> ${config.data[response].ingroup_b} </p>
                           </br>
                           <button id="next" class='magpie-view-button' class="magpie-nodisplay">WEITER</button>
@@ -382,8 +383,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].ingroup_a} </br> </br> ${config.data[response].outgroup_b} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -402,8 +403,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br>  ${config.data[response].ingroup_b} </br> </br> ${config.data[response].outgroup_a} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -424,8 +425,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br> ${config.data[response].ingroup_a} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>
@@ -444,8 +445,8 @@ const custom_dilemma_decision = function(config) {
                   $("main").html(`<div style="text-align: center" class='magpie-view'>
                           <h1 class='magpie-view-title'>Wie würdest du entscheiden?</h1>
                           <p class='magpie-view-question magpie-view-qud'>${config.data[response].dilemma}
-                          </br> </br>${config.data[response].optionA}
-                          </br> ${config.data[response].optionB}
+                          </br> </br>Entweder: ${config.data[response].optionA}
+                          </br>Oder: ${config.data[response].optionB}
                           </br> </br> ${config.data[response].ingroup_b} </p>
                           <h2 class='magpie-view-question'>Wie würdest du dich entscheiden?</h2>
                           </div>

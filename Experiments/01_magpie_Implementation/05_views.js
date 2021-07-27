@@ -38,11 +38,11 @@ const instructions = magpieViews.view_generator("instructions", {
   text: `In dieser Befragung knüpfen wir an eine zuvor veröffentlichte Studie an, in der untersucht wurde, wie Menschen sich in moralischen Dilemmata fühlen.
          </br>
          </br>
-         In der vorherigen Studie wurde ein moralisches Dilemma beschrieben, dass zwei mögliche Handlungsoptionen beinhaltete.
+         In der vorherigen Studie wurde ein moralisches Dilemma beschrieben, das zwei mögliche Handlungsoptionen beinhaltete.
          Die Teilnehmer wählten aus, welche Handlung sie bevorzugten und mussten bewerten, wie sie sich bei der Ausführung dieser Handlung fühlen würden.
          </br>
          </br>
-         In dieser Studie wird dir ein Szenario präsentiert, dass ein moralisches Dilemma beschreibt.
+         In dieser Studie wird dir ein Szenario präsentiert, das ein moralisches Dilemma beschreibt.
          Du entscheidest, welche Handlung du durchführen würdest und gibst dann eine Bewertung ab, wie gut oder schlecht du dich nach der Durchführung dieser Handlung fühlen würdest.
          </div>`,
   buttonText: 'Beginne mit dem Experiment'
