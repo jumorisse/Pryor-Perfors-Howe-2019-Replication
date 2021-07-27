@@ -255,20 +255,44 @@ const custom_dilemma_decision = function(config) {
               var ingroup_info_a = Math.random() < 0.5;
             }
             if (CT == 1) {
-              var both_infos = magpie.trial_data[2].both_infos;
-              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              if (magpie.currentTrialCounter < 12) {
+                var both_infos = magpie.trial_data[2].both_infos;
+                var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              }
+              if (magpie.currentTrialCounter >= 12) {
+                var both_infos = magpie.trial_data[7].both_infos;
+                var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
+              }
             };
             if (CT == 2) {
-              var both_infos = magpie.trial_data[2].both_infos;
-              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              if (magpie.currentTrialCounter < 12) {
+                var both_infos = magpie.trial_data[2].both_infos;
+                var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              }
+              if (magpie.currentTrialCounter >= 12) {
+                var both_infos = magpie.trial_data[7].both_infos;
+                var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
+              }
             };
             if (CT == 3) {
-              var both_infos = magpie.trial_data[2].both_infos;
-              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              if (magpie.currentTrialCounter < 12) {
+                var both_infos = magpie.trial_data[2].both_infos;
+                var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              }
+              if (magpie.currentTrialCounter >= 12) {
+                var both_infos = magpie.trial_data[7].both_infos;
+                var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
+              }
             };
             if (CT == 4) {
-              var both_infos = magpie.trial_data[2].both_infos;
-              var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              if (magpie.currentTrialCounter < 12) {
+                var both_infos = magpie.trial_data[2].both_infos;
+                var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
+              }
+              if (magpie.currentTrialCounter >= 12) {
+                var both_infos = magpie.trial_data[7].both_infos;
+                var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
+              }
             };
             // Here, you can do whatever you want, eventually you should call magpie.findNextView()
             // to proceed to the next view and if it is an trial type view,
