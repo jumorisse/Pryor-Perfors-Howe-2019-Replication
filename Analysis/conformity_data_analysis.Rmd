@@ -1,0 +1,83 @@
+---
+title: "conformity_data_analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, error = F, message = F, warning = F)
+
+```
+
+```{r libraries, include=FALSE, message=FALSE, warning=FALSE}
+
+# package for convenience functions (e.g. ggplot2, dplyr, etc.)
+library(tidyverse)
+
+# package for this course
+library(aida)
+
+# package for Bayesian regression
+library(brms)
+
+# parallel execution of Stan code
+options(mc.cores = parallel::detectCores())
+
+# use the aida-theme for plotting
+theme_set(theme_aida())
+
+# global color scheme / non-optimized
+project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# setting theme colors globally
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = project_colors)
+}
+scale_fill_discrete <- function(...) {
+   scale_fill_manual(..., values = project_colors)
+} 
+
+# nicer global knitr options
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      cache = TRUE, fig.align = 'center')
+```
+
+
+```{r}
+data <- read_csv('data_pilot.csv')
+data
+
+```
+
+# Cleaning data
+
+```{r}
+cleaned_data <- data %>% 
+  filter(response != 'next') %>%
+  select(- QUD, -RT, - startDate, - startTime, -age, -gender, -education, -languages, -question, -option1, -option2) %>%
+  pivot_wider(
+    names_from = trial_name,
+    values_from = response
+)
+cleaned_data
+
+```
+```{r}
+cleaned_data <- cleaned_data %>%
+  rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1, philosophical_dilemma = dilemma_decision2) %>% 
+  mutate(correct_answer = case_when(
+    understanding_check == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast." ~ TRUE,
+    understanding_check == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." ~ TRUE,
+    understanding_check == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE))
+cleaned_data
+
+```
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
