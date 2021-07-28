@@ -53,9 +53,9 @@ data
 
 ```{r}
 cleaned_data <- data %>% 
-  filter(response != 'next') %>%
+  filter(response != 'next', languages != "TEST") %>%
   mutate(trials = paste(trial_name, trial_number, sep = "_")) %>%
-  select(-QUD, -RT, - startDate, - startTime, -age, -gender, -education, -languages, -question, -option1, -option2, -trial_name, -trial_number) %>%
+  select(-QUD, -RT, - startDate, - startTime, -age, -gender, -education, -languages, -question, -option1, -option2, -trial_name, -trial_number, -experiment_id) %>%
   pivot_wider(
    names_from = trials,
    values_from = response
@@ -69,9 +69,10 @@ cleaned_data
 cleaned_data <- cleaned_data %>%
   rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, rating_daily_dilemma = dilemma_decision1_5, rating_philosophical_dilemma = dilemma_decision2_5) %>% 
   mutate(correct_answer = case_when(
-    understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast." ~ TRUE,
-    understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." ~ TRUE,
+    understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."& 
+    understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." &
     understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
+  #group_by(submission_id) %>%
   select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
   mutate(
     ingroup_daily = case_when(
@@ -95,10 +96,43 @@ cleaned_data <- cleaned_data %>%
          ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
          ) %>%
   select(-ingroup_norm) %>%
-  unique()
+  unique() %>%
+  filter(!between(statement_rating_1, -2, 2)) %>%
+  filter(correct_answer == TRUE) %>%
+  mutate(
+    ingroup_norm_daily = case_when(
+      ingroup_daily == TRUE ~ 1,
+      ingroup_daily == FALSE ~ -1,
+    ),
+    ingroup_norm_philo = case_when(
+      ingroup_philo == TRUE ~ 1,
+      ingroup_philo == FALSE ~ -1,
+    )) %>%
+  mutate_if(is.logical,as.numeric) %>%
+  select(-ingroup_daily, -ingroup_philo)
 cleaned_data
+```
+# Analysis
+```{r,results='hide'}
+
+priors <- prior(normal( 0 , 0.5 ), class = "b") +
+  prior(normal( 0 , 0.5 ), class = "b") +
+  prior(normal( 0 , 0.5 ), class = "b") +
+  prior(normal( 0.6/0.75 * 1.27 , 0.5 ), class = "b")
+
+self_categorization_model <- brm(
+  data = cleaned_data, # define data 
+  formula = response ~ both_infos + ingroup_norm_daily + * dilemma, # regress trials depending on condition
+  sample_prior = 'yes', # take samples from prior
+  iter = 10000, # set sample size to 10000 to achieve a more precise estimation
+  prior = priors) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
+)
 
 ```
+
+
+
+
 ## Including Plots
 
 You can also embed plots, for example:
