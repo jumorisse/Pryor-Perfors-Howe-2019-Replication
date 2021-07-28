@@ -54,21 +54,48 @@ data
 ```{r}
 cleaned_data <- data %>% 
   filter(response != 'next') %>%
-  select(- QUD, -RT, - startDate, - startTime, -age, -gender, -education, -languages, -question, -option1, -option2) %>%
+  mutate(trials = paste(trial_name, trial_number, sep = "_")) %>%
+  select(-QUD, -RT, - startDate, - startTime, -age, -gender, -education, -languages, -question, -option1, -option2, -trial_name, -trial_number) %>%
   pivot_wider(
-    names_from = trial_name,
-    values_from = response
+   names_from = trials,
+   values_from = response
 )
+  
+
 cleaned_data
 
 ```
 ```{r}
 cleaned_data <- cleaned_data %>%
-  rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1, philosophical_dilemma = dilemma_decision2) %>% 
+  rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, rating_daily_dilemma = dilemma_decision1_5, rating_philosophical_dilemma = dilemma_decision2_5) %>% 
   mutate(correct_answer = case_when(
-    understanding_check == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast." ~ TRUE,
-    understanding_check == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." ~ TRUE,
-    understanding_check == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE))
+    understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast." ~ TRUE,
+    understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." ~ TRUE,
+    understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
+  select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
+  mutate(
+    ingroup_daily = case_when(
+      !is.na(daily_dilemma) ~ ingroup_norm
+    ),
+    ingroup_philo = case_when(
+      !is.na(philosophical_dilemma) ~ ingroup_norm
+    )) %>%
+  group_by(submission_id) %>%
+  mutate(both_infos = unique(both_infos[!is.na(both_infos)]), 
+         topic_choice_1 = unique(topic_choice_1[!is.na(topic_choice_1)]),
+         statement_rating_1 = unique(statement_rating_1[!is.na(statement_rating_1)]),
+         philosophical_dilemma = unique(philosophical_dilemma[!is.na(philosophical_dilemma)]),
+         rating_philosophical_dilemma = unique(rating_philosophical_dilemma[!is.na(rating_philosophical_dilemma)]),
+         daily_dilemma = unique(daily_dilemma[!is.na(daily_dilemma)]),
+         rating_daily_dilemma = unique(rating_daily_dilemma[!is.na(rating_daily_dilemma)]),
+         group_ident_1 = unique(group_ident_1[!is.na(group_ident_1)]),
+         group_ident_2 = unique(group_ident_2[!is.na(group_ident_2)]),
+         correct_answer = unique(correct_answer[!is.na(correct_answer)]),
+         ingroup_daily = unique(ingroup_daily[!is.na(ingroup_daily)]),
+         ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
+         ) %>%
+  select(-ingroup_norm) %>%
+  unique()
 cleaned_data
 
 ```
