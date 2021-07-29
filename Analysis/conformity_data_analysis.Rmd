@@ -40,6 +40,7 @@ scale_fill_discrete <- function(...) {
 # nicer global knitr options
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
                       cache = TRUE, fig.align = 'center')
+set.seed(1702)
 ```
 
 
@@ -128,21 +129,29 @@ cleaned_data
 ```
 
 
-# Analysis
+# Analysis -- macht leider noch gar keinen sinn :(
 ```{r,results='hide'}
 
-priors <- prior(normal( 0 , 0.5 ), class = "b") +
-  prior(normal( 0 , 0.5 ), class = "b") +
-  prior(normal( 0 , 0.5 ), class = "b") +
-  prior(normal( 0.6/0.75 * 1.27 , 0.5 ), class = "b")
+priors <- prior("normal( 0 , 0.5 )", class = "b") +
+            #set_prior("normal( 0 , 0.5 )", class = "b"),
+          prior("normal(0.6/0.75 * 1.27 , 0.5)", class = "intercept")
+
+# model_FE = brm(
+#   formula = dilemma_rating ~ ingroup_norm + both_infos,
+#   data = cleaned_data,
+#   family = cumulative("probit"),
+#   seed = 1702
+# )
 
 self_categorization_model <- brm(
-  data = cleaned_data, # define data 
-  formula = response ~ both_infos + ingroup_norm_daily + * dilemma, # regress trials depending on condition
+  data = cleaned_data, # define data
+  family = sratio,
+  formula = bf(dilemma_rating ~ 1 + ingroup_norm + both_infos + ingroup_norm * both_infos), # regress trials depending on condition
   sample_prior = 'yes', # take samples from prior
   iter = 10000, # set sample size to 10000 to achieve a more precise estimation
-  prior = priors) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
-)
+  prior = priors
+  ) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
+
 
 ```
 
