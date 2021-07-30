@@ -123,7 +123,9 @@ cleaned_data <- cleaned_data %>% pivot_longer(
     dilemma_version == "philosophical_dilemma" ~ ingroup_norm_philo,
     dilemma_version == "daily_dilemma" ~ ingroup_norm_daily
   )
-) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma)
+) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>% mutate(
+  dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
+)
 
 cleaned_data
 ```
@@ -132,6 +134,7 @@ cleaned_data
 # Analysis -- macht leider noch gar keinen sinn :(
 ```{r,results='hide'}
 
+<<<<<<< Updated upstream
 priors <- prior("normal( 0 , 0.5 )", class = "b") +
             #set_prior("normal( 0 , 0.5 )", class = "b"),
           prior("normal(0.6/0.75 * 1.27 , 0.5)", class = "intercept")
@@ -148,13 +151,51 @@ self_categorization_model <- brm(
   family = sratio,
   formula = bf(dilemma_rating ~ 1 + ingroup_norm + both_infos + ingroup_norm * both_infos), # regress trials depending on condition
   sample_prior = 'yes', # take samples from prior
+=======
+<<<<<<< HEAD
+priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
+  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'both_infos'),
+  set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm:both_infos'))
+
+alternative_model <- brm(
+  family = cumulative('logit'),
+  data = cleaned_data, # define data 
+  formula = dilemma_rating ~ dilemma_version + ingroup_norm * both_infos, # regress trials depending on condition
+  sample_prior = 'yes', # take samples from prior
+  iter = 1000, # set sample size to 10000 to achieve a more precise estimation
+  prior = priors) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
+=======
+priors <- prior("normal( 0 , 0.5 )", class = "b") +
+            #set_prior("normal( 0 , 0.5 )", class = "b"),
+          prior("normal(0.6/0.75 * 1.27 , 0.5)", class = "intercept")
+
+# model_FE = brm(
+#   formula = dilemma_rating ~ ingroup_norm + both_infos,
+#   data = cleaned_data,
+#   family = cumulative("probit"),
+#   seed = 1702
+# )
+
+self_categorization_model <- brm(
+  data = cleaned_data, # define data
+  family = sratio,
+  formula = bf(dilemma_rating ~ 1 + ingroup_norm + both_infos + ingroup_norm * both_infos), # regress trials depending on condition
+  sample_prior = 'yes', # take samples from prior
+>>>>>>> Stashed changes
   iter = 10000, # set sample size to 10000 to achieve a more precise estimation
   prior = priors
   ) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> be1b1acb811691bcefdcf818a8ec7e38d4b19b09
+>>>>>>> Stashed changes
 
 ```
 
+```{r}
+summary(alternative_model)
+```
 
 
 
