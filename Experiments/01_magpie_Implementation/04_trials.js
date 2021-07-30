@@ -22,19 +22,19 @@ const trial_info = {
         {
             question: 'Bitte wähle das Thema aus, für das du dich am meisten interessierst.',
             option1: 'Tempolimit',
-            option2: 'Digitalisierung und Datenschutz',
+            option2: 'Datenschutz',
             option3: 'Gender-Debatte',
             option4: 'Vermögenssteuer',
             option5: 'Impfpflicht',
-            option6: 'Migration',
+            option6: 'Migrationskontrolle',
             option7: 'Cannabis Legalisierung',
             option8: 'Fleischkonsum',
         }
     ],
     statement_rating: [
         'Es sollte eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen eingeführt werden.',
-        'Persönliche Daten des Verbrauchers sollten in Deutschland bessermehr geschützt werden. ',
-        'In der Öffentlichkeit sollte Sprache gegendert sein.',
+        'Persönliche Daten des Verbrauchers sollten in Deutschland besser geschützt werden. ',
+        'In der Öffentlichkeit sollte Sprache gegendert werden.',
         'Die Vermögenssteuer sollte in Deutschland wieder eingeführt werden.',
         'Falls auf freiwilliger Basis keine Herdenimmunität erreicht werden kann, sollte eine Impfpflicht eingeführt werden.',
         'Migration nach Deutschland sollte strenger kontrolliert werden.',
@@ -228,24 +228,24 @@ const trial_info = {
       ],
       [
         {
-          question: 'Ich identifiziere mich als Digitalisierungs-Befürworter',
+          question: 'Ich identifiziere mich als Befürworter eines stärkeren Datenschutzes',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich als Digitalisierungs-Gegner',
+          question: 'Ich identifiziere mich als Gegner eines stärkeren Datenschutzes',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
       ],
       [
         {
-          question: 'Ich identifiziere mich als Befürworter der Gender-Debatte',
+          question: 'Ich identifiziere mich als Befürworter des Genderns in der Öffentlichkeit',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich als Gegnern der Gender-Debatte',
+          question: 'Ich identifiziere mich als Gegner des Genderns in der Öffentlichkeit',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
@@ -276,12 +276,12 @@ const trial_info = {
       ],
       [
         {
-          question: 'Ich identifiziere mich als Migrations-Befürworter',
+          question: 'Ich identifiziere mich als Befürworter einer stärkeren Migrationskontrolle',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich als Migrations-Gegner',
+          question: 'Ich identifiziere mich als Gegner einer stärkeren Migrationskontrolle',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }
@@ -300,12 +300,12 @@ const trial_info = {
       ],
       [
         {
-          question: 'Ich identifiziere mich als Befürworter des Mindestpreises von Fleisch',
+          question: 'Ich identifiziere mich als Befürworter eines Mindestpreises für Fleisch',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         },
         {
-          question: 'Ich identifiziere mich als Gegner des Mindestpreises von Fleisch',
+          question: 'Ich identifiziere mich als Gegner eines Mindestpreises für Fleisch',
           option1: 'Korrekt',
           option2: 'Inkorrekt'
         }

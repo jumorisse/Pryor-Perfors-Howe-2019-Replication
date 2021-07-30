@@ -122,6 +122,18 @@ cleaned_data <- cleaned_data %>% pivot_longer(
   ingroup_norm = case_when(
     dilemma_version == "philosophical_dilemma" ~ ingroup_norm_philo,
     dilemma_version == "daily_dilemma" ~ ingroup_norm_daily
+  ),
+  ingroup_agree = case_when(
+    statement_rating_1 < 0 & group_ident_2 > 0 ~ 1,
+    statement_rating_1 > 0 & group_ident_1 > 0 ~ 1,
+    statement_rating_1 < 0 & group_ident_2 < 0 ~ 0,
+    statement_rating_1 > 0 & group_ident_1 < 0 ~ 0,
+  ),
+  outgroup_disagree = case_when(
+    statement_rating_1 < 0 & group_ident_1 < 0 ~ 1,
+    statement_rating_1 > 0 & group_ident_2 < 0 ~ 1,
+    statement_rating_1 < 0 & group_ident_1 > 0 ~ 0,
+    statement_rating_1 > 0 & group_ident_2 > 0 ~ 0,
   )
 ) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>% mutate(
   dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
@@ -132,35 +144,48 @@ cleaned_data
 
 
 # Analysis
-```{r,results='hide'}
-priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
+
+## Implementing the competing models
+
+#### The alternative model
+```{r}
+alternative_priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
   set_prior('normal( 0 , 0.5 )', class = "b", coef = 'both_infos'),
   set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm:both_infos'))
 
 alternative_model <- brm(
   family = cumulative('logit'),
-  data = cleaned_data, # define data 
-  formula = dilemma_rating ~ dilemma_version + ingroup_norm * both_infos, # regress trials depending on condition
-  sample_prior = 'yes', # take samples from prior
-  iter = 1000, # set sample size to 10000 to achieve a more precise estimation
-  prior = priors) #  set the prior to a student_t with 1 degree of freedom, mean = 0 and standard deviation to 100
-priors <- prior("normal( 0 , 0.5 )", class = "b") +
-            #set_prior("normal( 0 , 0.5 )", class = "b"),
-          prior("normal(0.6/0.75 * 1.27 , 0.5)", class = "intercept")
+  data = cleaned_data,
+  formula = dilemma_rating ~ dilemma_version + ingroup_norm * both_infos,
+  sample_prior = 'yes', 
+  iter = 1000, 
+  prior = alternative_priors) 
 ```
 
 ```{r}
 summary(alternative_model)
 ```
 
+#### The self-categorization model
+```{r}
+self_categorization_priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
+  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'both_infos'),
+  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'ingroup_norm:both_infos'))
 
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+self_categorization_model <- brm(
+  family = cumulative('logit'),
+  data = cleaned_data,
+  formula = dilemma_rating ~ dilemma_version + ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree,
+  sample_prior = 'yes',
+  iter = 1000,
+  prior = self_categorization_priors)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+summary(self_categorization_model)
+```
+## Compring the models via the bayes factor
+```{r}
+
+```
+
