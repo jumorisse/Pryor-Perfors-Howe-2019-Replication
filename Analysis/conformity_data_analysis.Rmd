@@ -159,7 +159,8 @@ alternative_model <- brm(
   formula = dilemma_rating ~ dilemma_version + ingroup_norm * both_infos,
   sample_prior = 'yes', 
   iter = 1000, 
-  prior = alternative_priors) 
+  prior = alternative_priors,
+  save_all_pars = TRUE) 
 ```
 
 ```{r}
@@ -178,14 +179,19 @@ self_categorization_model <- brm(
   formula = dilemma_rating ~ dilemma_version + ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree,
   sample_prior = 'yes',
   iter = 1000,
-  prior = self_categorization_priors)
+  prior = self_categorization_priors,
+  save_all_pars = TRUE)
 ```
 
 ```{r}
 summary(self_categorization_model)
 ```
-## Compring the models via the bayes factor
+## Comparing the models via the bayes factor
 ```{r}
-
+#bayes_factor(alternative_model, self_categorization_model)
+alternative_marg_lik <- bridge_sampler(alternative_model)
+```
+```{r}
+self_cat_marg_lik <- bridge_sampler(self_categorization_model)
 ```
 
