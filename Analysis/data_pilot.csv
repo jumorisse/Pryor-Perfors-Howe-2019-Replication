@@ -1,4 +1,38 @@
 submission_id,QUD,RT,age,both_infos,education,experiment_id,gender,ingroup_info_a,languages,option1,option2,question,response,startDate,startTime,trial_name,trial_number
+2403,NA,NA,23,NA,Abitur,263,männlich,NA,deutsch,NA,NA,NA,0,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,topic_choice,1
+2403,NA,NA,23,NA,Abitur,263,männlich,NA,deutsch,NA,NA,NA,5,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,statement_rating,1
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision2,1
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision2,2
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision2,3
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,1,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision2,4
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,3,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision2,5
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision1,1
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision1,2
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,next,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision1,3
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,2,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision1,4
+2403,NA,NA,23,true,Abitur,263,männlich,true,deutsch,NA,NA,NA,3,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,dilemma_decision1,5
+2403,,1819,23,NA,Abitur,263,männlich,NA,deutsch,Du musstest immer so schnell wie möglich antworten.,"Es ist irrelevant, wie lange du für deine Antworten benötigt hast.",Welche dieser Behauptungen über dieses Experiment ist wahr?,"Es ist irrelevant, wie lange du für deine Antworten benötigt hast.",Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,understanding_check,1
+2403,,1539,23,NA,Abitur,263,männlich,NA,deutsch,Anfangs wurden dir mehrere Themen zur Auswahl gestellt.,Du konntest dir ein Dilemma aussuchen.,Welche dieser Behauptungen über dieses Experiment ist wahr?,Anfangs wurden dir mehrere Themen zur Auswahl gestellt.,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,understanding_check,2
+2403,,1504,23,NA,Abitur,263,männlich,NA,deutsch,Für die Durchführung dieses Experiments erhälst du eine Aufwandsentschädigung oder VP Stunden.,"Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar.",Welche dieser Behauptungen über dieses Experiment ist wahr?,"Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar.",Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,understanding_check,3
+2403,NA,NA,23,NA,Abitur,263,männlich,NA,deutsch,NA,NA,NA,-2,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,group_ident,1
+2403,NA,NA,23,NA,Abitur,263,männlich,NA,deutsch,NA,NA,NA,3,Sat Jul 31 2021 13:16:56 GMT+0200 (Mitteleuropäische Sommerzeit),1627730216572,group_ident,2
+2402,NA,NA,,NA,,263,,NA,,NA,NA,NA,4,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,topic_choice,1
+2402,NA,NA,,NA,,263,,NA,,NA,NA,NA,0,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,statement_rating,1
+2402,NA,NA,,false,,263,,true,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision2,1
+2402,NA,NA,,false,,263,,true,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision2,2
+2402,NA,NA,,false,,263,,true,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision2,3
+2402,NA,NA,,false,,263,,true,,NA,NA,NA,4,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision2,4
+2402,NA,NA,,false,,263,,true,,NA,NA,NA,0,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision2,5
+2402,NA,NA,,false,,263,,false,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision1,1
+2402,NA,NA,,false,,263,,false,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision1,2
+2402,NA,NA,,false,,263,,false,,NA,NA,NA,next,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision1,3
+2402,NA,NA,,false,,263,,false,,NA,NA,NA,4,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision1,4
+2402,NA,NA,,false,,263,,false,,NA,NA,NA,0,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,dilemma_decision1,5
+2402,,10735,,NA,,263,,NA,,Du musstest immer so schnell wie möglich antworten.,"Es ist irrelevant, wie lange du für deine Antworten benötigt hast.",Welche dieser Behauptungen über dieses Experiment ist wahr?,Du musstest immer so schnell wie möglich antworten.,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,understanding_check,1
+2402,,12649,,NA,,263,,NA,,Anfangs wurden dir mehrere Themen zur Auswahl gestellt.,Du konntest dir ein Dilemma aussuchen.,Welche dieser Behauptungen über dieses Experiment ist wahr?,Anfangs wurden dir mehrere Themen zur Auswahl gestellt.,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,understanding_check,2
+2402,,12014,,NA,,263,,NA,,Für die Durchführung dieses Experiments erhälst du eine Aufwandsentschädigung oder VP Stunden.,"Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar.",Welche dieser Behauptungen über dieses Experiment ist wahr?,Für die Durchführung dieses Experiments erhälst du eine Aufwandsentschädigung oder VP Stunden.,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,understanding_check,3
+2402,NA,NA,,NA,,263,,NA,,NA,NA,NA,0,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,group_ident,1
+2402,NA,NA,,NA,,263,,NA,,NA,NA,NA,0,Sat Jul 31 2021 00:49:14 GMT+0200 (Mitteleuropäische Sommerzeit),1627685354386,group_ident,2
 2373,NA,NA,21,NA,Abitur,263,weiblich,NA,Deutsch,NA,NA,NA,4,Tue Jul 27 2021 17:09:32 GMT+0200 (Central European Summer Time),1627398572358,topic_choice,1
 2373,NA,NA,21,NA,Abitur,263,weiblich,NA,Deutsch,NA,NA,NA,1,Tue Jul 27 2021 17:09:32 GMT+0200 (Central European Summer Time),1627398572358,statement_rating,1
 2373,NA,NA,21,true,Abitur,263,weiblich,false,Deutsch,NA,NA,NA,next,Tue Jul 27 2021 17:09:32 GMT+0200 (Central European Summer Time),1627398572358,dilemma_decision2,1

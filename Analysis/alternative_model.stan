@@ -1,9 +1,9 @@
 
 data{
     int<lower=1> N;
-    double dilemma_rating[N];
-    double both_infos[N];
-    double ingroup_norm[N];
+    int dilemma_rating[N];
+    int both_infos[N];
+    int ingroup_norm[N];
 }
 parameters{
     ordered[5] cutpoints;
