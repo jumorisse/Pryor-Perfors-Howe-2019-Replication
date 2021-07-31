@@ -68,6 +68,7 @@ cleaned_data <- data %>%
 cleaned_data
 
 ```
+
 ```{r}
 cleaned_data <- cleaned_data %>%
   rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, rating_daily_dilemma = dilemma_decision1_5, rating_philosophical_dilemma = dilemma_decision2_5) %>% 
@@ -149,78 +150,76 @@ cleaned_data <- cleaned_data %>% pivot_longer(
 
 #%>% mutate(
   #dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
-
-
-list_ingroup_norm <- list(cleaned_data$both_infos)
-list_ingroup_norm
-list_both_infos <- list(cleaned_data$both_infos)
-list_both_infos
-list_dilemma_version <- list(cleaned_data$dilemma_version)
-list_dilemma_version
-list_dilemma_rating <- list(cleaned_data$dilemma_rating)
-list_dilemma_rating
 cleaned_data
 ```
 
 
 # Analysis
 ```{r}
-#Extract priors
-self_categorization_prior = "
-data {
-int list_ingroup_norm;  
-int list_both_infos;               
-int list_dilemma_version;
-int list_dilemma_rating;
-}
-parameters{
-real<lower=0> bIn;
-real bBoth;
-real<lower=0> bOut;
-}
-model{
-bBoth ~ normal( 0 , 0.5 );
-bOut ~ normal( 0 , 0.5 );
-bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
-}"
+N <- length(cleaned_data$dilemma_rating)
+dilemma_rating <- cleaned_data$dilemma_rating
+both_infos <- cleaned_data$both_infos
+ingroup_norm <- cleaned_data$ingroup_norm
+stan_data_alternative = list(N = N, dilemma_rating = dilemma_rating, both_infos = both_infos, ingroup_norm = ingroup_norm)
+```
 
-alternative_prior = "
-data {
-double list_ingroup_norm;  
-double list_both_infos;               
-double list_dilemma_version;
-double list_dilemma_rating;
+
+```{r}
+#Extract priors
+write("
+data{
+    int<lower=1> N;
+    double dilemma_rating[N];
+    double both_infos[N];
+    double ingroup_norm[N];
 }
 parameters{
-real<lower=0> bIn;
-real bBoth;
-real<upper=0> bOut;
-real dilemma_version;
+    ordered[5] cutpoints;
+    real<lower=0> bIn;
+    real bBoth;
+}
+transformed parameters{
+  real bOut = -0.85 / 0.6 * bIn;
 }
 model{
-bBoth ~ normal( 0 , 0.5 );
-bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
-bOut ~ normal(-0.85/0.75 * 1.27, 0.5);
-dilemma_version ~ normal( 0 , 0.5 );
+    vector[N] phi;
+    cutpoints ~ normal( 0 , 10 );
+    bIn ~ normal( 0.816 , 0.5 );
+    bBoth ~ normal( 0 , 0.5 );
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i];
+        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+    }
 }
 generated quantities{
-real list_ingroup_norm;  
-real list_both_infos;               
-real list_dilemma_version;
-real list_dilemma_rating;
-}
-"
+    vector[N] phi;
+    real dev;
+    vector[N] log_lik;
+    dev = 0;
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i];
+    dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    }
+}", "alternative_model.stan")
 
+#alternative_model <- "alternative_model.stan"
 ```
 
 ```{r}
-stanfit <- stan(model_code = alternative_prior, pars=c("bOut","bBoth","bIn", "dilemma_version"), iter = 1000, chains = 4,  warmup = 500, seed =123)
+stanc("alternative_model.stan")
+```
+
+
+```{r}
+stanfit <- stan(file = alternative_model, data = stan_data_alternative, pars=c("bOut","bBoth","bIn"), iter = 1000, chains = 4,  warmup = 500, seed =123)
 # feed the Stan model back into brms
-fit <- brm(dilemma_rating ~ dilemma_version + ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), empty = TRUE)
+fit <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), empty = TRUE)
 fit$fit <- stanfit
 fit <- rename_pars(fit)
 summary(fit)
 ```
+
 ```{r}
 stanfit <- stan(model_code = self_categorization_prior, pars=c("bOut","bBoth","bIn", "dilemma_version"), iter = 1000, chains = 4,  warmup = 500, seed =123)
 # feed the Stan model back into brms
@@ -277,5 +276,51 @@ alternative_marg_lik <- bridge_sampler(alternative_model)
 ```
 ```{r}
 self_cat_marg_lik <- bridge_sampler(self_categorization_model)
+```
+
+```{r}
+data {
+int list_ingroup_norm;  
+int list_both_infos;               
+int list_dilemma_version;
+int list_dilemma_rating;
+}
+parameters{
+real<lower=0> bIn;
+real bBoth;
+real<lower=0> bOut;
+}
+model{
+bBoth ~ normal( 0 , 0.5 );
+bOut ~ normal( 0 , 0.5 );
+bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
+}",
+"alternative_model.stan")
+
+alternative_prior = "
+data {
+double list_ingroup_norm;  
+double list_both_infos;               
+double list_dilemma_version;
+double list_dilemma_rating;
+}
+parameters{
+real<lower=0> bIn;
+real bBoth;
+real<upper=0> bOut;
+real dilemma_version;
+}
+model{
+bBoth ~ normal( 0 , 0.5 );
+bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
+bOut ~ normal(-0.85/0.75 * 1.27, 0.5);
+dilemma_version ~ normal( 0 , 0.5 );
+}
+generated quantities{
+real list_ingroup_norm;  
+real list_both_infos;               
+real list_dilemma_version;
+real list_dilemma_rating;
+}
 ```
 
