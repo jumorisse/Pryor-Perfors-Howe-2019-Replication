@@ -20,6 +20,8 @@ library(aida)
 # package for Bayesian regression
 library(brms)
 
+library(rstan)
+
 # parallel execution of Stan code
 options(mc.cores = parallel::detectCores())
 
@@ -135,16 +137,98 @@ cleaned_data <- cleaned_data %>% pivot_longer(
     statement_rating_1 < 0 & group_ident_1 > 0 ~ 0,
     statement_rating_1 > 0 & group_ident_2 > 0 ~ 0,
   )
-) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>% mutate(
-  dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
-)
+) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>%
+  transform(dilemma_rating = as.numeric(dilemma_rating)) %>%
+  mutate(
+    dilemma_version = case_when(
+      dilemma_version == "daily_dilemma" ~ 1,
+      dilemma_version == "philosophical_dilemma" ~ 2,
+    )
+  )
 
+
+#%>% mutate(
+  #dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
+
+
+list_ingroup_norm <- list(cleaned_data$both_infos)
+list_ingroup_norm
+list_both_infos <- list(cleaned_data$both_infos)
+list_both_infos
+list_dilemma_version <- list(cleaned_data$dilemma_version)
+list_dilemma_version
+list_dilemma_rating <- list(cleaned_data$dilemma_rating)
+list_dilemma_rating
 cleaned_data
 ```
 
 
 # Analysis
+```{r}
+#Extract priors
+self_categorization_prior = "
+data {
+int list_ingroup_norm;  
+int list_both_infos;               
+int list_dilemma_version;
+int list_dilemma_rating;
+}
+parameters{
+real<lower=0> bIn;
+real bBoth;
+real<lower=0> bOut;
+}
+model{
+bBoth ~ normal( 0 , 0.5 );
+bOut ~ normal( 0 , 0.5 );
+bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
+}"
 
+alternative_prior = "
+data {
+double list_ingroup_norm;  
+double list_both_infos;               
+double list_dilemma_version;
+double list_dilemma_rating;
+}
+parameters{
+real<lower=0> bIn;
+real bBoth;
+real<upper=0> bOut;
+real dilemma_version;
+}
+model{
+bBoth ~ normal( 0 , 0.5 );
+bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
+bOut ~ normal(-0.85/0.75 * 1.27, 0.5);
+dilemma_version ~ normal( 0 , 0.5 );
+}
+generated quantities{
+real list_ingroup_norm;  
+real list_both_infos;               
+real list_dilemma_version;
+real list_dilemma_rating;
+}
+"
+
+```
+
+```{r}
+stanfit <- stan(model_code = alternative_prior, pars=c("bOut","bBoth","bIn", "dilemma_version"), iter = 1000, chains = 4,  warmup = 500, seed =123)
+# feed the Stan model back into brms
+fit <- brm(dilemma_rating ~ dilemma_version + ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), empty = TRUE)
+fit$fit <- stanfit
+fit <- rename_pars(fit)
+summary(fit)
+```
+```{r}
+stanfit <- stan(model_code = self_categorization_prior, pars=c("bOut","bBoth","bIn", "dilemma_version"), iter = 1000, chains = 4,  warmup = 500, seed =123)
+# feed the Stan model back into brms
+fit <- brm(dilemma_rating ~ dilemma_version + ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = cleaned_data, family = cumulative('logit'), empty = TRUE)
+fit$fit <- stanfit
+fit <- rename_pars(fit)
+summary(fit)
+```
 ## Implementing the competing models
 
 #### The alternative model
@@ -164,7 +248,7 @@ alternative_model <- brm(
 ```
 
 ```{r}
-summary(alternative_model)
+summary(fit)
 ```
 
 #### The self-categorization model
