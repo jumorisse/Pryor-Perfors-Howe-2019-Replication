@@ -3,7 +3,7 @@ data{
     int<lower=1> N;
     int dilemma_rating[N];
     int both_infos[N];
-    int ingroup_norm[N];
+    real ingroup_norm[N];
 }
 parameters{
     ordered[5] cutpoints;

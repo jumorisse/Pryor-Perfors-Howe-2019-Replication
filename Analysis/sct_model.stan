@@ -2,8 +2,8 @@
 data{
     int<lower=1> N;
     int dilemma_rating[N];
-    int both_infos[N];
-    int ingroup_norm[N];
+    real both_infos[N];
+    real ingroup_norm[N];
     int ingroup_agree[N];
     int outgroup_disagree[N];
 }
@@ -18,10 +18,10 @@ model{
     cutpoints ~ normal( 0 , 10 );
     bBoth ~ normal( 0 , 0.5 );
     bOut ~ normal( 0 , 0.5 );
-    bIn ~ normal( 0.6/0.75 * 1.02 , 0.5 );
+    bIn ~ normal( 0.816 , 0.5 );
     for ( i in 1:N ) {
         phi[i] = bIn * ingroup_norm[i] * ingroup_agree[N] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[N];
-        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+        dilemma_rating[i] ~ ordered_logistic( phi[i], cutpoints );
     }
 }
 generated quantities{
@@ -30,8 +30,8 @@ generated quantities{
     vector[N] log_lik;
     dev = 0;
     for ( i in 1:N ) {
-        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[N] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[N];
-        dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
-        log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i];
+        dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i], cutpoints);
+        log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i], cutpoints);
     }
 }
