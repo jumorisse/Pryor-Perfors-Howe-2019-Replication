@@ -3,7 +3,7 @@ data{
     int<lower=1> N;
     int dilemma_rating[N];
     int both_infos[N];
-    real ingroup_norm[N];
+    int ingroup_norm[N];
 }
 parameters{
     ordered[5] cutpoints;
@@ -11,7 +11,7 @@ parameters{
     real bBoth;
 }
 transformed parameters{
-  real bOut = -0.85 / 0.6 * bIn;
+    real bOut = -1.4166666667 * bIn;
 }
 model{
     vector[N] phi;
