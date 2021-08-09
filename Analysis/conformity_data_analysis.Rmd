@@ -15,29 +15,31 @@ knitr::opts_chunk$set(echo = TRUE, error = F, message = F, warning = F)
 library(tidyverse)
 
 # package for this course
-library(aida)
+#library(aida)
 
 # package for Bayesian regression
 library(brms)
 
 library(rstan)
 
+library(bridgesampling)
+
 # parallel execution of Stan code
 options(mc.cores = parallel::detectCores())
 
 # use the aida-theme for plotting
-theme_set(theme_aida())
-
-# global color scheme / non-optimized
-project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
-
-# setting theme colors globally
-scale_colour_discrete <- function(...) {
-  scale_colour_manual(..., values = project_colors)
-}
-scale_fill_discrete <- function(...) {
-   scale_fill_manual(..., values = project_colors)
-} 
+# theme_set(theme_aida())
+# 
+# # global color scheme / non-optimized
+# project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+# 
+# # setting theme colors globally
+# scale_colour_discrete <- function(...) {
+#   scale_colour_manual(..., values = project_colors)
+# }
+# scale_fill_discrete <- function(...) {
+#    scale_fill_manual(..., values = project_colors)
+# } 
 
 # nicer global knitr options
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
@@ -51,6 +53,26 @@ raw_data <- read_csv('data_pilot.csv')
 raw_data
 
 ```
+# Demographics
+
+```{r}
+raw_data %>% filter(trial_name == 'topic_choice') %>%
+  summarize(N = length(submission_id),
+            mean_age = mean(age, na.rm = TRUE),
+            min_age = min(age, na.rm = TRUE),
+            max_age = max(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            median_ag = median(age, na.rm = TRUE),
+            # In der Analyse zur richtigen Studie Großschreiben !!!!
+            num_males = sum(gender=="männlich", na.rm = TRUE),
+            num_females = sum(gender=="weiblich", na.rm = TRUE),
+            num_divers = sum(gender=="divers", na.rm = TRUE),
+            num_lower_degree = sum(education == "Real- oder Hauptschulabschluss", na.rm = TRUE),
+            num_high_school_degree = sum(education == 'Abitur', na.rm = TRUE),
+            num_higher_degree = sum(education == 'Universitärer Abschluss', na.rm = TRUE)
+  )
+```
+
 
 # Cleaning data
 
@@ -62,20 +84,13 @@ cleaned_data <- raw_data %>%
   pivot_wider(
    names_from = trials,
    values_from = response
-)
-  
-
-cleaned_data
-
-```
-
-```{r}
-cleaned_data <- cleaned_data %>%
+) %>%
   rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, rating_daily_dilemma = dilemma_decision1_5, rating_philosophical_dilemma = dilemma_decision2_5) %>% 
-  mutate(passed_understanding_check = case_when(
-    understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."& 
-    understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." &
-    understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
+  mutate(
+      passed_understanding_check = case_when(
+      understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."& 
+      understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." &
+      understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
   select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
   mutate(
     ingroup_daily = case_when(
@@ -85,23 +100,22 @@ cleaned_data <- cleaned_data %>%
       !is.na(philosophical_dilemma) ~ ingroup_norm
     )) %>%
   group_by(submission_id) %>%
-  mutate(both_infos = unique(both_infos[!is.na(both_infos)]), 
-         topic_choice_1 = unique(topic_choice_1[!is.na(topic_choice_1)]),
-         statement_rating_1 = unique(statement_rating_1[!is.na(statement_rating_1)]),
-         philosophical_dilemma = unique(philosophical_dilemma[!is.na(philosophical_dilemma)]),
-         rating_philosophical_dilemma = unique(rating_philosophical_dilemma[!is.na(rating_philosophical_dilemma)]),
-         daily_dilemma = unique(daily_dilemma[!is.na(daily_dilemma)]),
-         rating_daily_dilemma = unique(rating_daily_dilemma[!is.na(rating_daily_dilemma)]),
-         group_ident_1 = unique(group_ident_1[!is.na(group_ident_1)]),
-         group_ident_2 = unique(group_ident_2[!is.na(group_ident_2)]),
-         passed_understanding_check = unique(passed_understanding_check[!is.na(passed_understanding_check)]),
-         ingroup_daily = unique(ingroup_daily[!is.na(ingroup_daily)]),
-         ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
-         ) %>%
+  mutate(
+    both_infos = unique(both_infos[!is.na(both_infos)]), 
+    topic_choice_1 = unique(topic_choice_1[!is.na(topic_choice_1)]),
+    statement_rating_1 = unique(statement_rating_1[!is.na(statement_rating_1)]),
+    philosophical_dilemma = unique(philosophical_dilemma[!is.na(philosophical_dilemma)]),
+    rating_philosophical_dilemma = unique(rating_philosophical_dilemma[!is.na(rating_philosophical_dilemma)]),
+    daily_dilemma = unique(daily_dilemma[!is.na(daily_dilemma)]),
+    rating_daily_dilemma = unique(rating_daily_dilemma[!is.na(rating_daily_dilemma)]),
+    group_ident_1 = unique(group_ident_1[!is.na(group_ident_1)]),
+    group_ident_2 = unique(group_ident_2[!is.na(group_ident_2)]),
+    passed_understanding_check = unique(passed_understanding_check[!is.na(passed_understanding_check)]),
+    ingroup_daily = unique(ingroup_daily[!is.na(ingroup_daily)]),
+    ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
+    ) %>%
   select(-ingroup_norm) %>%
   unique() %>%
-  filter(!between(statement_rating_1, -2, 2)) %>%
-  filter(passed_understanding_check == TRUE) %>%
   mutate(
     ingroup_norm_daily = case_when(
       ingroup_daily == TRUE ~ -1,
@@ -112,69 +126,75 @@ cleaned_data <- cleaned_data %>%
       ingroup_philo == FALSE ~ 1,
     )) %>%
   mutate_if(is.logical,as.numeric) %>%
-  select(-ingroup_daily, -ingroup_philo, -passed_understanding_check)
+  select(-ingroup_daily, -ingroup_philo) %>% 
+  pivot_longer(
+    cols = c(5, 7),
+    names_to = "dilemma_version",
+    values_to = "dilemma_rating"
+  ) %>% 
+  mutate(
+    ingroup_norm = case_when(
+      dilemma_version == "philosophical_dilemma" ~ ingroup_norm_philo,
+      dilemma_version == "daily_dilemma" ~ ingroup_norm_daily
+    ),
+    ingroup_agree = case_when(
+      statement_rating_1 < 0 & group_ident_2 > 0 ~ 1,
+      statement_rating_1 > 0 & group_ident_1 > 0 ~ 1,
+      statement_rating_1 < 0 & group_ident_2 < 0 ~ 0,
+      statement_rating_1 > 0 & group_ident_1 < 0 ~ 0,
+    ),
+    outgroup_disagree = case_when(
+      statement_rating_1 < 0 & group_ident_1 < 0 ~ 1,
+      statement_rating_1 > 0 & group_ident_2 < 0 ~ 1,
+      statement_rating_1 < 0 & group_ident_1 > 0 ~ 0,
+      statement_rating_1 > 0 & group_ident_2 > 0 ~ 0,
+    )
+  ) %>% 
+  select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>%
+    transform(dilemma_rating = as.numeric(dilemma_rating)) %>%
+  mutate(
+      dilemma_version = case_when(
+        dilemma_version == "daily_dilemma" ~ 1,
+        dilemma_version == "philosophical_dilemma" ~ 2,
+      )
+    ) %>% 
+  mutate(
+      dilemma_rating = as.integer(dilemma_rating),
+      both_infos = as.integer(both_infos),
+      ingroup_norm = as.integer(ingroup_norm),
+      ingroup_agree = as.integer(ingroup_agree),
+      outgroup_disagree = as.integer(outgroup_disagree),
+      statement_rating_1 = as.integer(statement_rating_1),
+      topic_choice_1 = as.integer(topic_choice_1),
+      group_ident_1 = as.integer(group_ident_1),
+      group_ident_2 = as.integer(group_ident_2)
+    )
+  
+
 cleaned_data
+
 ```
 
 ```{r}
-cleaned_data <- cleaned_data %>% pivot_longer(
-  cols = c(5, 7),
-  names_to = "dilemma_version",
-  values_to = "dilemma_rating"
-) %>% mutate(
-  ingroup_norm = case_when(
-    dilemma_version == "philosophical_dilemma" ~ ingroup_norm_philo,
-    dilemma_version == "daily_dilemma" ~ ingroup_norm_daily
-  ),
-  ingroup_agree = case_when(
-    statement_rating_1 < 0 & group_ident_2 > 0 ~ 1,
-    statement_rating_1 > 0 & group_ident_1 > 0 ~ 1,
-    statement_rating_1 < 0 & group_ident_2 < 0 ~ 0,
-    statement_rating_1 > 0 & group_ident_1 < 0 ~ 0,
-  ),
-  outgroup_disagree = case_when(
-    statement_rating_1 < 0 & group_ident_1 < 0 ~ 1,
-    statement_rating_1 > 0 & group_ident_2 < 0 ~ 1,
-    statement_rating_1 < 0 & group_ident_1 > 0 ~ 0,
-    statement_rating_1 > 0 & group_ident_2 > 0 ~ 0,
+cleaned_data %>% filter(dilemma_version == 1) %>%
+  summarise(
+    failed_understanding_check = sum(passed_understanding_check == 0 & !between(statement_rating_1, -2, 2)),
+    too_low_statement_rating = sum(between(statement_rating_1, -2, 2) & passed_understanding_check != 0),
+    both = sum(passed_understanding_check == 0 & between(statement_rating_1, -2, 2))
   )
-) %>% select(-ingroup_norm_daily, -ingroup_norm_philo, -rating_philosophical_dilemma, -rating_daily_dilemma) %>%
-  transform(dilemma_rating = as.numeric(dilemma_rating)) %>%
-  mutate(
-    dilemma_version = case_when(
-      dilemma_version == "daily_dilemma" ~ 1,
-      dilemma_version == "philosophical_dilemma" ~ 2,
-    )
-  ) %>% mutate(
-    dilemma_rating = as.integer(dilemma_rating),
-    both_infos = as.integer(both_infos),
-    ingroup_norm = as.integer(ingroup_norm),
-    ingroup_agree = as.integer(ingroup_agree),
-    outgroup_disagree = as.integer(outgroup_disagree)
-  ) %>% select(submission_id , dilemma_version, both_infos, ingroup_norm, dilemma_rating, ingroup_agree, outgroup_disagree)
-
-
-#%>% mutate(
-  #dilemma_rating = factor(dilemma_rating, ordered = TRUE, levels = c(1,2,3,4,5,6))
-cleaned_data
 ```
 
+```{r}
+cleaned_data <- cleaned_data %>% 
+  filter(!between(statement_rating_1, -2, 2)) %>%
+  filter(passed_understanding_check == TRUE)
+
+cleaned_data
+```
 
 # Analysis
 ```{r}
-# N <- 10
-# dilemma_rating <- c(cleaned_data$dilemma_rating)
-# both_infos <- c(cleaned_data$both_infos)
-# ingroup_norm <- c(cleaned_data$ingroup_norm)
-# ingroup_agree <- c(cleaned_data$ingroup_agree)
-# outgroup_disagree <- c(cleaned_data$outgroup_disagree)
-# stan_data_alternative = list(N = N, dilemma_rating = dilemma_rating, both_infos = both_infos, ingroup_norm = ingroup_norm)
-# 
-# stan_data_sct = list(N = N, dilemma_rating = dilemma_rating, both_infos = both_infos, ingroup_norm = ingroup_norm, ingroup_agree = ingroup_agree, outgroup_disagree = outgroup_disagree)
-
 stan_data <- as.list(c(cleaned_data, N = dim(cleaned_data)[1]))
-
-#stan_data_sct <- as.list(c(cleaned_data, N = dim(cleaned_data)[1]))
 ```
 
 
@@ -226,12 +246,9 @@ alternative_model <- "alternative_model.stan"
 
 
 ```{r}
-stanfit_alt <- stan(file = alternative_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+stanfit_alt <- stan(file = alternative_model, data = stan_data, iter = 1000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 # feed the Stan model back into brms
 fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), fit = stanfit_alt, save_all_pars = TRUE)
-#fit_alt <- rename_pars(fit_alt)
-#summary(fit_alt)
-#marg_lik_alt <- bridge_sampler(samples = stanfit_alt)
 ```
 
 ```{r}
@@ -282,119 +299,28 @@ sct_model <- "sct_model.stan"
 ```
 
 ```{r}
-stanfit_sct <- stan(file = sct_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+stanfit_sct <- stan(file = sct_model, data = stan_data, iter = 1000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 
 fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = cleaned_data, family = cumulative('logit'), fit = stanfit_sct, save_all_pars = TRUE)
-#fit_sct <- rename_pars(fit_sct)
-#summary(fit_sct)
-#marg_lik_sct <- bridge_sampler(samples = stanfit_sct)
+```
+
+
+```{r}
+marg_lik_sct <- brms::bridge_sampler(samples = fit_sct)
+marg_lik_alt <- brms::bridge_sampler(samples = fit_alt)
+bf(marg_lik_alt,marg_lik_sct)
+
+bf(marg_lik_sct,marg_lik_alt)
+```
+
+
+
+
+
+```{r}
+bf(marg_lik_alt, marg_lik_alt)
 ```
 
 ```{r}
-#bf(marg_lik_alt,marg_lik_sct)
-brms::bayes_factor(fit_sct, fit_alt)
+bf(marg_lik_sct, marg_lik_sct)
 ```
-```{r}
-summary(fit_sct)
-```
-
-```{r}
-summary(fit_alt)
-```
-
-## Implementing the competing models
-
-#### The alternative model
-```{r}
-alternative_priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
-  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'both_infos'),
-  set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm:both_infos'))
-
-alternative_model <- brm(
-  family = cumulative('logit'),
-  data = cleaned_data,
-  formula = dilemma_rating ~ dilemma_version + ingroup_norm * both_infos,
-  sample_prior = 'yes', 
-  iter = 1000, 
-  prior = alternative_priors,
-  save_all_pars = TRUE) 
-```
-
-```{r}
-summary(fit)
-```
-
-#### The self-categorization model
-```{r}
-self_categorization_priors <- c(set_prior('normal( 0.816 , 0.5 )', class = "b", coef = 'ingroup_norm'),
-  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'both_infos'),
-  set_prior('normal( 0 , 0.5 )', class = "b", coef = 'ingroup_norm:both_infos'))
-
-self_categorization_model <- brm(
-  family = cumulative('logit'),
-  data = cleaned_data,
-  formula = dilemma_rating ~ dilemma_version + ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree,
-  sample_prior = 'yes',
-  iter = 1000,
-  prior = self_categorization_priors,
-  save_all_pars = TRUE)
-```
-
-```{r}
-summary(self_categorization_model)
-```
-## Comparing the models via the bayes factor
-```{r}
-#bayes_factor(alternative_model, self_categorization_model)
-alternative_marg_lik <- bridge_sampler(alternative_model)
-```
-```{r}
-self_cat_marg_lik <- bridge_sampler(self_categorization_model)
-```
-
-```{r}
-data {
-int list_ingroup_norm;  
-int list_both_infos;               
-int list_dilemma_version;
-int list_dilemma_rating;
-}
-parameters{
-real<lower=0> bIn;
-real bBoth;
-real<lower=0> bOut;
-}
-model{
-bBoth ~ normal( 0 , 0.5 );
-bOut ~ normal( 0 , 0.5 );
-bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
-}",
-"alternative_model.stan")
-
-alternative_prior = "
-data {
-double list_ingroup_norm;  
-double list_both_infos;               
-double list_dilemma_version;
-double list_dilemma_rating;
-}
-parameters{
-real<lower=0> bIn;
-real bBoth;
-real<upper=0> bOut;
-real dilemma_version;
-}
-model{
-bBoth ~ normal( 0 , 0.5 );
-bIn ~ normal( 0.6/0.75 * 1.27 , 0.5 );
-bOut ~ normal(-0.85/0.75 * 1.27, 0.5);
-dilemma_version ~ normal( 0 , 0.5 );
-}
-generated quantities{
-real list_ingroup_norm;  
-real list_both_infos;               
-real list_dilemma_version;
-real list_dilemma_rating;
-}
-```
-
