@@ -54,8 +54,12 @@ const custom_post = function(config) {
                         </select>
                     </p>
                     <p class='magpie-view-text'>
-                        <label for="languages" name="languages">${config.languages_question}:<br /><span></</span></label>
-                        <input type="text" id="languages"/>
+                        <label for="languages">${config.languages_question}:</label>
+                        <select id="languages" name="languages">
+                            <option></option>
+                            <option value="${config.languages_german}">${config.languages_german}</option>
+                            <option value="${config.languages_other}">${config.languages_other}</option>
+                        </select>
                     </p>
                     <button id="next" class='magpie-view-button'>${config.button_text}</button>
                 </div>`);

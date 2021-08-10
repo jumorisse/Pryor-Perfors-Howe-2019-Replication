@@ -65,6 +65,8 @@ const post_test = custom_post(
     edu_graduated_college: 'Hochschulabschluss',
     edu_higher_degree: 'Universitärer Abschluss',
     languages_question: 'Muttersprache',
+    languages_german: 'Deutsch',
+    languages_other: 'Andere',
     button_text: 'Weiter',
   }
 );
@@ -174,44 +176,3 @@ const thanks = magpieViews.view_generator("thanks", {
   title: 'Thank you for taking part in this experiment!',
   prolificConfirmText: 'Press the button'
 });
-
-/** trial (magpie's Trial Type Views) below
-
-* Obligatory properties
-
-    - trials: int - the number of trials this view will appear
-    - name: string - the name of the view type as it shall be known to _magpie (e.g. for use with a progress bar)
-            and the name of the trial as you want it to appear in the submitted data
-    - data: array - an array of trial objects
-
-* Optional properties
-
-    - pause: number (in ms) - blank screen before the fixation point or stimulus show
-    - fix_duration: number (in ms) - blank screen with fixation point in the middle
-    - stim_duration: number (in ms) - for how long to have the stimulus on the screen
-      More about trial life cycle - https://magpie-ea.github.io/magpie-docs/01_designing_experiments/04_lifecycles_hooks/
-
-    - hook: object - option to hook and add custom functions to the view
-      More about hooks - https://magpie-ea.github.io/magpie-docs/01_designing_experiments/04_lifecycles_hooks/
-
-* All about the properties of trial views
-* https://magpie-ea.github.io/magpie-docs/01_designing_experiments/01_template_views/#trial-views
-*/
-
-
-// Here, we initialize a normal forced_choice view
-const forced_choice_2A = magpieViews.view_generator("forced_choice", {
-  // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-  trials: trial_info.forced_choice.length,
-  // name should be identical to the variable name
-  name: 'forced_choice_2A',
-  data: trial_info.forced_choice,
-  // you can add custom functions at different stages through a view's life cycle
-  // hook: {
-  //     after_response_enabled: check_response
-  // }
-});
-
-// There are many more templates available:
-// forced_choice, slider_rating, dropdown_choice, testbox_input, rating_scale, image_selection, sentence_choice,
-// key_press, self_paced_reading and self_paced_reading_rating_scale

@@ -41,7 +41,6 @@ $("document").ready(function() {
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar
-                forced_choice_2A.name,
             ],
              // Possible styles are "default", "separate" and "chunks"
             style: "separate",
