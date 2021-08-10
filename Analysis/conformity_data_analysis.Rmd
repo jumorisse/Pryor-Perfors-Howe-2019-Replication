@@ -187,7 +187,8 @@ cleaned_data %>% filter(dilemma_version == 1) %>%
 ```{r}
 cleaned_data <- cleaned_data %>% 
   filter(!between(statement_rating_1, -2, 2)) %>%
-  filter(passed_understanding_check == TRUE)
+  filter(passed_understanding_check == TRUE) %>% 
+  select(submission_id, dilemma_rating, both_infos, ingroup_norm, ingroup_agree, outgroup_disagree, dilemma_version)
 
 cleaned_data
 ```
@@ -241,12 +242,7 @@ alternative_model <- "alternative_model.stan"
 ```
 
 ```{r}
-#stanc(alternative_model)
-```
-
-
-```{r}
-stanfit_alt <- stan(file = alternative_model, data = stan_data, iter = 1000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+stanfit_alt <- stan(file = alternative_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 # feed the Stan model back into brms
 fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), fit = stanfit_alt, save_all_pars = TRUE)
 ```
@@ -295,11 +291,7 @@ sct_model <- "sct_model.stan"
 ```
 
 ```{r}
-#stanc(sct_model)
-```
-
-```{r}
-stanfit_sct <- stan(file = sct_model, data = stan_data, iter = 1000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+stanfit_sct <- stan(file = sct_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 
 fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = cleaned_data, family = cumulative('logit'), fit = stanfit_sct, save_all_pars = TRUE)
 ```
@@ -312,10 +304,6 @@ bf(marg_lik_alt,marg_lik_sct)
 
 bf(marg_lik_sct,marg_lik_alt)
 ```
-
-
-
-
 
 ```{r}
 bf(marg_lik_alt, marg_lik_alt)
