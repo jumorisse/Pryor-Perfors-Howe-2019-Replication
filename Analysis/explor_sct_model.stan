@@ -21,7 +21,7 @@ model{
     bBoth ~ normal( 0 , 0.5 );
     bOut ~ normal( 0 , 0.5 );
     bIn ~ normal( 0.6/0.75 * 1.02 , 0.5 );
-    bVers ~ uniform(-1, 1);
+    bVers ~ normal(0, 3);
     for ( i in 1:N ) {
         phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bVers * dilemma_version[i];
         dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );

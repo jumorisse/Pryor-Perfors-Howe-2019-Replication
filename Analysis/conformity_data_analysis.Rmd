@@ -84,7 +84,7 @@ tidy_data <- raw_data %>%
    values_from = response
 ) %>%
   # renames variables for better understanding
-  rename(ingroup_norm = ingroup_info_a, daily_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, feeling_daily_dilemma = dilemma_decision1_5, feeling_philosophical_dilemma = dilemma_decision2_5) %>%
+  rename(ingroup_norm = ingroup_info_a, real_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, feeling_real_dilemma = dilemma_decision1_5, feeling_philosophical_dilemma = dilemma_decision2_5) %>%
   # checks whether all 3 understanding checks were answered correctly
   mutate(
       passed_understanding_check = case_when(
@@ -95,13 +95,13 @@ tidy_data <- raw_data %>%
   select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
   # creates ingroup_daily and ingroup_philo variables that contain the ingroup norm in the rows of their dilemma version
   mutate(
-    ingroup_daily = case_when(
-      !is.na(daily_dilemma) ~ ingroup_norm
+    ingroup_real = case_when(
+      !is.na(real_dilemma) ~ ingroup_norm
     ),
     ingroup_philo = case_when(
       !is.na(philosophical_dilemma) ~ ingroup_norm
     )) %>%
-  # removes the ingroup_norm variable (information now stored in ingroup_philo and ingroup_daily)
+  # removes the ingroup_norm variable (information now stored in ingroup_philo and ingroup_real)
   select(-ingroup_norm) %>%
   # replaces na values by the existing value of the respective variable in other rows of the subject
   group_by(submission_id) %>%
@@ -111,42 +111,42 @@ tidy_data <- raw_data %>%
     statement_rating_1 = unique(statement_rating_1[!is.na(statement_rating_1)]),
     philosophical_dilemma = unique(philosophical_dilemma[!is.na(philosophical_dilemma)]),
     feeling_philosophical_dilemma = unique(feeling_philosophical_dilemma[!is.na(feeling_philosophical_dilemma)]),
-    daily_dilemma = unique(daily_dilemma[!is.na(daily_dilemma)]),
-    feeling_daily_dilemma = unique(feeling_daily_dilemma[!is.na(feeling_daily_dilemma)]),
+    real_dilemma = unique(real_dilemma[!is.na(real_dilemma)]),
+    feeling_real_dilemma = unique(feeling_real_dilemma[!is.na(feeling_real_dilemma)]),
     group_ident_1 = unique(group_ident_1[!is.na(group_ident_1)]),
     group_ident_2 = unique(group_ident_2[!is.na(group_ident_2)]),
     passed_understanding_check = unique(passed_understanding_check[!is.na(passed_understanding_check)]),
-    ingroup_daily = unique(ingroup_daily[!is.na(ingroup_daily)]),
+    ingroup_real = unique(ingroup_real[!is.na(ingroup_real)]),
     ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
     ) %>%
   ungroup() %>% 
   # now the rows for each participant contain the same information, so they can be merged to obtain 1 row per participant
   unique() %>%
-  # creates the ingroup_norm for both daily and philo dilemma according to the coding of the original study: -1 if ingroup prefers active action (e.g. changing the direction of the train) and 1 if ingroup prefers passive action (e.g. not changing the direction of the train)
+  # creates the ingroup_norm for both realistic and philosophical dilemma according to the coding of the original study: -1 if ingroup prefers active action (e.g. changing the direction of the train) and 1 if ingroup prefers passive action (e.g. not changing the direction of the train)
   mutate(
-    ingroup_norm_daily = case_when(
-      ingroup_daily == TRUE ~ -1,
-      ingroup_daily == FALSE ~ 1,
+    ingroup_norm_real = case_when(
+      ingroup_real == TRUE ~ -1,
+      ingroup_real == FALSE ~ 1,
     ),
     ingroup_norm_philo = case_when(
       ingroup_philo == TRUE ~ -1,
       ingroup_philo == FALSE ~ 1,
     )) %>%
   # the variables used for creating the ingroup_norm variable in the previous step can now be dropped (info is contained in ingroup_norm)
-  select(-ingroup_daily, -ingroup_philo) %>%
+  select(-ingroup_real, -ingroup_philo) %>%
   # change all logical variables to numeric variables (TRUE ~ 1 and FALSE ~ 0)
   mutate_if(is.logical,as.numeric) %>%
   # changes format so that there are two rows per participant (one for each dilemma) and creates the variable dilemma_version (denoting the type of dilemma) and dilemma_rating (the participant's decision for that dilemma)
   pivot_longer(
     cols = c(6, 8),
-    names_to = "dilemma_version",
+    names_to = "dilemma_type",
     values_to = "dilemma_rating"
   ) %>%
   mutate(
     # now that we have one row per dilemma, the two ingroup_norm variables (daily and philo) can be reduced to one ingroup_norm variable
     ingroup_norm = case_when(
-      dilemma_version == "philosophical_dilemma" ~ ingroup_norm_philo,
-      dilemma_version == "daily_dilemma" ~ ingroup_norm_daily
+      dilemma_type == "philosophical_dilemma" ~ ingroup_norm_philo,
+      dilemma_type == "real_dilemma" ~ ingroup_norm_real
     ),
     # creates variable that indicates whether the subject identifies with its ingroup
     ingroup_agree = case_when(
@@ -164,14 +164,7 @@ tidy_data <- raw_data %>%
     )
   ) %>%
   # removes ingroup_norm_daily and ingroup_norm_philo used for creating the one ingroup_norm variable
-   select(-ingroup_norm_daily, -ingroup_norm_philo) %>%
-  # transform(dilemma_rating = as.numeric(dilemma_rating)) %>%
-  # mutate(
-  #     dilemma_version = case_when(
-  #       dilemma_version == "daily_dilemma" ~ 1,
-  #       dilemma_version == "philosophical_dilemma" ~ 2,
-  #     )
-  #   ) %>%
+   select(-ingroup_norm_real, -ingroup_norm_philo) %>%
   # corrects the type of integer variables
   mutate(
       submission_id = as.integer(submission_id),
@@ -184,7 +177,7 @@ tidy_data <- raw_data %>%
       topic_choice_1 = as.integer(topic_choice_1),
       group_ident_1 = as.integer(group_ident_1),
       group_ident_2 = as.integer(group_ident_2),
-      feeling_daily_dilemma = as.integer(feeling_daily_dilemma),
+      feeling_real_dilemma = as.integer(feeling_real_dilemma),
       feeling_philosophical_dilemma = as.integer(feeling_philosophical_dilemma),
       passed_understanding_check = as.integer(passed_understanding_check)
     )
@@ -195,7 +188,7 @@ tidy_data
 
 ```{r}
 # counts all participants that indicated that there native language is not German
-language_summary <- tidy_data %>% filter(dilemma_version == 'daily_dilemma') %>% 
+language_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>% 
   summarise(
     not_german_native_speaker = sum(languages == 'Andere')
   )
@@ -204,7 +197,7 @@ language_summary
 tidy_data <- tidy_data %>% filter(languages != 'Andere')
 
 # creates a summary of how many participant were exluded for either or both reasons
-exclusion_summary <- tidy_data %>% filter(dilemma_version == 'daily_dilemma') %>%
+exclusion_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>%
   summarise(
     failed_understanding_check = sum(passed_understanding_check == 0 & !between(statement_rating_1, -2, 2)),
     too_low_statement_rating = sum(between(statement_rating_1, -2, 2) & passed_understanding_check != 0),
@@ -353,14 +346,16 @@ bf(marg_lik_sct, marg_lik_sct)
 ```
 # Exploratory Analysis
 
-## Preparing Data for the Exploratory Analysis
+## Checking for Possible Main Effect of the Type of Dilemma (dilemma_version)
+
+### Preparing Data for the Extending the Models with a dilemma_version Term
 ```{r}
 explor_data <- cleaned_data %>% mutate(
-  dilemma_version = case_when(
-    dilemma_version == 'philosophical_dilemma' ~ 1,
-    dilemma_version == 'daily_dilemma' ~ -1
+  dilemma_type = case_when(
+    dilemma_type == 'philosophical_dilemma' ~ 1,
+    dilemma_type == 'real_dilemma' ~ -1
   ),
-  dilemma_version = as.integer(dilemma_version)
+  dilemma_type = as.integer(dilemma_type)
 )
 explor_data
 
@@ -368,7 +363,7 @@ explor_stan_data <- as.list(c(explor_data, N = dim(explor_data)[1]))
 ```
 
 
-## Extending the Models with the Dilemma Version Main-Effect
+### Extending the Alternative Model with a Dilemma Version Main-Effect
 
 ```{r}
 
@@ -379,13 +374,13 @@ data{
     int dilemma_rating[N];
     int both_infos[N];
     int ingroup_norm[N];
-    int dilemma_version[N];
+    int dilemma_type[N];
 }
 parameters{
     ordered[5] cutpoints;
     real<lower=0> bIn;
     real bBoth;
-    real bVers;
+    real bTyp;
 }
 transformed parameters{
     real bOut = -1.4166666667 * bIn;
@@ -395,9 +390,9 @@ model{
     cutpoints ~ normal( 0 , 10 );
     bIn ~ normal( 0.816 , 0.5 );
     bBoth ~ normal( 0 , 0.5 );
-    bVers ~ uniform(-1, 1);
+    bTyp ~ normal(0, 3);
     for ( i in 1:N ) {
-        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bVers * dilemma_version[i];
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bTyp * dilemma_type[i];
         dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
     }
 }
@@ -407,7 +402,7 @@ generated quantities{
     vector[N] log_lik;
     dev = 0;
     for ( i in 1:N ) {
-        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bVers * dilemma_version[i];
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bTyp * dilemma_type[i];
     dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
     log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
     }
@@ -419,15 +414,22 @@ explor_alternative_model <- "explor_alternative_model.stan"
 ```{r}
 explor_stanfit_alt <- stan(file = explor_alternative_model, data = explor_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 
-explor_brms_fit_alt <- brm(dilemma_rating ~ dilemma_version + ingroup_norm * both_infos, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_alt, save_all_pars = TRUE)
+explor_brms_fit_alt <- brm(dilemma_rating ~ dilemma_type + ingroup_norm * both_infos, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_alt, save_all_pars = TRUE)
 ```
 
+#### Does inlcuding the dilemma_version term helps the alternative model to better explain the data?
 ```{r}
 marg_lik_explor_alt <- brms::bridge_sampler(samples = explor_brms_fit_alt)
 
 bf(marg_lik_explor_alt,marg_lik_alt)
 ```
 
+#### What direction does a possible dilemma_version effect have in the alternative model?
+```{r}
+summary(explor_brms_fit_alt)
+```
+
+### Extending the SCT Model with a Dilemma Version Main-Effect
 
 ```{r}
 write("
@@ -438,13 +440,13 @@ data{
     int ingroup_norm[N];
     int ingroup_agree[N];
     int outgroup_disagree[N];
-    int dilemma_version[N];
+    int dilemma_type[N];
 }
 parameters{
     real<lower=0> bIn;
     real bBoth;
     real<lower=0> bOut;
-    real bVers;
+    real bTyp;
     ordered[5] cutpoints;
 }
 model{
@@ -453,9 +455,9 @@ model{
     bBoth ~ normal( 0 , 0.5 );
     bOut ~ normal( 0 , 0.5 );
     bIn ~ normal( 0.6/0.75 * 1.02 , 0.5 );
-    bVers ~ uniform(-1, 1);
+    bTyp ~ normal(0, 3);
     for ( i in 1:N ) {
-        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bVers * dilemma_version[i];
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bTyp * dilemma_type[i];
         dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
     }
 }
@@ -465,7 +467,7 @@ generated quantities{
     vector[N] log_lik;
     dev = 0;
     for ( i in 1:N ) {
-        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bVers * dilemma_version[i];
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bTyp * dilemma_type[i];
         dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
         log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
     }
@@ -477,11 +479,67 @@ explor_sct_model <- "explor_sct_model.stan"
 ```{r}
 explor_stanfit_sct <- stan(file = explor_sct_model, data = explor_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
 
-explor_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree + dilemma_version, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_sct, save_all_pars = TRUE)
+explor_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree + dilemma_type, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_sct, save_all_pars = TRUE)
 ```
 
+#### Does inlcuding the dilemma_version term helps the sct-model to better explain the data?
 ```{r}
 marg_lik_explor_sct <- brms::bridge_sampler(samples = explor_brms_fit_sct)
 
 bf(marg_lik_explor_sct,marg_lik_sct)
 ```
+
+#### What direction does a possible dilemma_version effect have in the sct-model?
+```{r}
+summary(explor_brms_fit_sct)
+```
+
+## Investigating Performance of Competing Models for each Dilemma Type
+
+### Splitting the dataset via the dilemma_version variable and preparing the new datasets for the stan models
+```{r}
+real_data <- cleaned_data %>% filter(dilemma_type == 'real_dilemma')
+philo_data <- cleaned_data %>% filter(dilemma_type == 'philosophical_dilemma')
+
+real_stan_data <- as.list(c(real_data, N = dim(real_data)[1]))
+philo_stan_data <- as.list(c(philo_data, N = dim(philo_data)[1]))
+```
+
+### Fitting the alternative models
+```{r}
+real_stanfit_alt <- stan(file = alternative_model, data = real_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+philo_stanfit_alt <- stan(file = alternative_model, data = philo_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+
+real_brms_fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = real_data, family = cumulative('logit'), fit = real_stanfit_alt, save_all_pars = TRUE)
+philo_brms_fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = philo_data, family = cumulative('logit'), fit = philo_stanfit_alt, save_all_pars = TRUE)
+```
+
+### Fitting the sct models
+```{r}
+real_stanfit_sct <- stan(file = sct_model, data = real_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+philo_stanfit_sct <- stan(file = sct_model, data = philo_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+
+real_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = real_data, family = cumulative('logit'), fit = real_stanfit_sct, save_all_pars = TRUE)
+philo_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = philo_data, family = cumulative('logit'), fit = philo_stanfit_sct, save_all_pars = TRUE)
+```
+
+### Comparing the models for the realistic dilemma decisions
+```{r}
+real_marg_lik_sct <- brms::bridge_sampler(samples = real_brms_fit_sct)
+real_marg_lik_alt <- brms::bridge_sampler(samples = real_brms_fit_alt)
+
+bf(real_marg_lik_alt,real_marg_lik_sct)
+bf(real_marg_lik_sct,real_marg_lik_alt)
+```
+
+### Comparing the models for the philosophical dilemma decisions
+```{r}
+philo_marg_lik_sct <- brms::bridge_sampler(samples = philo_brms_fit_sct)
+philo_marg_lik_alt <- brms::bridge_sampler(samples = philo_brms_fit_alt)
+
+bf(philo_marg_lik_alt,philo_marg_lik_sct)
+bf(philo_marg_lik_sct,philo_marg_lik_alt)
+```
+
