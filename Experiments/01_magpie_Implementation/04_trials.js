@@ -27,7 +27,7 @@ const trial_info = {
       ],
     dilemma_decision_1:[
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Tempolimit zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -36,7 +36,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Tempolimit nicht zustimmen, entschieden sich, zur Polizei zu gehen',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug Datenschutz zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -45,7 +45,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug Datenschutz nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Gendern zustimmen, entschieden sich, zur Polizei gehen.',
@@ -54,7 +54,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Gendern nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -63,7 +63,7 @@ const trial_info = {
         outgroup_b: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Vermögenssteuer nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf die Impfpflicht zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -72,7 +72,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf die Impfpflicht nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf Migration zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -81,7 +81,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf Migration nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis zustimmen, entschieden sich, zur Polizei zu gehen.',
@@ -90,7 +90,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf das Konsumieren von Cannabis nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
       {
-        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem er/sie sein Geständnis anvertrauen kann. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
+        dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
         optionA: 'Zur Polizei gehen und ihnen sagen, was du weißt.',
         optionB: 'Nichts sagen, weil du das Vertrauen eines Freundes nicht verraten willst.',
         ingroup_a: 'Etwa 60% der Teilnehmer, die dir in Bezug auf den Fleischkonsum zustimmen, entschieden sich, zur Polizei zu gehen.',

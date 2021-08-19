@@ -214,7 +214,7 @@ exclusion_summary
 cleaned_data <- tidy_data %>% 
   filter(!between(statement_rating_1, -2, 2)) %>%
   filter(passed_understanding_check == TRUE) %>% 
-  select(submission_id, dilemma_rating, both_infos, ingroup_norm, ingroup_agree, outgroup_disagree, dilemma_version)
+  select(submission_id, dilemma_rating, both_infos, ingroup_norm, ingroup_agree, outgroup_disagree, dilemma_type)
 
 cleaned_data
 ```
@@ -337,13 +337,7 @@ bf(marg_lik_alt,marg_lik_sct)
 bf(marg_lik_sct,marg_lik_alt)
 ```
 
-```{r}
-bf(marg_lik_alt, marg_lik_alt)
-```
 
-```{r}
-bf(marg_lik_sct, marg_lik_sct)
-```
 # Exploratory Analysis
 
 ## Checking for Possible Main Effect of the Type of Dilemma (dilemma_version)
