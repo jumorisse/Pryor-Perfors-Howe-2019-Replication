@@ -1,0 +1,224 @@
+---
+title: "01_data_preprocessing_pilot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, error = F, message = F, warning = F)
+
+```
+
+```{r libraries, include=FALSE, message=FALSE, warning=FALSE}
+
+# package for convenience functions (e.g. ggplot2, dplyr, etc.)
+library(tidyverse)
+
+# package for this course
+#library(aida)
+
+# package for Bayesian regression
+#library(brms)
+
+#library(rstan)
+
+#library(bridgesampling)
+
+# parallel execution of Stan code
+options(mc.cores = parallel::detectCores())
+
+# nicer global knitr options
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      cache = TRUE, fig.align = 'center')
+set.seed(1702)
+```
+
+
+```{r}
+# reads the raw experimental data
+raw_data <- read_csv('../../Data/01_pilot/01_raw_pilot_data.csv')
+
+raw_data
+```
+# Demographics
+
+```{r}
+# creates an overview of the demographics of the participants
+# CAUTION: Not mandatory for participants to enter these informations (therefore na values possible)
+demographics <- raw_data %>% filter(trial_name == 'topic_choice') %>%
+  summarize(N = length(submission_id),
+            num_provided_age = sum(!is.na(age)),
+            mean_age = mean(age, na.rm = TRUE),
+            min_age = min(age, na.rm = TRUE),
+            max_age = max(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            median_ag = median(age, na.rm = TRUE),
+            num_provided_gender = sum(!is.na(gender)),
+            num_males = sum(gender=="männlich", na.rm = TRUE),
+            num_females = sum(gender=="weiblich", na.rm = TRUE),
+            num_divers = sum(gender=="divers", na.rm = TRUE),
+            num_provided_education = sum(!is.na(education)),
+            num_lower_degree = sum(education == "Real- oder Hauptschulabschluss", na.rm = TRUE),
+            num_high_school_degree = sum(education == 'Abitur', na.rm = TRUE),
+            num_higher_degree = sum(education == 'Universitärer Abschluss', na.rm = TRUE),
+            num_provided_language = sum(!is.na(languages)),
+            num_german_native_speakers = sum(languages == 'Deutsch', na.rm = TRUE),
+            num_other_native_speakers = sum(languages == 'Andere', na.rm = TRUE)
+  )
+
+demographics
+```
+
+
+# Cleaning data
+
+```{r}
+tidy_data <- raw_data %>% 
+  # removes all trials in which the participant just presses a next button and all test submissions
+  filter(response != 'next', languages != 'TEST') %>%
+  # creates a trials variables that contains a descriptions of the trial in the shape trialName_trialNumber
+  mutate(trials = paste(trial_name, trial_number, sep = "_")) %>%
+  # removes variables unnecessary for further cleaning or analysis
+  select(-QUD, -RT, - startDate, - startTime, -age, -gender, -education, -question, -option1, -option2, -trial_name, -trial_number, -experiment_id) %>%
+  # changes the form so each trial gets its own column with the response as value
+  pivot_wider(
+   names_from = trials,
+   values_from = response
+) %>%
+  # renames variables for better understanding
+  rename(ingroup_norm = ingroup_info_a, real_dilemma = dilemma_decision1_4, philosophical_dilemma = dilemma_decision2_4, feeling_real_dilemma = dilemma_decision1_5, feeling_philosophical_dilemma = dilemma_decision2_5) %>%
+  # checks whether all 3 understanding checks were answered correctly
+  mutate(
+      passed_understanding_check = case_when(
+      understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."&
+      understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." &
+      understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
+  # removes the answers to the understanding checks (information if passed now contained in passed_understanding_check)
+  select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
+  # creates ingroup_daily and ingroup_philo variables that contain the ingroup norm in the rows of their dilemma version
+  mutate(
+    ingroup_real = case_when(
+      !is.na(real_dilemma) ~ ingroup_norm
+    ),
+    ingroup_philo = case_when(
+      !is.na(philosophical_dilemma) ~ ingroup_norm
+    )) %>%
+  # removes the ingroup_norm variable (information now stored in ingroup_philo and ingroup_real)
+  select(-ingroup_norm) %>%
+  # replaces na values by the existing value of the respective variable in other rows of the subject
+  group_by(submission_id) %>%
+  mutate(
+    both_infos = unique(both_infos[!is.na(both_infos)]),
+    topic_choice_1 = unique(topic_choice_1[!is.na(topic_choice_1)]),
+    statement_rating_1 = unique(statement_rating_1[!is.na(statement_rating_1)]),
+    philosophical_dilemma = unique(philosophical_dilemma[!is.na(philosophical_dilemma)]),
+    feeling_philosophical_dilemma = unique(feeling_philosophical_dilemma[!is.na(feeling_philosophical_dilemma)]),
+    real_dilemma = unique(real_dilemma[!is.na(real_dilemma)]),
+    feeling_real_dilemma = unique(feeling_real_dilemma[!is.na(feeling_real_dilemma)]),
+    group_ident_1 = unique(group_ident_1[!is.na(group_ident_1)]),
+    group_ident_2 = unique(group_ident_2[!is.na(group_ident_2)]),
+    passed_understanding_check = unique(passed_understanding_check[!is.na(passed_understanding_check)]),
+    ingroup_real = unique(ingroup_real[!is.na(ingroup_real)]),
+    ingroup_philo = unique(ingroup_philo[!is.na(ingroup_philo)])
+    ) %>%
+  ungroup() %>%
+  # now the rows for each participant contain the same information, so they can be merged to obtain 1 row per participant
+  unique() %>%
+  # creates the ingroup_norm for both realistic and philosophical dilemma according to the coding of the original study: -1 if ingroup prefers active action (e.g. changing the direction of the train) and 1 if ingroup prefers passive action (e.g. not changing the direction of the train)
+  mutate(
+    ingroup_norm_real = case_when(
+      ingroup_real == TRUE ~ -1,
+      ingroup_real == FALSE ~ 1,
+    ),
+    ingroup_norm_philo = case_when(
+      ingroup_philo == TRUE ~ -1,
+      ingroup_philo == FALSE ~ 1,
+    )) %>%
+  # the variables used for creating the ingroup_norm variable in the previous step can now be dropped (info is contained in ingroup_norm)
+  select(-ingroup_real, -ingroup_philo) %>%
+  # change all logical variables to numeric variables (TRUE ~ 1 and FALSE ~ 0)
+  mutate_if(is.logical,as.numeric) %>%
+  # changes format so that there are two rows per participant (one for each dilemma) and creates the variable dilemma_version (denoting the type of dilemma) and dilemma_rating (the participant's decision for that dilemma)
+  pivot_longer(
+    cols = c(6, 8),
+    names_to = "dilemma_type",
+    values_to = "dilemma_rating"
+  ) %>%
+  mutate(
+    # now that we have one row per dilemma, the two ingroup_norm variables (daily and philo) can be reduced to one ingroup_norm variable
+    ingroup_norm = case_when(
+      dilemma_type == "philosophical_dilemma" ~ ingroup_norm_philo,
+      dilemma_type == "real_dilemma" ~ ingroup_norm_real
+    ),
+    # creates variable that indicates whether the subject identifies with its ingroup
+    ingroup_agree = case_when(
+      statement_rating_1 <= 0 & group_ident_2 > 0 ~ 1,
+      statement_rating_1 >= 0 & group_ident_1 > 0 ~ 1,
+      statement_rating_1 <= 0 & group_ident_2 <= 0 ~ 0,
+      statement_rating_1 >= 0 & group_ident_1 <= 0 ~ 0,
+    ),
+    # create variable that indicates whether the subject does not identify with its outgroup (again: statement_rating_1 = 0 not necessary)
+    outgroup_disagree = case_when(
+      statement_rating_1 <= 0 & group_ident_1 < 0 ~ 1,
+      statement_rating_1 >= 0 & group_ident_2 < 0 ~ 1,
+      statement_rating_1 <= 0 & group_ident_1 >= 0 ~ 0,
+      statement_rating_1 >= 0 & group_ident_2 >= 0 ~ 0,
+    )
+  ) %>%
+  # removes ingroup_norm_daily and ingroup_norm_philo used for creating the one ingroup_norm variable
+   select(-ingroup_norm_real, -ingroup_norm_philo) %>%
+  # corrects the type of integer variables
+  mutate(
+      submission_id = as.integer(submission_id),
+      dilemma_rating = as.integer(dilemma_rating),
+      both_infos = as.integer(both_infos),
+      ingroup_norm = as.integer(ingroup_norm),
+      ingroup_agree = as.integer(ingroup_agree),
+      outgroup_disagree = as.integer(outgroup_disagree),
+      statement_rating_1 = as.integer(statement_rating_1),
+      topic_choice_1 = as.integer(topic_choice_1),
+      group_ident_1 = as.integer(group_ident_1),
+      group_ident_2 = as.integer(group_ident_2),
+      feeling_real_dilemma = as.integer(feeling_real_dilemma),
+      feeling_philosophical_dilemma = as.integer(feeling_philosophical_dilemma),
+      passed_understanding_check = as.integer(passed_understanding_check)
+    )
+
+
+tidy_data
+```
+
+```{r}
+# counts all participants that indicated that there native language is not German
+language_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>% 
+  summarise(
+    not_german_native_speaker = sum(languages == 'Andere')
+  )
+language_summary
+# removes those participants that are not German native speakers
+tidy_data <- tidy_data %>% filter(languages != 'Andere')
+
+# creates a summary of how many participant were exluded for either or both reasons
+exclusion_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>%
+  summarise(
+    failed_understanding_check = sum(passed_understanding_check == 0 & !between(statement_rating_1, -2, 2)),
+    too_low_statement_rating = sum(between(statement_rating_1, -2, 2) & passed_understanding_check != 0),
+    both = sum(passed_understanding_check == 0 & between(statement_rating_1, -2, 2)),
+    total = failed_understanding_check + too_low_statement_rating + both
+  )
+
+exclusion_summary
+```
+
+```{r}
+# removes any participant with a statement_rating_1 between (including) -2 and 2 and all that failed the understanding check
+# additionally selects the variables relevant for the analysis
+cleaned_data <- tidy_data %>% 
+  filter(!between(statement_rating_1, -2, 2)) %>%
+  filter(passed_understanding_check == TRUE) %>% 
+  select(submission_id, dilemma_rating, both_infos, ingroup_norm, ingroup_agree, outgroup_disagree, dilemma_type)
+
+cleaned_data
+
+write_csv(cleaned_data, '../../Data/01_pilot/02_cleaned_pilot_data.csv')
+```

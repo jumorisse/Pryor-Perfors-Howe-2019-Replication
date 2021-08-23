@@ -1,0 +1,9 @@
+submission_id,dilemma_rating,both_infos,ingroup_norm,ingroup_agree,outgroup_disagree,dilemma_type
+2371,3,0,1,1,1,philosophical_dilemma
+2371,4,0,-1,1,1,real_dilemma
+2370,2,1,1,1,1,philosophical_dilemma
+2370,3,1,-1,1,1,real_dilemma
+2369,4,0,1,0,1,philosophical_dilemma
+2369,3,0,-1,0,1,real_dilemma
+2368,4,1,1,1,1,philosophical_dilemma
+2368,3,1,1,1,1,real_dilemma

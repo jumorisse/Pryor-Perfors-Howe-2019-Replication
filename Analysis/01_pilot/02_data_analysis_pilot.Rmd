@@ -1,0 +1,352 @@
+---
+title: "conformity_data_analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, error = F, message = F, warning = F)
+
+```
+
+```{r libraries, include=FALSE, message=FALSE, warning=FALSE}
+
+# package for convenience functions (e.g. ggplot2, dplyr, etc.)
+library(tidyverse)
+
+# package for Bayesian regression
+library(brms)
+
+library(rstan)
+
+library(bridgesampling)
+
+# parallel execution of Stan code
+options(mc.cores = parallel::detectCores())
+
+# nicer global knitr options
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      cache = TRUE, fig.align = 'center')
+set.seed(1702)
+```
+
+# Analysis
+```{r}
+# loads the cleaned dataset
+cleaned_data <- read_csv('../../Data/01_pilot/02_cleaned_pilot_data.csv')
+# creates the dataset used for the stan models
+stan_data <- as.list(c(cleaned_data, N = dim(cleaned_data)[1]))
+```
+
+
+```{r}
+# creates the stan model for the alternative hypothesis
+write("
+data{
+    int<lower=1> N;
+    int dilemma_rating[N];
+    int both_infos[N];
+    int ingroup_norm[N];
+}
+parameters{
+    ordered[5] cutpoints;
+    real<lower=0> bIn;
+    real bBoth;
+}
+transformed parameters{
+    real bOut = -1.4166666667 * bIn;
+}
+model{
+    vector[N] phi;
+    cutpoints ~ normal( 0 , 10 );
+    bIn ~ normal( 0.816 , 0.5 );
+    bBoth ~ normal( 0 , 0.5 );
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i];
+        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+    }
+}
+generated quantities{
+    vector[N] phi;
+    real dev;
+    vector[N] log_lik;
+    dev = 0;
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i];
+    dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    }
+}", "../stan_models/01_alternative_model.stan")
+
+alternative_model <- "../stan_models/01_alternative_model.stan"
+```
+
+```{r}
+# fits the stan model for the alternative hypothesis
+stanfit_alt <- stan(file = alternative_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+# feeds the fitted stan model back into brms
+brms_fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = cleaned_data, family = cumulative('logit'), fit = stanfit_alt, save_all_pars = TRUE)
+```
+
+```{r}
+# creates the stan model for sct model
+write("
+data{
+    int<lower=1> N;
+    int dilemma_rating[N];
+    int both_infos[N];
+    int ingroup_norm[N];
+    int ingroup_agree[N];
+    int outgroup_disagree[N];
+}
+parameters{
+    real<lower=0> bIn;
+    real bBoth;
+    real<lower=0> bOut;
+    ordered[5] cutpoints;
+}
+model{
+    vector[N] phi;
+    cutpoints ~ normal( 0 , 10 );
+    bBoth ~ normal( 0 , 0.5 );
+    bOut ~ normal( 0 , 0.5 );
+    bIn ~ normal( 0.6/0.75 * 1.02 , 0.5 );
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i];
+        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+    }
+}
+generated quantities{
+    vector[N] phi;
+    real dev;
+    vector[N] log_lik;
+    dev = 0;
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i];
+        dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+        log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    }
+}", "../stan_models/02_sct_model.stan")
+
+sct_model <- "../stan_models/02_sct_model.stan"
+```
+
+```{r}
+# fits the stan model for the self-categorization theory (sct)
+stanfit_sct <- stan(file = sct_model, data = stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+# feeds the fitted stan model back into brms
+brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = cleaned_data, family = cumulative('logit'), fit = stanfit_sct, save_all_pars = TRUE)
+```
+
+
+```{r}
+# computes the marginal likelihoods
+marg_lik_sct <- brms::bridge_sampler(samples = brms_fit_sct)
+marg_lik_alt <- brms::bridge_sampler(samples = brms_fit_alt)
+
+# computes the bayes_factors (1st in favor of the alternative model and 2nd in favor of the sct model)
+bf(marg_lik_alt,marg_lik_sct)
+bf(marg_lik_sct,marg_lik_alt)
+```
+
+
+# Exploratory Analysis
+
+## Checking for Possible Main Effect of the Type of Dilemma (dilemma_version)
+
+### Preparing Data for the Extending the Models with a dilemma_version Term
+```{r}
+explor_data <- cleaned_data %>% mutate(
+  dilemma_type = case_when(
+    dilemma_type == 'philosophical_dilemma' ~ 1,
+    dilemma_type == 'real_dilemma' ~ -1
+  ),
+  dilemma_type = as.integer(dilemma_type)
+)
+explor_data
+
+explor_stan_data <- as.list(c(explor_data, N = dim(explor_data)[1]))
+```
+
+
+### Extending the Alternative Model with a Dilemma Version Main-Effect
+
+```{r}
+
+# creates the stan model for the alternative hypothesis
+write("
+data{
+    int<lower=1> N;
+    int dilemma_rating[N];
+    int both_infos[N];
+    int ingroup_norm[N];
+    int dilemma_type[N];
+}
+parameters{
+    ordered[5] cutpoints;
+    real<lower=0> bIn;
+    real bBoth;
+    real bTyp;
+}
+transformed parameters{
+    real bOut = -1.4166666667 * bIn;
+}
+model{
+    vector[N] phi;
+    cutpoints ~ normal( 0 , 10 );
+    bIn ~ normal( 0.816 , 0.5 );
+    bBoth ~ normal( 0 , 0.5 );
+    bTyp ~ normal(0, 3);
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bTyp * dilemma_type[i];
+        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+    }
+}
+generated quantities{
+    vector[N] phi;
+    real dev;
+    vector[N] log_lik;
+    dev = 0;
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] + bTyp * dilemma_type[i];
+    dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    }
+}", "../stan_models/03_explor_alternative_model.stan")
+
+explor_alternative_model <- "../stan_models/03_explor_alternative_model.stan"
+```
+
+```{r}
+explor_stanfit_alt <- stan(file = explor_alternative_model, data = explor_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+explor_brms_fit_alt <- brm(dilemma_rating ~ dilemma_type + ingroup_norm * both_infos, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_alt, save_all_pars = TRUE)
+```
+
+#### Does inlcuding the dilemma_version term helps the alternative model to better explain the data?
+```{r}
+marg_lik_explor_alt <- brms::bridge_sampler(samples = explor_brms_fit_alt)
+
+bf(marg_lik_explor_alt,marg_lik_alt)
+```
+
+#### What direction does a possible dilemma_version effect have in the alternative model?
+```{r}
+summary(explor_brms_fit_alt)
+```
+
+### Extending the SCT Model with a Dilemma Version Main-Effect
+
+```{r}
+write("
+data{
+    int<lower=1> N;
+    int dilemma_rating[N];
+    int both_infos[N];
+    int ingroup_norm[N];
+    int ingroup_agree[N];
+    int outgroup_disagree[N];
+    int dilemma_type[N];
+}
+parameters{
+    real<lower=0> bIn;
+    real bBoth;
+    real<lower=0> bOut;
+    real bTyp;
+    ordered[5] cutpoints;
+}
+model{
+    vector[N] phi;
+    cutpoints ~ normal( 0 , 10 );
+    bBoth ~ normal( 0 , 0.5 );
+    bOut ~ normal( 0 , 0.5 );
+    bIn ~ normal( 0.6/0.75 * 1.02 , 0.5 );
+    bTyp ~ normal(0, 3);
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bTyp * dilemma_type[i];
+        dilemma_rating[i] ~ ordered_logistic( phi[i] , cutpoints );
+    }
+}
+generated quantities{
+    vector[N] phi;
+    real dev;
+    vector[N] log_lik;
+    dev = 0;
+    for ( i in 1:N ) {
+        phi[i] = bIn * ingroup_norm[i] * ingroup_agree[i] + bBoth * both_infos[i] + bOut * both_infos[i] * ingroup_norm[i] * outgroup_disagree[i] + bTyp * dilemma_type[i];
+        dev = dev + (-2)*ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+        log_lik[i] = ordered_logistic_lpmf( dilemma_rating[i] | phi[i] , cutpoints );
+    }
+}", "../stan_models/04_explor_sct_model.stan")
+
+explor_sct_model <- "../stan_models/04_explor_sct_model.stan"
+```
+
+```{r}
+explor_stanfit_sct <- stan(file = explor_sct_model, data = explor_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+explor_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree + dilemma_type, data = explor_data, family = cumulative('logit'), fit = explor_stanfit_sct, save_all_pars = TRUE)
+```
+
+#### Does inlcuding the dilemma_version term helps the sct-model to better explain the data?
+```{r}
+marg_lik_explor_sct <- brms::bridge_sampler(samples = explor_brms_fit_sct)
+
+bf(marg_lik_explor_sct,marg_lik_sct)
+```
+
+#### What direction does a possible dilemma_version effect have in the sct-model?
+```{r}
+summary(explor_brms_fit_sct)
+```
+
+## Investigating Performance of Competing Models for each Dilemma Type
+
+### Splitting the dataset via the dilemma_version variable and preparing the new datasets for the stan models
+```{r}
+real_data <- cleaned_data %>% filter(dilemma_type == 'real_dilemma')
+philo_data <- cleaned_data %>% filter(dilemma_type == 'philosophical_dilemma')
+
+real_stan_data <- as.list(c(real_data, N = dim(real_data)[1]))
+philo_stan_data <- as.list(c(philo_data, N = dim(philo_data)[1]))
+```
+
+### Fitting the alternative models
+```{r}
+real_stanfit_alt <- stan(file = alternative_model, data = real_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+philo_stanfit_alt <- stan(file = alternative_model, data = philo_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+
+real_brms_fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = real_data, family = cumulative('logit'), fit = real_stanfit_alt, save_all_pars = TRUE)
+philo_brms_fit_alt <- brm(dilemma_rating ~ ingroup_norm * both_infos, data = philo_data, family = cumulative('logit'), fit = philo_stanfit_alt, save_all_pars = TRUE)
+```
+
+### Fitting the sct models
+```{r}
+real_stanfit_sct <- stan(file = sct_model, data = real_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+philo_stanfit_sct <- stan(file = sct_model, data = philo_stan_data, iter = 10000, chains = 4,  warmup = 500, seed =123, control=list(adapt_delta = 0.99))
+
+
+real_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = real_data, family = cumulative('logit'), fit = real_stanfit_sct, save_all_pars = TRUE)
+philo_brms_fit_sct <- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree, data = philo_data, family = cumulative('logit'), fit = philo_stanfit_sct, save_all_pars = TRUE)
+```
+
+### Comparing the models for the realistic dilemma decisions
+```{r}
+real_marg_lik_sct <- brms::bridge_sampler(samples = real_brms_fit_sct)
+real_marg_lik_alt <- brms::bridge_sampler(samples = real_brms_fit_alt)
+
+bf(real_marg_lik_alt,real_marg_lik_sct)
+bf(real_marg_lik_sct,real_marg_lik_alt)
+```
+
+### Comparing the models for the philosophical dilemma decisions
+```{r}
+philo_marg_lik_sct <- brms::bridge_sampler(samples = philo_brms_fit_sct)
+philo_marg_lik_alt <- brms::bridge_sampler(samples = philo_brms_fit_alt)
+
+bf(philo_marg_lik_alt,philo_marg_lik_sct)
+bf(philo_marg_lik_sct,philo_marg_lik_alt)
+```
+
