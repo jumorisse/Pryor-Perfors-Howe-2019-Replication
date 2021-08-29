@@ -26,6 +26,21 @@ raw_data <- read_csv('../../Data/02_main/01_raw_main_data.csv')
 
 raw_data
 ```
+
+# Removes participants whose data was falsely recorded
+```{r}
+raw_data <- raw_data %>% group_by(submission_id) %>% mutate(
+  data_error = case_when(
+    trial_number == 4 & is.na(response) ~ TRUE,
+    trial_number == 4 & !is.na(response) ~ FALSE,
+  )) %>% mutate(
+    data_error = unique(data_error[!is.na(data_error)])
+  ) %>% filter(data_error == FALSE) %>% select(-data_error) %>% ungroup()
+
+raw_data
+```
+
+
 # Demographics
 
 ```{r}
@@ -78,7 +93,10 @@ tidy_data <- raw_data %>%
       passed_understanding_check = case_when(
       understanding_check_1 == "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."&
       understanding_check_2 == "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." &
-      understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE)) %>%
+      understanding_check_3 == "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ TRUE,
+      understanding_check_1 != "Es ist irrelevant, wie lange du für deine Antworten benötigt hast."|
+      understanding_check_2 != "Anfangs wurden dir mehrere Themen zur Auswahl gestellt." |
+      understanding_check_3 != "Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar." ~ FALSE)) %>%
   # removes the answers to the understanding checks (information if passed now contained in passed_understanding_check)
   select(-understanding_check_1, -understanding_check_2, -understanding_check_3) %>%
   # creates ingroup_daily and ingroup_philo variables that contain the ingroup norm in the rows of their dilemma version
