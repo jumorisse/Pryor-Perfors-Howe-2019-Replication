@@ -13,8 +13,8 @@ For more details see..
 
 ## Implementation
 
-The experiment was implemented using _magpie.
+The experiment was implemented using _magpie. All files related to the _magpie implementation can be found under Experiments/02_main/01_magpie_implementation_main .
 
 ## Running the Experiment
 
-To run the experiment..
+To run the experiment visit https://group-15-main.netlify.app/ .
