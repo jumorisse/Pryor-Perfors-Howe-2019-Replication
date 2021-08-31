@@ -120,9 +120,9 @@ dilemma_decision_plot_real
 dilemma_decision_plot_philo <- ggplot()+
     geom_col(data=means_philo, aes(x=ingroup_norm, y=meanResponse, fill=factor(ingroup_norm)), width=vertical_bar_width, alpha=0.5) +
     geom_rect(data=props_philo, aes(xmin=xmin, ymin=ymin, xmax=xmax, ymax=ymax, group=ingroup_norm), fill = "#9c9d9e", alpha = 0.6) +
-    scale_y_continuous(name="Preference", limits=c(1,6), oob = rescale_none, breaks = 1:6, labels=c("Definitely \n Report", "","","","", "Definitely \n leave alone")) + 
-    scale_x_continuous(name = "Ingroup Norm", breaks=c(-1,1), labels=c("Report", "Not Report"))+
-    scale_fill_manual(breaks = c(-1, 1), labels=c("Report", "Not Report"), values = c("#3148f7", "#35b5ff")) +
+    scale_y_continuous(name="Preference", limits=c(1,6), oob = rescale_none, breaks = 1:6, labels=c("Definitely \n Diverting Train", "","","","", "Definitely \n Not Diverting Train")) + 
+    scale_x_continuous(name = "Ingroup Norm", breaks=c(-1,1), labels=c("Divert Train", "Not Divert Train"))+
+    scale_fill_manual(breaks = c(-1, 1), labels=c("Divert Train", "Not Divert Train"), values = c("#3148f7", "#35b5ff")) +
     facet_wrap(~both_infos) + 
     scale_alpha(range = c(0, 1)) +
     theme(panel.spacing = unit(4, "lines"),
