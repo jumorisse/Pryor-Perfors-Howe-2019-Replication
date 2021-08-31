@@ -2,6 +2,6 @@
 ## Content
 Contains all R scripts used for preprocessing and analysing the data from the pilot run of our study.
 ## Files
-01_data_preprocessing_pilot.rmd: R script for tidying and cleaning the data as well as producing summaries of demographics and exclusions of the pilot data.
+01_data_preprocessing_pilot.Rmd: R script for tidying and cleaning the data as well as producing summaries of demographics and exclusions of the pilot data.
 
-02_data_analysis_pilot.rmd: R script for performing the main analysis and also the exploratory analysis with the data from our pilot study.
+02_data_analysis_pilot.Rmd: R script for performing the main analysis and also the exploratory analysis with the data from our pilot study.
