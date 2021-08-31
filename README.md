@@ -17,4 +17,4 @@ The experiment was implemented using _magpie.
 
 ## Running the Experiment
 
-To run the experiment..
+To run the experiment visit https://group-15-main.netlify.app/ .
