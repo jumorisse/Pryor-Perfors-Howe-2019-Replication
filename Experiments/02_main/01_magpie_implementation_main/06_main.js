@@ -13,7 +13,7 @@ $("document").ready(function() {
     // e.g. >> window.magpie_monitor or window.magpie_monitor.findNextView()
     // in all other modes null will be returned
     window.magpie_monitor = magpieInit({
-        // You have to specify all views you want to use in this experiment and the order of them
+        // Here we specify all views we are using and their order
         views_seq: [
             intro,
             post_test,
@@ -26,7 +26,7 @@ $("document").ready(function() {
             group_ident,
             thanks,
         ],
-        // Here, you can specify all information for the deployment
+        // Here we specify the deployment info.
         deploy: {
             experimentID: "283",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
@@ -35,9 +35,8 @@ $("document").ready(function() {
             // As well as "MTurk", "MTurkSandbox" and "Prolific"
             deployMethod: "debug",
             contact_email: "jmorisse@uni-osnabrueck.de",
-            //prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },
-        // Here, you can specify how the progress bar should look like
+        // We don't incorporate a progress bar.
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar

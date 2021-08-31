@@ -1,36 +1,17 @@
-// In this file you can instantiate your views
-// We here first instantiate wrapping views, then the trial views
-
-
-/** Wrapping views below
-
-* Obligatory properties
-
-    * trials: int - the number of trials this view will appear
-    * name: string
-
-*Optional properties
-    * buttonText: string - the text on the button (default: 'next')
-    * text: string - the text to be displayed in this view
-    * title: string - the title of this view
-
-    * More about the properties and functions of the wrapping views - https://magpie-ea.github.io/magpie-docs/01_designing_experiments/01_template_views/#wrapping-views
-
-*/
+// In this file you can find all instantiations of the views.
 
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
 const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
   title: '',
-  // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside margin-top: 10%; font-size: 30px; margin-left: 30%;
   text: `<h1 style="margin-top: 10%; text-align: center" class='magpie-view-title'>Willkommen zu unserem Experiment!</h1>
          <p style="margin-top: 5%; font-size: 25px; text-align: center">Vielen Dank, dass du an unserer Studie teilnimmst.</p>
             `,
   buttonText: 'Weiter zu der Anleitung'
 });
 
-// For most tasks, you need instructions views
+// After the introduction, the users are shown instructions on how to complete this experiment.
 const instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions',
@@ -48,6 +29,7 @@ const instructions = magpieViews.view_generator("instructions", {
   buttonText: 'Beginne mit dem Experiment'
 });
 
+// The post_test view asks the user to enter data about age, gender, education and language.
 const post_test = custom_post(
   {
     trials: 1,
@@ -71,29 +53,8 @@ const post_test = custom_post(
   }
 );
 
-// In the post test questionnaire you can ask your participants addtional questions
-/*const post_test = magpieViews.view_generator("post_test", {
-  trials: 1,
-  name: 'post_test',
-  title: 'Persönliche Informationen',
-  text: `Bitte trage die folgenden Informationen ein. <br/> Alle Eingaben sind anonymisiert!`,
-  age_question: 'Alter',
-  gender_question: 'Geschlecht',
-  gender_male: 'männlich',
-  gender_female: 'weiblich',
-  gender_other: 'divers',
-  edu_question: 'Höchster Bildungsabschluss',
-  edu_graduated_lower_degree: 'Real- oder Hauptschulabschluss',
-  edu_graduated_high_school: 'Abitur',
-  edu_graduated_college: 'Hochschulabschluss',
-  edu_higher_degree: 'Universitärer Abschluss',
-  languages_question: 'Muttersprache',
-  buttonText: 'Weiter',
-  // comments_question: 'Weitere Kommentare'
-});
-*/
-
-const topic_choice = custom_press_a_button(
+// In the topic_choice view the user is asked to choose on of 8 topics.
+const topic_choice = custom_topic_choice(
     // config information
     {
         trials: trial_info.topic_choice.length,
@@ -102,6 +63,7 @@ const topic_choice = custom_press_a_button(
     }
 );
 
+// In the statement_rating view the user is asked to rate how much they agree with a statement that is related to their chosen topic.
 const statement_rating = custom_statement_rating(
     // config information
     {
@@ -111,6 +73,7 @@ const statement_rating = custom_statement_rating(
     }
 );
 
+// A view that gives more instructions specifically for the dilemma decsion views.
 const dilemma_instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'dilemma_instructions1',
@@ -122,6 +85,7 @@ const dilemma_instructions = magpieViews.view_generator("instructions", {
   buttonText: 'Weiter zum Dilemma'
 });
 
+// In the dilemma_decision1 view, the user is confronted with the realistic dilemma.
 const dilemma_decision1 = custom_dilemma_decision(
   {
     trials: 5,
@@ -130,14 +94,7 @@ const dilemma_decision1 = custom_dilemma_decision(
   }
 );
 
-const rate_feeling1 = magpieViews.view_generator('slider_rating',
-  {
-    trials: trial_info.feeling_options.length,
-    name: 'rate_feeling1',
-    data: trial_info.feeling_options
-  }
-);
-
+// In the dilemma_decision1 view, the user is confronted with the philosophical dilemma.
 const dilemma_decision2 = custom_dilemma_decision(
   {
     trials: 5,
@@ -146,14 +103,7 @@ const dilemma_decision2 = custom_dilemma_decision(
   }
 );
 
-const rate_feeling2 = magpieViews.view_generator('slider_rating',
-  {
-    trials: trial_info.feeling_options.length,
-    name: 'rate_feeling2',
-    data: trial_info.feeling_options
-  }
-);
-
+// In the understanding_check view the user is asked three questions to check whether they were following the experiment properly.
 const understanding_check = magpieViews.view_generator('sentence_choice',
   {
     trials: trial_info.understanding_checks.length,
@@ -161,6 +111,8 @@ const understanding_check = magpieViews.view_generator('sentence_choice',
     data: trial_info.understanding_checks
   }
 )
+
+// In the group_ident view it is checked whether the user actually identifies with its supposed ingroup and whether the user does not identifie with its outgroup.
 const group_ident = group_identification(
   {
     trials: 2,

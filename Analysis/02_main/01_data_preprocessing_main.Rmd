@@ -200,8 +200,6 @@ mutate(
 
 
 tidy_data
-
-n_distinct(tidy_data$submission_id)
 ```
 
 ```{r}

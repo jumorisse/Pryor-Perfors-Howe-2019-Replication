@@ -1,13 +1,8 @@
-// In this file you can create your own custom view templates
+// This file contains the templates of all customized views_seq
 
-
-// A view template is a function that returns a view,
-// this functions gets some config (e.g. trial_data, name, etc.) information as input
-// A view is an object, that has a name, CT (the counter of how many times this view occurred in the experiment),
-// trials the maximum number of times this view is repeated
-// and a render function, the render function gets CT and the magpie-object as input
-// and has to call magpie.findNextView() eventually to proceed to the next view (or the next trial in this view),
-// if it is an trial view it also makes sense to call magpie.trial_data.push(trial_data) to save the trial information
+// Custom Post View
+//
+// Asks the participant to enter info on their age, gender, education and language. Once entered (or not) the user continues by clicking 'weiter'.
 const custom_post = function(config) {
     const view = {
         name: config.name,
@@ -16,12 +11,7 @@ const custom_post = function(config) {
         data: config.data,
         // The render functions gets the magpie object as well as the current trial in view counter as input
         render: function (CT, magpie) {
-            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
-            // to proceed to the next view and if it is an trial type view,
-            // you should save the trial information with magpie.trial_data.push(trial_data)
-
-            // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT)
+          // html defining how the view will look and what will be asked and offered as answer options
             $("main").html(`
                 <div class='magpie-view'>
                 <div class='magpie-view magpie-post-test-view'>
@@ -63,9 +53,8 @@ const custom_post = function(config) {
                     </p>
                     <button id="next" class='magpie-view-button'>${config.button_text}</button>
                 </div>`);
-            // This function will handle  the response
+            // This function will handle  the participants' response
             const handle_click = function(e) {
-                // We will just save the response and continue to the next view
                 // prevents the form from submitting
                 e.preventDefault();
 
@@ -75,21 +64,21 @@ const custom_post = function(config) {
                 magpie.global_data.education = $("#education").val();
                 magpie.global_data.languages = $("#languages").val();
 
-                // Now, we will continue with the next view
+                // continue with the next view
                 magpie.findNextView();
             };
-
-            // We will add the handle_click functions to both buttons
+            // the handle_click function will be executed once the participant presses 'next'
             $('#next').on("click", handle_click);
-
-            // That's everything for this view
         }
     };
     // We have to return the view, so that it can be used in 05_views.js
     return view;
 };
 
-const custom_press_a_button = function(config) {
+// Custom Topic Choice view
+//
+// Builds up on the button choice view and asks the participant to choose one topic. View ends once the user clicks on a topic.
+const custom_topic_choice = function(config) {
     const view = {
         name: config.name,
         CT: 0,
@@ -97,12 +86,7 @@ const custom_press_a_button = function(config) {
         data: config.data,
         // The render functions gets the magpie object as well as the current trial in view counter as input
         render: function (CT, magpie) {
-            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
-            // to proceed to the next view and if it is an trial type view,
-            // you should save the trial information with magpie.trial_data.push(trial_data)
-
-            // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT)
+            // html defining how the 8 different topics will be displayed and coded
             $("main").html(`
                 <div class='magpie-view'>
                 <h1 style=" margin-bottom: -8%" class='magpie-view-title'>Welches Thema interessiert dich am meisten?</h1>
@@ -121,14 +105,12 @@ const custom_press_a_button = function(config) {
                 </div>`);
             // This function will handle  the response
             const handle_click = function(e) {
-                // We will just save the response and continue to the next view
+                // we record the trial name, number and the user's response as trial_data
                 let trial_data = {
                     trial_name: config.name,
                     trial_number: CT + 1,
                     response: e.target.id
                 };
-                // Often it makes sense to also save the config information
-                // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
                 // Here, we save the trial_data
                 magpie.trial_data.push(trial_data);
@@ -138,7 +120,7 @@ const custom_press_a_button = function(config) {
                 console.log(magpie);
             };
 
-            // We will add the handle_click functions to both buttons
+            // We will add the handle_click functions to all 8 buttons
             $('#0').on("click", handle_click);
             $('#1').on("click", handle_click);
             $('#2').on("click", handle_click);
@@ -148,14 +130,16 @@ const custom_press_a_button = function(config) {
             $('#6').on("click", handle_click);
             $('#7').on("click", handle_click);
             $('#8').on("click", handle_click);
-
-            // That's everything for this view
         }
     };
     // We have to return the view, so that it can be used in 05_views.js
     return view;
 };
 
+// Custom Statement Rating View
+//
+// Building up on the rating scale view.
+// Shows the user a statement about their previously chosen topic and asks the user to rate how much they agree with the shown statement.
 const custom_statement_rating = function(config) {
     const view = {
         name: config.name,
@@ -165,15 +149,7 @@ const custom_statement_rating = function(config) {
         // The render functions gets the magpie object as well as the current trial in view counter as input
         render: function (CT, magpie) {
             var response = magpie.trial_data[0].response;
-            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
-            // to proceed to the next view and if it is an trial type view,
-            // you should save the trial information with magpie.trial_data.push(trial_data)
-
-            // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${magpie.trial_data[0].response} or ${config.data[response]}
-
-            // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
-            // <p class='magpie-view-question magpie-view-qud'>TEST</p>
+            // html for showing the statement based on the user's response in the topic choice and displaying the rating scale.
             $("main").html(`
                     <div class='magpie-view'>
                     <h1 class='magpie-view-title'>Bewerte die folgende Aussage:</h1>
@@ -208,14 +184,12 @@ const custom_statement_rating = function(config) {
 
             // This function will handle  the response
             const handle_click = function(e) {
-                // We will just save the response and continue to the next view
+                // we record the trial name, number and the user's response as trial_data
                 let trial_data = {
                     trial_name: config.name,
                     trial_number: CT + 1,
                     response: e.target.id
                 };
-                // Often it makes sense to also save the config information
-                // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
                 // Here, we save the trial_data
                 magpie.trial_data.push(trial_data);
@@ -224,7 +198,7 @@ const custom_statement_rating = function(config) {
                 magpie.findNextView();
             };
 
-            // We will add the handle_click functions to both buttons
+            // We will add the handle_click functions to all possible ratings
             $('#-5').on("click", handle_click);
             $('#-4').on("click", handle_click);
             $('#-3').on("click", handle_click);
@@ -236,14 +210,24 @@ const custom_statement_rating = function(config) {
             $('#3').on("click", handle_click);
             $('#4').on("click", handle_click);
             $('#5').on("click", handle_click);
-
-            // That's everything for this view
         }
     };
     // We have to return the view, so that it can be used in 05_views.js
     return view;
 };
 
+// Custom Dilemma Decision View
+//
+// Always runs 5 trials:
+// 1st trial: The user is assigned randomly (with equal chance) to the experimental conditions, i.e. either both infos shown or only ingroup info shown and either
+//            ingroup favors option A or ingroup favors option B. The dilemma is displayed and the user can continued by clicking 'weiter'.
+// 2nd trial: Additionally to the dilemma, the decision options are displayed. Again, the user can continue by pressing 'weiter'.
+// 3rd trial: Additionally to dilemma and options, the ingroup info is displayed. Depending on the both_infos condition (assigned in trial 1) also the outgroup info is displayed.
+//            The user continues by pressing 'weiter'.
+// 4th trial: Additionally to dilemma, options and in-/outgroup info, 6 buttons are displayed that show the different levels of the two decision options.
+//            The user is asked to pick one. Once the user clicks on one button, the trial is over. This trial builds up on the button choice view.
+// 5th trial: The previously displayed elements are not displayed any longer. Instead the user is asked how he/she feels about their decision and can answer by clicking
+//            different levels between 'sehr gut' and 'garnicht gut'. This view builds up on the rating scale view.
 const custom_dilemma_decision = function(config) {
     const view = {
         name: config.name,
@@ -252,19 +236,26 @@ const custom_dilemma_decision = function(config) {
         data: config.data,
         // The render functions gets the magpie object as well as the current trial in view counter as input
         render: function (CT, magpie) {
+            // loads the topic choice and statement rating of the user. This is needed to show the correct in-/outgroup info
             var response = magpie.trial_data[0].response;
             var rating = magpie.trial_data[1].response;
             if (CT == 0) {
+              // In the first trial (if this the first dilemma the user is shown) the user is assigned to one experimental condition (50/50 chance) determining whether
+              // only ingroup or also outgroup info will be shown.
               if (magpie.currentTrialCounter < 10) {
                 var both_infos = Math.random() < 0.5;
               }
+              // If this is the second dilemma for the user, the both_info condition is the same as for the first one.
               if (magpie.currentTrialCounter > 10){
                 var both_infos = magpie.trial_data[2].both_infos;
               }
+              // Always in the first trial of this view, the user is assigned to one condition determining which option its ingroup favors (50/50 chance).
               var ingroup_info_a = Math.random() < 0.5;
             }
             if (CT == 1) {
+              // The both_infos condition is always retrieved from the first time this view was run
               var both_infos = magpie.trial_data[2].both_infos;
+              // The ingroup norm condition is always retrieved from the latest run of the first trial of this view.
               if (magpie.currentTrialCounter < 12) {
                 var ingroup_info_a = magpie.trial_data[2].ingroup_info_a;
               }
@@ -299,14 +290,8 @@ const custom_dilemma_decision = function(config) {
                 var ingroup_info_a = magpie.trial_data[7].ingroup_info_a;
               }
             };
-            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
-            // to proceed to the next view and if it is an trial type view,
-            // you should save the trial information with magpie.trial_data.push(trial_data)
 
-            // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${magpie.trial_data[0].response} or ${config.data[response]}
-
-            // Ich habe unser problems gelöst: ids in topic choice sind indices für unser statements array in 04_trials. Möglich, trotzdem bei 0 anzufangen zu zählen und später beim indexen [response - 1 zu nehmen?]
+            // Just displays the dilemma
             if (CT == 0) {
               $("main").html(`<div style="text-align: center" class='magpie-view'>
                       <h1 class='magpie-view-title'>Was ein Dilemma!</h1>
@@ -316,6 +301,7 @@ const custom_dilemma_decision = function(config) {
                       </div>`);
             };
 
+            // Displays the dilemma and the two decision options
             if (CT == 1) {
                 $("main").html(`<div style="text-align: center" class='magpie-view'>
                         <h1 class='magpie-view-title'>Die Antwortmöglichkeiten</h1>
@@ -327,6 +313,7 @@ const custom_dilemma_decision = function(config) {
                         </div>`);
             };
 
+            // Displays the dilemma, options and the in-/outgroup info (based on the user's conditions, see if statements)
             if (CT == 2) {
               if (both_infos == true) {
                 if (ingroup_info_a == true) {
@@ -381,6 +368,7 @@ const custom_dilemma_decision = function(config) {
               };
             };
 
+            // Displays the dilemma, options, in-/outgroup info and the buttons with which the user can make their decision.
             if (CT == 3) {
               if (both_infos == true) {
                 if (ingroup_info_a == true) {
@@ -468,6 +456,7 @@ const custom_dilemma_decision = function(config) {
               };
             };
 
+            // Displays only a statement and options from which the user can choose how they feeld about their choice.
             if (CT == 4) {
               $("main").html(`
                       <div class='magpie-view'>
@@ -497,7 +486,7 @@ const custom_dilemma_decision = function(config) {
 
             // This function will handle  the response
             const handle_click = function(e) {
-                // We will just save the response and continue to the next view
+                // we record the trial name, number, response and both of the user's assigned conditions as trial_data
                 let trial_data = {
                     trial_name: config.name,
                     trial_number: CT + 1,
@@ -505,8 +494,6 @@ const custom_dilemma_decision = function(config) {
                     both_infos: both_infos,
                     ingroup_info_a: ingroup_info_a
                 };
-                // Often it makes sense to also save the config information
-                // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
                 // Here, we save the trial_data
                 magpie.trial_data.push(trial_data);
@@ -515,7 +502,7 @@ const custom_dilemma_decision = function(config) {
                 magpie.findNextView();
             };
 
-            // We will add the handle_click functions to both buttons
+            // For trial 1 to 3 we will add the handle_click function to the 'weiter'/'next' button
             if (CT == 0) {
               $('#next').on("click", handle_click);
             };
@@ -528,6 +515,7 @@ const custom_dilemma_decision = function(config) {
               $('#next').on("click", handle_click);
             };
 
+            // For trial 4, we add the handle_click function to all buttons representing a dilemma decision
             if (CT == 3) {
               $('#1').on("click", handle_click);
               $('#2').on("click", handle_click);
@@ -537,6 +525,7 @@ const custom_dilemma_decision = function(config) {
               $('#6').on("click", handle_click);
             };
 
+            // For trial 5, we add the handle_click function to all possible ratings of the statement
             if (CT == 4) {
               $('#-3').on("click", handle_click);
               $('#-2').on("click", handle_click);
@@ -546,15 +535,18 @@ const custom_dilemma_decision = function(config) {
               $('#2').on("click", handle_click);
               $('#3').on("click", handle_click);
             };
-
-            // That's everything for this view
         }
     };
     // We have to return the view, so that it can be used in 05_views.js
     return view;
 };
 
-
+// Custom Group Identification View
+//
+// Builds up on the rating scale view.
+// Always runs 2 trials:
+// 1st trial: Asks whether user identifies with people who are advocates of the user's chosen topic/the related statement.
+// 2nd trial: Asks whether user identifies with people who are against the user's chosen topic/the related statement.
 const group_identification = function(config) {
     const view = {
         name: config.name,
@@ -565,12 +557,8 @@ const group_identification = function(config) {
         render: function (CT, magpie) {
           var response = magpie.trial_data[0].response;
           var rating = magpie.trial_data[1].response;
-            // Here, you can do whatever you want, eventually you should call magpie.findNextView()
-            // to proceed to the next view and if it is an trial type view,
-            // you should save the trial information with magpie.trial_data.push(trial_data)
-
-            // Normally, you want to display some kind of html, to do this you append your html to the main element
-            // You could use one of our predefined html-templates, with (magpie.)stimulus_container_generators["<view_name>"](config, CT) ${config.data[response][CT].option1}
+            // The question and the two options (user identifies or does not identifie) are displayed as well as the buttons representing the different
+            // levels of agreement between those two options.
             $("main").html(`
                 <div class='magpie-view'>
                 <h1 class='magpie-view-title'> Abschlussbefragung</h1>
@@ -597,14 +585,12 @@ const group_identification = function(config) {
                 </div>`);
             // This function will handle  the response
             const handle_click = function(e) {
-                // We will just save the response and continue to the next view
+                // we record the trial name, number and the user's response as trial_data
                 let trial_data = {
                     trial_name: config.name,
                     trial_number: CT + 1,
                     response: e.target.id
                 };
-                // Often it makes sense to also save the config information
-                // trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
                 // Here, we save the trial_data
                 magpie.trial_data.push(trial_data);
@@ -614,7 +600,7 @@ const group_identification = function(config) {
                 console.log(magpie);
             };
 
-            // We will add the handle_click functions to both buttons
+            // We will add the handle_click functions to all buttons representing the different levels of agreement with either option.
             $('#-3').on("click", handle_click);
             $('#-2').on("click", handle_click);
             $('#-1').on("click", handle_click);
@@ -622,8 +608,6 @@ const group_identification = function(config) {
             $('#1').on("click", handle_click);
             $('#2').on("click", handle_click);
             $('#3').on("click", handle_click);
-
-            // That's everything for this view
         }
     };
     // We have to return the view, so that it can be used in 05_views.js

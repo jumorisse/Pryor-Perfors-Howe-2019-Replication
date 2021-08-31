@@ -2,6 +2,7 @@
 
 
 const trial_info = {
+    // All topics for choice
     topic_choice: [
         {
             question: 'Bitte wähle das Thema aus, für das du dich am meisten interessierst.',
@@ -15,6 +16,7 @@ const trial_info = {
             option8: 'Fleischkonsum',
         }
     ],
+    // One statement about each of the topics
     statement_rating: [
         'Es sollte eine Geschwindigkeitsbegrenzung auf deutschen Autobahnen eingeführt werden.',
         'Persönliche Daten des Verbrauchers sollten in Deutschland besser geschützt werden. ',
@@ -25,6 +27,8 @@ const trial_info = {
         'Das Konsumieren von Cannabis sollte in Deutschland legal sein.',
         'Fleisch sollte in Deutschland einen Mindestpreis erhalten.',
       ],
+    // Each of the 8 elements contains the same dilemma (realistic dilemma), option A and B but differing ingroup/outgroup statements with regards to the topics.
+    // So for each topic there is one element in this list to make sure the ingroup/outgroup statements are always in line with the topic the user chose.
     dilemma_decision_1:[
       {
         dilemma: 'Ein*e gute*r Freund*in erzählt dir, dass er/sie ein Verbrechen begangen und deshalb nachts Probleme mit dem Schlafen hat. Er/Sie hat das Gefühl, dass du der/die Einzige bist, dem/der er/sie seine/ihre Tat anvertrauen kann, und erzählt dir von dem Verbrechen. Ein paar Tage später liest du in der Zeitung, dass jemand unschuldiges für das Verbrechen deines/deiner Freundes/Freundin für ein paar Wochen ins Gefängnis muss. ',
@@ -99,6 +103,8 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf den Fleischkonsum nicht zustimmen, entschieden sich, zur Polizei zu gehen.',
       },
     ],
+    // Each of the 8 elements contains the same dilemma (philosophical dilemma), option A and B but differing ingroup/outgroup statements with regards to the topics.
+    // So for each topic there is one element in this list to make sure the ingroup/outgroup statements are always in line with the topic the user chose.
     dilemma_decision_2:[
       {
         dilemma: 'Eine Straßenbahn ist außer Kontrolle geraten und droht, fünf Personen, die sich nicht bewegen können, zu überrollen. Du stehst in einiger Entfernung auf dem Rangierbahnhof neben einer Weiche. Durch Umstellen dieser Weiche kann die Straßenbahn auf ein anderes Gleis umgeleitet werden. Unglücklicherweise befindet sich dort eine weitere Person.',
@@ -173,6 +179,7 @@ const trial_info = {
         outgroup_a: 'Etwa 85% der Teilnehmer, die dir in Bezug auf den Fleischkonsum nicht zustimmen, entschieden sich, die Weiche umzustellen.',
       },
     ],
+    // Containing the elements needed for the feeling check after the user makes the dilemma decision.
     feeling_options: [
       {
         question: 'Wie fühlst du dich nach dieser Entscheidung?',
@@ -180,6 +187,7 @@ const trial_info = {
         optionLeft: 'Sehr schlecht'
       }
     ],
+    // Contains three questions and two possible answers each for the understanding check.
     understanding_checks: [
       {
         question: 'Welche dieser Behauptungen über dieses Experiment ist wahr?',
@@ -197,6 +205,8 @@ const trial_info = {
         option2: 'Wir können dir leider keine Aufwandsentschädigung oder VP Stunden anbieten, sind dir aber sehr dankbar.'
       }
     ],
+    // Contains 8 elements to check whether the user actually identifies with its supposed ingroup/ not identifies with its supposed outgroup.
+    // For each topic (8) this list has one element and each of these elements has 2 elements itself (one for in- and one for outgroup).
     group_identifiers: [
       [
         {
