@@ -27,8 +27,17 @@ raw_data <- read_csv('../../Data/02_main/01_raw_main_data.csv')
 raw_data
 ```
 
-# Removes participants whose data was falsely recorded
+# Removes participants whose data was falsely recorded or who are under 16 years old
 ```{r}
+# creates summary showing how many participants were under 16
+raw_data %>% filter(trial_name == 'topic_choice') %>% 
+  summarize(
+    under_16 = sum(age < 16, na.rm = TRUE)
+  )
+# removes any participants that were under 16
+raw_data <- raw_data %>% filter(age >= 16 | is.na(age))
+
+# removes faulty data (participants for which response is na)
 raw_data <- raw_data %>% group_by(submission_id) %>% mutate(
   data_error = case_when(
     trial_number == 4 & is.na(response) ~ TRUE,
@@ -61,7 +70,8 @@ demographics <- raw_data %>% filter(trial_name == 'topic_choice') %>%
             num_provided_education = sum(!is.na(education)),
             num_lower_degree = sum(education == "Real- oder Hauptschulabschluss", na.rm = TRUE),
             num_high_school_degree = sum(education == 'Abitur', na.rm = TRUE),
-            num_higher_degree = sum(education == 'Universitärer Abschluss', na.rm = TRUE),
+            num_university_degree = sum(education == 'Universitärer Abschluss', na.rm = TRUE),
+            num_university_of_appl_science_degree = sum(education == 'Hochschulabschluss', na.rm = TRUE),
             num_provided_language = sum(!is.na(languages)),
             num_german_native_speakers = sum(languages == 'Deutsch', na.rm = TRUE),
             num_other_native_speakers = sum(languages == 'Andere', na.rm = TRUE)
@@ -76,7 +86,7 @@ demographics
 ```{r}
 tidy_data <- raw_data %>% 
   # removes all trials in which the participant just presses a next button and all test submissions
-  filter(response != 'next', languages != 'TEST') %>%
+  filter(response != 'next') %>%
   # creates a trials variables that contains a descriptions of the trial in the shape trialName_trialNumber
   mutate(trials = paste(trial_name, trial_number, sep = "_")) %>%
   # removes variables unnecessary for further cleaning or analysis
@@ -128,79 +138,81 @@ tidy_data <- raw_data %>%
   ungroup() %>%
   # now the rows for each participant contain the same information, so they can be merged to obtain 1 row per participant
   unique() %>%
-  # creates the ingroup_norm for both realistic and philosophical dilemma according to the coding of the original study: -1 if ingroup prefers active action (e.g. changing the direction of the train) and 1 if ingroup prefers passive action (e.g. not changing the direction of the train)
-  mutate(
-    ingroup_norm_real = case_when(
-      ingroup_real == TRUE ~ -1,
-      ingroup_real == FALSE ~ 1,
-    ),
-    ingroup_norm_philo = case_when(
-      ingroup_philo == TRUE ~ -1,
-      ingroup_philo == FALSE ~ 1,
-    )) %>%
-  # the variables used for creating the ingroup_norm variable in the previous step can now be dropped (info is contained in ingroup_norm)
-  select(-ingroup_real, -ingroup_philo) %>%
-  # change all logical variables to numeric variables (TRUE ~ 1 and FALSE ~ 0)
-  mutate_if(is.logical,as.numeric) %>%
-  # changes format so that there are two rows per participant (one for each dilemma) and creates the variable dilemma_version (denoting the type of dilemma) and dilemma_rating (the participant's decision for that dilemma)
-  pivot_longer(
-    cols = c(6, 8),
-    names_to = "dilemma_type",
-    values_to = "dilemma_rating"
-  ) %>%
-  mutate(
-    # now that we have one row per dilemma, the two ingroup_norm variables (daily and philo) can be reduced to one ingroup_norm variable
-    ingroup_norm = case_when(
-      dilemma_type == "philosophical_dilemma" ~ ingroup_norm_philo,
-      dilemma_type == "real_dilemma" ~ ingroup_norm_real
-    ),
-    # creates variable that indicates whether the subject identifies with its ingroup
-    ingroup_agree = case_when(
-      statement_rating_1 <= 0 & group_ident_2 > 0 ~ 1,
-      statement_rating_1 >= 0 & group_ident_1 > 0 ~ 1,
-      statement_rating_1 <= 0 & group_ident_2 <= 0 ~ 0,
-      statement_rating_1 >= 0 & group_ident_1 <= 0 ~ 0,
-    ),
-    # create variable that indicates whether the subject does not identify with its outgroup (again: statement_rating_1 = 0 not necessary)
-    outgroup_disagree = case_when(
-      statement_rating_1 <= 0 & group_ident_1 < 0 ~ 1,
-      statement_rating_1 >= 0 & group_ident_2 < 0 ~ 1,
-      statement_rating_1 <= 0 & group_ident_1 >= 0 ~ 0,
-      statement_rating_1 >= 0 & group_ident_2 >= 0 ~ 0,
-    )
-  ) %>%
-  # removes ingroup_norm_daily and ingroup_norm_philo used for creating the one ingroup_norm variable
-   select(-ingroup_norm_real, -ingroup_norm_philo) %>%
-  # corrects the type of integer variables
-  mutate(
-      submission_id = as.integer(submission_id),
-      dilemma_rating = as.integer(dilemma_rating),
-      both_infos = as.integer(both_infos),
-      ingroup_norm = as.integer(ingroup_norm),
-      ingroup_agree = as.integer(ingroup_agree),
-      outgroup_disagree = as.integer(outgroup_disagree),
-      statement_rating_1 = as.integer(statement_rating_1),
-      topic_choice_1 = as.integer(topic_choice_1),
-      group_ident_1 = as.integer(group_ident_1),
-      group_ident_2 = as.integer(group_ident_2),
-      feeling_real_dilemma = as.integer(feeling_real_dilemma),
-      feeling_philosophical_dilemma = as.integer(feeling_philosophical_dilemma),
-      passed_understanding_check = as.integer(passed_understanding_check)
-    )
+# creates the ingroup_norm for both realistic and philosophical dilemma according to the coding of the original study: -1 if ingroup prefers active action (e.g. changing the direction of the train) and 1 if ingroup prefers passive action (e.g. not changing the direction of the train)
+mutate(
+  ingroup_norm_real = case_when(
+    ingroup_real == TRUE ~ -1,
+    ingroup_real == FALSE ~ 1,
+  ),
+  ingroup_norm_philo = case_when(
+    ingroup_philo == TRUE ~ -1,
+    ingroup_philo == FALSE ~ 1,
+  )) %>%
+# the variables used for creating the ingroup_norm variable in the previous step can now be dropped (info is contained in ingroup_norm)
+select(-ingroup_real, -ingroup_philo) %>%
+# change all logical variables to numeric variables (TRUE ~ 1 and FALSE ~ 0)
+mutate_if(is.logical,as.numeric) %>%
+# changes format so that there are two rows per participant (one for each dilemma) and creates the variable dilemma_version (denoting the type of dilemma) and dilemma_rating (the participant's decision for that dilemma)
+pivot_longer(
+  cols = c(6, 8),
+  names_to = "dilemma_type",
+  values_to = "dilemma_rating"
+) %>%
+mutate(
+  # now that we have one row per dilemma, the two ingroup_norm variables (daily and philo) can be reduced to one ingroup_norm variable
+  ingroup_norm = case_when(
+    dilemma_type == "philosophical_dilemma" ~ ingroup_norm_philo,
+    dilemma_type == "real_dilemma" ~ ingroup_norm_real
+  ),
+  # creates variable that indicates whether the subject identifies with its ingroup
+  ingroup_agree = case_when(
+    statement_rating_1 <= 0 & group_ident_2 > 0 ~ 1,
+    statement_rating_1 >= 0 & group_ident_1 > 0 ~ 1,
+    statement_rating_1 <= 0 & group_ident_2 <= 0 ~ 0,
+    statement_rating_1 >= 0 & group_ident_1 <= 0 ~ 0,
+  ),
+  # create variable that indicates whether the subject does not identify with its outgroup (again: statement_rating_1 = 0 not necessary)
+  outgroup_disagree = case_when(
+    statement_rating_1 <= 0 & group_ident_1 < 0 ~ 1,
+    statement_rating_1 >= 0 & group_ident_2 < 0 ~ 1,
+    statement_rating_1 <= 0 & group_ident_1 >= 0 ~ 0,
+    statement_rating_1 >= 0 & group_ident_2 >= 0 ~ 0,
+  )
+) %>%
+# removes ingroup_norm_daily and ingroup_norm_philo used for creating the one ingroup_norm variable
+ select(-ingroup_norm_real, -ingroup_norm_philo) %>%
+# corrects the type of integer variables
+mutate(
+    submission_id = as.integer(submission_id),
+    dilemma_rating = as.integer(dilemma_rating),
+    both_infos = as.integer(both_infos),
+    ingroup_norm = as.integer(ingroup_norm),
+    ingroup_agree = as.integer(ingroup_agree),
+    outgroup_disagree = as.integer(outgroup_disagree),
+    statement_rating_1 = as.integer(statement_rating_1),
+    topic_choice_1 = as.integer(topic_choice_1),
+    group_ident_1 = as.integer(group_ident_1),
+    group_ident_2 = as.integer(group_ident_2),
+    feeling_real_dilemma = as.integer(feeling_real_dilemma),
+    feeling_philosophical_dilemma = as.integer(feeling_philosophical_dilemma),
+    passed_understanding_check = as.integer(passed_understanding_check)
+  )
 
 
 tidy_data
+
+n_distinct(tidy_data$submission_id)
 ```
 
 ```{r}
 # counts all participants that indicated that there native language is not German
 language_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>% 
   summarise(
-    not_german_native_speaker = sum(languages == 'Andere')
+    not_german_native_speaker = sum(languages == 'Andere', na.rm = TRUE)
   )
 language_summary
 # removes those participants that are not German native speakers
-tidy_data <- tidy_data %>% filter(languages != 'Andere')
+tidy_data <- tidy_data %>% filter(languages != 'Andere' | is.na(languages))
 
 # creates a summary of how many participant were exluded for either or both reasons
 exclusion_summary <- tidy_data %>% filter(dilemma_type == 'real_dilemma') %>%

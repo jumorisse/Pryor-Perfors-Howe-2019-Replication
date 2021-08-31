@@ -55,6 +55,8 @@ submission_id,dilemma_rating,both_infos,ingroup_norm,ingroup_agree,outgroup_disa
 2896,4,1,-1,1,1,philosophical_dilemma
 2894,3,1,-1,1,1,real_dilemma
 2894,3,1,1,1,1,philosophical_dilemma
+2893,4,0,-1,0,0,real_dilemma
+2893,1,0,-1,0,0,philosophical_dilemma
 2887,2,1,-1,1,1,real_dilemma
 2887,3,1,1,1,1,philosophical_dilemma
 2885,3,1,-1,1,1,real_dilemma
@@ -143,6 +145,8 @@ submission_id,dilemma_rating,both_infos,ingroup_norm,ingroup_agree,outgroup_disa
 2823,1,1,1,1,1,philosophical_dilemma
 2822,3,0,-1,1,1,real_dilemma
 2822,6,0,-1,1,1,philosophical_dilemma
+2821,6,1,-1,1,1,real_dilemma
+2821,2,1,-1,1,1,philosophical_dilemma
 2819,4,0,-1,1,1,real_dilemma
 2819,2,0,-1,1,1,philosophical_dilemma
 2818,4,0,1,1,1,real_dilemma

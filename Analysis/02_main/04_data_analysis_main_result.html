@@ -480,12 +480,13 @@ marg_lik_sct &lt;- brms::bridge_sampler(samples = brms_fit_sct)</code></pre>
 <pre><code>## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
-## Iteration: 4</code></pre>
+## Iteration: 4
+## Iteration: 5</code></pre>
 <pre class="r"><code># computes the bayes_factors (1st in favor of the alternative model and 2nd in favor of the sct model)
 bf(marg_lik_alt,marg_lik_sct)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of marg_lik_alt over marg_lik_sct: 0.00083</code></pre>
+<pre><code>## Estimated Bayes factor in favor of marg_lik_alt over marg_lik_sct: 0.00503</code></pre>
 <pre class="r"><code>bf(marg_lik_sct,marg_lik_alt)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of marg_lik_sct over marg_lik_alt: 1210.20233</code></pre>
+<pre><code>## Estimated Bayes factor in favor of marg_lik_sct over marg_lik_alt: 198.61407</code></pre>
 </div>
 <div id="exploratory-analysis" class="section level1">
 <h1>Exploratory Analysis</h1>
@@ -501,7 +502,7 @@ bf(marg_lik_alt,marg_lik_sct)</code></pre>
   dilemma_type = as.integer(dilemma_type)
 )
 explor_data</code></pre>
-<pre><code>## # A tibble: 160 x 7
+<pre><code>## # A tibble: 164 x 7
 ##    submission_id dilemma_rating both_infos ingroup_norm ingroup_agree
 ##            &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;
 ##  1          3142              4          0            1             1
@@ -514,7 +515,7 @@ explor_data</code></pre>
 ##  8          2987              3          0           -1             1
 ##  9          2947              3          1            1             1
 ## 10          2947              2          1            1             1
-## # ... with 150 more rows, and 2 more variables: outgroup_disagree &lt;dbl&gt;,
+## # ... with 154 more rows, and 2 more variables: outgroup_disagree &lt;dbl&gt;,
 ## #   dilemma_type &lt;int&gt;</code></pre>
 <pre class="r"><code>explor_stan_data &lt;- as.list(c(explor_data, N = dim(explor_data)[1]))</code></pre>
 </div>
@@ -572,10 +573,9 @@ explor_brms_fit_alt &lt;- brm(dilemma_rating ~ dilemma_type + ingroup_norm * bot
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
-## Iteration: 5
-## Iteration: 6</code></pre>
+## Iteration: 5</code></pre>
 <pre class="r"><code>bf(marg_lik_explor_alt,marg_lik_alt)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of marg_lik_explor_alt over marg_lik_alt: 342.03372</code></pre>
+<pre><code>## Estimated Bayes factor in favor of marg_lik_explor_alt over marg_lik_alt: 1189.23612</code></pre>
 </div>
 <div id="what-direction-does-a-possible-dilemma_version-effect-have-in-the-alternative-model" class="section level4">
 <h4>What direction does a possible dilemma_version effect have in the alternative model?</h4>
@@ -583,31 +583,31 @@ explor_brms_fit_alt &lt;- brm(dilemma_rating ~ dilemma_type + ingroup_norm * bot
 <pre><code>##  Family: cumulative 
 ##   Links: mu = logit; disc = identity 
 ## Formula: dilemma_rating ~ dilemma_type + ingroup_norm * both_infos 
-##    Data: explor_data (Number of observations: 160) 
+##    Data: explor_data (Number of observations: 164) 
 ## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 ##          total post-warmup samples = 4000
 ## 
 ## Population-Level Effects: 
 ##                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-## Intercept[1]               -1.71      0.26    -2.24    -1.20 1.00     3624
-## Intercept[2]               -0.53      0.23    -1.00    -0.09 1.00     5098
-## Intercept[3]                0.44      0.23    -0.02     0.89 1.00     4885
-## Intercept[4]                1.65      0.27     1.11     2.19 1.00     4568
-## Intercept[5]                2.81      0.36     2.14     3.53 1.00     4462
-## dilemma_type               -0.53      0.14    -0.82    -0.25 1.00     4499
-## ingroup_norm                0.25      0.22    -0.18     0.67 1.00     2750
-## both_infos                  0.00      0.29    -0.57     0.53 1.00     5118
-## ingroup_norm:both_infos    -0.26      0.30    -0.83     0.31 1.00     2691
+## Intercept[1]               -1.68      0.26    -2.20    -1.18 1.00     3545
+## Intercept[2]               -0.49      0.23    -0.94    -0.06 1.00     4907
+## Intercept[3]                0.47      0.23     0.03     0.92 1.00     4799
+## Intercept[4]                1.68      0.27     1.16     2.21 1.00     4713
+## Intercept[5]                2.79      0.35     2.13     3.50 1.00     5187
+## dilemma_type               -0.58      0.15    -0.87    -0.29 1.00     4968
+## ingroup_norm                0.26      0.21    -0.15     0.68 1.00     2893
+## both_infos                  0.05      0.28    -0.49     0.60 1.00     5583
+## ingroup_norm:both_infos    -0.30      0.28    -0.86     0.23 1.00     3010
 ##                         Tail_ESS
-## Intercept[1]                2868
-## Intercept[2]                3275
-## Intercept[3]                3488
-## Intercept[4]                3589
-## Intercept[5]                3698
-## dilemma_type                3206
-## ingroup_norm                2790
-## both_infos                  2940
-## ingroup_norm:both_infos     2515
+## Intercept[1]                2753
+## Intercept[2]                3510
+## Intercept[3]                3645
+## Intercept[4]                3815
+## Intercept[5]                3830
+## dilemma_type                2789
+## ingroup_norm                2751
+## both_infos                  3369
+## ingroup_norm:both_infos     2556
 ## 
 ## Family Specific Parameters: 
 ##      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -674,7 +674,7 @@ explor_brms_fit_sct &lt;- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + bo
 ## Iteration: 4
 ## Iteration: 5</code></pre>
 <pre class="r"><code>bf(marg_lik_explor_sct,marg_lik_sct)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of marg_lik_explor_sct over marg_lik_sct: 432.37865</code></pre>
+<pre><code>## Estimated Bayes factor in favor of marg_lik_explor_sct over marg_lik_sct: 1523.02454</code></pre>
 </div>
 <div id="what-direction-does-a-possible-dilemma_version-effect-have-in-the-sct-model" class="section level4">
 <h4>What direction does a possible dilemma_version effect have in the sct-model?</h4>
@@ -682,43 +682,43 @@ explor_brms_fit_sct &lt;- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + bo
 <pre><code>##  Family: cumulative 
 ##   Links: mu = logit; disc = identity 
 ## Formula: dilemma_rating ~ ingroup_norm * ingroup_agree + both_infos + ingroup_norm * both_infos * outgroup_disagree + dilemma_type 
-##    Data: explor_data (Number of observations: 160) 
+##    Data: explor_data (Number of observations: 164) 
 ## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 ##          total post-warmup samples = 4000
 ## 
 ## Population-Level Effects: 
 ##                                           Estimate Est.Error l-95% CI u-95% CI
-## Intercept[1]                                 -3.32      1.16    -5.70    -1.11
-## Intercept[2]                                 -2.10      1.15    -4.43     0.09
-## Intercept[3]                                 -1.09      1.14    -3.41     1.09
-## Intercept[4]                                  0.15      1.15    -2.21     2.34
-## Intercept[5]                                  1.33      1.17    -1.06     3.53
-## ingroup_norm                                 -1.28      1.12    -3.61     0.82
-## ingroup_agree                                -0.98      0.87    -2.74     0.74
-## both_infos                                   -0.74      1.16    -3.13     1.46
-## outgroup_disagree                            -0.62      1.14    -3.01     1.53
-## dilemma_type                                 -0.56      0.15    -0.86    -0.27
-## ingroup_norm:ingroup_agree                   -0.73      0.88    -2.48     0.97
-## ingroup_norm:both_infos                       2.42      1.20     0.13     4.87
-## ingroup_norm:outgroup_disagree                2.37      1.19    -0.01     4.76
-## both_infos:outgroup_disagree                  0.80      1.20    -1.48     3.27
-## ingroup_norm:both_infos:outgroup_disagree    -2.88      1.24    -5.42    -0.45
+## Intercept[1]                                 -2.20      0.88    -3.88    -0.48
+## Intercept[2]                                 -0.99      0.86    -2.69     0.70
+## Intercept[3]                                 -0.00      0.86    -1.66     1.67
+## Intercept[4]                                  1.24      0.87    -0.44     2.95
+## Intercept[5]                                  2.36      0.90     0.64     4.11
+## ingroup_norm                                 -0.14      0.85    -1.93     1.49
+## ingroup_agree                                -0.87      0.88    -2.61     0.88
+## both_infos                                    0.31      0.98    -1.71     2.24
+## outgroup_disagree                             0.37      0.98    -1.66     2.34
+## dilemma_type                                 -0.60      0.15    -0.90    -0.31
+## ingroup_norm:ingroup_agree                   -0.88      0.87    -2.64     0.84
+## ingroup_norm:both_infos                       1.35      0.96    -0.50     3.26
+## ingroup_norm:outgroup_disagree                1.36      0.98    -0.56     3.27
+## both_infos:outgroup_disagree                 -0.22      1.03    -2.25     1.84
+## ingroup_norm:both_infos:outgroup_disagree    -1.84      1.01    -3.82     0.12
 ##                                           Rhat Bulk_ESS Tail_ESS
-## Intercept[1]                              1.00     2824     3036
-## Intercept[2]                              1.00     2850     3059
-## Intercept[3]                              1.00     2878     2895
-## Intercept[4]                              1.00     2977     3159
-## Intercept[5]                              1.00     3144     2966
-## ingroup_norm                              1.01     1613     2057
-## ingroup_agree                             1.00     3550     3065
-## both_infos                                1.00     2277     2223
-## outgroup_disagree                         1.00     2139     2335
-## dilemma_type                              1.00     4966     3001
-## ingroup_norm:ingroup_agree                1.00     3533     3058
-## ingroup_norm:both_infos                   1.00     1430     1731
-## ingroup_norm:outgroup_disagree            1.00     1534     1850
-## both_infos:outgroup_disagree              1.00     2215     2061
-## ingroup_norm:both_infos:outgroup_disagree 1.00     1565     1905
+## Intercept[1]                              1.00     3659     3019
+## Intercept[2]                              1.00     3794     3059
+## Intercept[3]                              1.00     3780     2956
+## Intercept[4]                              1.00     3899     3223
+## Intercept[5]                              1.00     3829     3223
+## ingroup_norm                              1.00     2756     2809
+## ingroup_agree                             1.00     2964     2641
+## both_infos                                1.00     2110     2515
+## outgroup_disagree                         1.00     2176     2221
+## dilemma_type                              1.00     4534     3275
+## ingroup_norm:ingroup_agree                1.00     2879     2868
+## ingroup_norm:both_infos                   1.00     1876     2246
+## ingroup_norm:outgroup_disagree            1.00     1983     2271
+## both_infos:outgroup_disagree              1.00     2095     2376
+## ingroup_norm:both_infos:outgroup_disagree 1.00     1920     1948
 ## 
 ## Family Specific Parameters: 
 ##      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -768,21 +768,18 @@ philo_brms_fit_sct &lt;- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + bot
 ## Iteration: 5
 ## Iteration: 6
 ## Iteration: 7
-## Iteration: 8
-## Iteration: 9
-## Iteration: 10
-## Iteration: 11
-## Iteration: 12</code></pre>
+## Iteration: 8</code></pre>
 <pre class="r"><code>real_marg_lik_alt &lt;- brms::bridge_sampler(samples = real_brms_fit_alt)</code></pre>
 <pre><code>## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
-## Iteration: 5</code></pre>
+## Iteration: 5
+## Iteration: 6</code></pre>
 <pre class="r"><code>bf(real_marg_lik_alt,real_marg_lik_sct)</code></pre>
 <pre><code>## Estimated Bayes factor in favor of real_marg_lik_alt over real_marg_lik_sct: 0.00000</code></pre>
 <pre class="r"><code>bf(real_marg_lik_sct,real_marg_lik_alt)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of real_marg_lik_sct over real_marg_lik_alt: 4381711.45676</code></pre>
+<pre><code>## Estimated Bayes factor in favor of real_marg_lik_sct over real_marg_lik_alt: 5846602.37911</code></pre>
 </div>
 <div id="comparing-the-models-for-the-philosophical-dilemma-decisions" class="section level3">
 <h3>Comparing the models for the philosophical dilemma decisions</h3>
@@ -791,8 +788,7 @@ philo_brms_fit_sct &lt;- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + bot
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
-## Iteration: 5
-## Iteration: 6</code></pre>
+## Iteration: 5</code></pre>
 <pre class="r"><code>philo_marg_lik_alt &lt;- brms::bridge_sampler(samples = philo_brms_fit_alt)</code></pre>
 <pre><code>## Iteration: 1
 ## Iteration: 2
@@ -801,9 +797,9 @@ philo_brms_fit_sct &lt;- brm(dilemma_rating ~ ingroup_norm * ingroup_agree + bot
 ## Iteration: 5
 ## Iteration: 6</code></pre>
 <pre class="r"><code>bf(philo_marg_lik_alt,philo_marg_lik_sct)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of philo_marg_lik_alt over philo_marg_lik_sct: 0.00000</code></pre>
+<pre><code>## Estimated Bayes factor in favor of philo_marg_lik_alt over philo_marg_lik_sct: 0.00038</code></pre>
 <pre class="r"><code>bf(philo_marg_lik_sct,philo_marg_lik_alt)</code></pre>
-<pre><code>## Estimated Bayes factor in favor of philo_marg_lik_sct over philo_marg_lik_alt: 5099620.60649</code></pre>
+<pre><code>## Estimated Bayes factor in favor of philo_marg_lik_sct over philo_marg_lik_alt: 2649.92346</code></pre>
 </div>
 </div>
 </div>
